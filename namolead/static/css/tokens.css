@@ -1,5 +1,9 @@
 /* NamoLead design tokens — orange / white / navy */
 :root {
+  /* type */
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+
   /* surfaces */
   --surface: #fafafa;            /* page background */
   --surface-2: #ffffff;          /* cards, panels */
@@ -39,4 +43,25 @@
   --shadow-sm: 0 1px 2px rgba(16, 42, 67, 0.06);
   --shadow: 0 4px 16px rgba(16, 42, 67, 0.10);
   --shadow-lg: 0 10px 32px rgba(16, 42, 67, 0.14);
+}
+
+/* Editorial display type — the anti-"generic AI site" signal */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+/* Flat, tactile, accessible base */
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+button, a, select, input, [role="button"] { cursor: pointer; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
 }

@@ -37,7 +37,9 @@
   {% else %}
   <div class="mt-8">
     {% url 'opportunities:go' page.slug as go_url %}
-    <a href="{{ go_url }}" class="inline-block bg-[var(--orange)] text-white font-semibold rounded-[var(--radius)] px-6 py-3 shadow-[var(--shadow-sm)] hover:bg-[var(--orange-strong)] hover:shadow-[var(--shadow)] transition-all">Apply now</a>
+    <a href="{{ go_url }}" class="inline-flex items-center gap-2 bg-[var(--orange)] text-white font-semibold rounded-[var(--radius)] px-6 py-3 hover:bg-[var(--orange-strong)] active:scale-[0.97] transition-all">Apply now
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
   </div>
   {% endif %}
 </article>

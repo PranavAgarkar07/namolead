@@ -1,6 +1,6 @@
 <a
   {% if url %}href="{{ url }}"{% else %}role="button"{% endif %}
-  class="inline-flex items-center justify-center gap-2 font-semibold rounded-[var(--radius)] px-5 py-2.5 transition-colors
+  class="inline-flex items-center justify-center gap-2 font-semibold rounded-[var(--radius)] px-5 py-2.5 transition-colors active:scale-[0.97]
   {% if variant == "outline" %}border border-[var(--navy)] text-[var(--navy)] hover:bg-[var(--navy-tint)]
   {% elif variant == "orange" %}bg-[var(--orange)] text-white hover:bg-[var(--orange-strong)]
   {% else %}bg-[var(--navy)] text-white hover:bg-[var(--navy-soft)]{% endif %}">

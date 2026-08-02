@@ -1,10 +1,10 @@
 {% load wagtailimages_tags %}
 {% image post.featured_image width-800 as card_img %}
-<a href="{{ post.url }}" class="block bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden hover:shadow-[var(--shadow)] hover:-translate-y-0.5 transition-all">
+<a href="{{ post.url }}" class="block bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden hover:border-[var(--navy)] hover:bg-white active:scale-[0.99] transition-all">
   {% if card_img %}<img src="{{ card_img.url }}" alt="" class="w-full aspect-[16/9] object-cover">{% endif %}
   <div class="p-5">
-    <div class="text-xs uppercase tracking-wide text-[var(--ink-muted)] mb-1">{{ post.get_category_display }}{% if post.organization %} · {{ post.organization }}{% endif %}</div>
-    <h2 class="font-semibold text-[var(--ink)]">{{ post.title }}</h2>
-    <p class="text-sm text-[var(--ink-muted)] mt-1 line-clamp-2">{{ post.short_description|truncatechars:200 }}</p>
+    <div class="text-xs uppercase tracking-widest text-[var(--ink-muted)] mb-2">{{ post.get_category_display }}{% if post.organization %} · {{ post.organization }}{% endif %}</div>
+    <h3 class="font-semibold text-lg text-[var(--ink)]">{{ post.title }}</h3>
+    <p class="text-sm text-[var(--ink-muted)] mt-1.5 line-clamp-2">{{ post.short_description|truncatechars:200 }}</p>
   </div>
 </a>
