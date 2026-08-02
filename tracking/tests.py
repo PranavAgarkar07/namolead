@@ -80,3 +80,13 @@ class TrackingTests(TestCase):
         user = User.objects.create_user("staff", password="x", is_staff=True)
         self.client.force_login(user)
         self.assertEqual(self.client.get("/analytics/").status_code, 200)
+
+    def test_dashboard_shows_stats(self):
+        User = get_user_model()
+        user = User.objects.create_user("staff", password="x", is_staff=True)
+        self.client.force_login(user)
+        self.client.get("/go/internship-a/?utm_source=instagram")
+        self.client.get("/track/view/internship-a/")
+        response = self.client.get("/analytics/")
+        self.assertContains(response, "Total clicks")
+        self.assertContains(response, "1")

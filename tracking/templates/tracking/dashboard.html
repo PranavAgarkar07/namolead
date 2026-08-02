@@ -1,0 +1,64 @@
+<!-- tracking/templates/tracking/dashboard.html -->
+{% extends "base.html" %}
+
+{% block title %}Analytics · NamoLead{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-6">Analytics</h1>
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+  <div class="bg-white border rounded-lg p-4"><div class="text-sm text-gray-500">Total clicks</div><div class="text-2xl font-bold">{{ totals.clicks }}</div></div>
+  <div class="bg-white border rounded-lg p-4"><div class="text-sm text-gray-500">Page views</div><div class="text-2xl font-bold">{{ totals.views }}</div></div>
+  <div class="bg-white border rounded-lg p-4"><div class="text-sm text-gray-500">Unlocks</div><div class="text-2xl font-bold">{{ totals.unlocks }}</div></div>
+  <div class="bg-white border rounded-lg p-4"><div class="text-sm text-gray-500">View→click CTR</div><div class="text-2xl font-bold">{{ totals.ctr }}</div></div>
+</div>
+
+<div class="grid md:grid-cols-2 gap-6">
+  <div class="bg-white border rounded-lg p-4">
+    <h2 class="font-semibold mb-2">Clicks per post</h2>
+    <canvas id="postChart"></canvas>
+  </div>
+  <div class="bg-white border rounded-lg p-4">
+    <h2 class="font-semibold mb-2">Traffic source</h2>
+    <canvas id="sourceChart"></canvas>
+  </div>
+  <div class="bg-white border rounded-lg p-4 md:col-span-2">
+    <h2 class="font-semibold mb-2">Clicks per week</h2>
+    <canvas id="weeklyChart"></canvas>
+  </div>
+</div>
+
+<h2 class="text-lg font-semibold mt-8 mb-2">Per-post breakdown</h2>
+<table class="w-full bg-white border rounded-lg text-sm">
+  <thead><tr class="text-left border-b"><th class="p-2">Post</th><th class="p-2">Clicks</th><th class="p-2">Views</th><th class="p-2">CTR</th></tr></thead>
+  <tbody>
+  {% for p in per_post %}
+    <tr class="border-b"><td class="p-2">{{ p.title }}</td><td class="p-2">{{ p.clicks }}</td><td class="p-2">{{ p.views }}</td><td class="p-2">{{ p.ctr }}</td></tr>
+  {% empty %}
+    <tr><td class="p-2" colspan="4">No clicks yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{{ per_post|json_script:"per-post" }}
+{{ by_source|json_script:"by-source" }}
+{{ weekly|json_script:"weekly" }}
+<script>
+const perPost = JSON.parse(document.getElementById('per-post').textContent);
+const bySource = JSON.parse(document.getElementById('by-source').textContent);
+const weekly = JSON.parse(document.getElementById('weekly').textContent);
+new Chart(document.getElementById('postChart'), {
+  type: 'bar',
+  data: { labels: perPost.map(p => p.title), datasets: [{ label: 'Clicks', data: perPost.map(p => p.clicks) }] }
+});
+new Chart(document.getElementById('sourceChart'), {
+  type: 'pie',
+  data: { labels: bySource.map(s => s.source), datasets: [{ data: bySource.map(s => s.clicks) }] }
+});
+new Chart(document.getElementById('weeklyChart'), {
+  type: 'line',
+  data: { labels: weekly.map(w => w.week), datasets: [{ label: 'Clicks', data: weekly.map(w => w.clicks) }] }
+});
+</script>
+{% endblock %}
