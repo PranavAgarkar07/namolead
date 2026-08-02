@@ -24,31 +24,58 @@ if (isWebGL) {
       key.position.set(4, 6, 8);
       scene.add(key);
 
-      const colors = [0xfdf9f3, 0xffffff, 0xff6b35, 0xffffff, 0xfdf9f3];
+      const colors = [0xfdf9f3, 0xfffaee, 0xff6b35, 0xffffff, 0xfdf9f3, 0xfdf9f3];
       const planes = [];
 
       function makePaperPlane() {
         const geo = new THREE.BufferGeometry();
-        const a = new THREE.Vector3(0, 0.8, 1.2);
-        const b = new THREE.Vector3(0, -0.8, 1.2);
-        const c = new THREE.Vector3(-1.1, 0, -1.4);
-        const d = new THREE.Vector3(1.1, 0, -1.4);
-        geo.setAttribute(
-          "position",
-          new THREE.Float32BufferAttribute([...a.toArray(), ...b.toArray(), ...c.toArray(), ...a.toArray(), ...d.toArray(), ...b.toArray()], 3)
-        );
+        // Nose-up orientation: crease line runs vertically (the center fold),
+        // wings spread in X, tail sits lower behind the folded spine.
+        const nose = new THREE.Vector3(0, 2.6, 0);        // sharp nose tip
+        const spine = new THREE.Vector3(0, -0.35, 0.15); // center crease root (ridge)
+        const tipL = new THREE.Vector3(-1.45, -0.1, 0.4);  // swept left wing tip
+        const tipR = new THREE.Vector3(1.45, -0.1, 0.4);   // swept right wing tip
+        const tailL = new THREE.Vector3(-0.5, -0.7, -0.55); // left tail point (keel)
+        const tailR = new THREE.Vector3(0.5, -0.7, -0.55);  // right tail point (keel)
+
+        const pos = [];
+        function push(v) { pos.push(v.x, v.y, v.z); }
+
+        // upper fold (top sheet, one smooth plane from nose to the spread wings)
+        push(nose); push(spine); push(tipL);
+        push(nose); push(tipR); push(spine);
+        // lower V (the folded underside of each wing down to the tail keel)
+        push(spine); push(tipL); push(tailL);
+        push(spine); push(tailR); push(tipR);
+
+        geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
         geo.computeVertexNormals();
         const color = colors[Math.floor(Math.random() * colors.length)];
-        const mat = new THREE.MeshStandardMaterial({ color, flatShading: true, side: THREE.DoubleSide });
+        const mat = new THREE.MeshStandardMaterial({
+          color,
+          roughness: 0.6,
+          metalness: 0,
+          flatShading: true,
+          side: THREE.DoubleSide,
+        });
         return new THREE.Mesh(geo, mat);
       }
 
       function spawn() {
         const mesh = makePaperPlane();
         const s = 0.6 + Math.random() * 1.1;
+        const x = (Math.random() * 2 - 1) * 6;
         mesh.scale.setScalar(s);
-        mesh.position.set((Math.random() * 2 - 1) * 6, -6 - Math.random() * 4, Math.random() * -6);
-        planes.push({ mesh, speed: 0.6 + Math.random() * 1.2, spin: (Math.random() * 2 - 1) * 0.7, tilt: Math.random() * Math.PI });
+        mesh.rotation.x = (Math.random() * 2 - 1) * 0.2; // gentle tilt toward viewer
+        mesh.position.set(x, -6 - Math.random() * 4, Math.random() * -6);
+        planes.push({
+          mesh,
+          baseX: x,
+          speed: 0.6 + Math.random() * 0.9,
+          flutter: (Math.random() * 2 - 1) * 0.35, // slow wing rock
+          sway: 0.4 + Math.random() * 0.8,          // lateral glide amplitude
+          phase: Math.random() * Math.PI * 2,
+        });
         scene.add(mesh);
       }
 
@@ -78,12 +105,17 @@ if (isWebGL) {
         camera.lookAt(0, 0, 0);
 
         for (const p of planes) {
+          const t = clock.elapsedTime;
+          // glide upward, drifting sideways along a gentle sine path
           p.mesh.position.y += p.speed * dt;
-          p.mesh.rotation.y = Math.sin(clock.elapsedTime * 0.5 + p.tilt) * 0.8;
-          p.mesh.rotation.z += p.spin * dt;
+          p.mesh.position.x = p.baseX + Math.sin(t * 0.4 + p.phase) * p.sway;
+          // bank: constant cruise + slow rock, no flipping/spinning
+          p.mesh.rotation.z = 0.12 + Math.sin(t * 0.35 + p.phase * 2) * p.flutter;
+          p.mesh.rotation.y = Math.sin(t * 0.25 + p.phase) * 0.18;
           if (p.mesh.position.y > 9) {
             p.mesh.position.y = -7;
-            p.mesh.position.x = (Math.random() * 2 - 1) * 9;
+            p.baseX = (Math.random() * 2 - 1) * 9;
+            p.phase = Math.random() * Math.PI * 2;
           }
         }
         renderer.render(scene, camera);
