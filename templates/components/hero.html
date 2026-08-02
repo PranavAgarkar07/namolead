@@ -1,4 +1,6 @@
+{% load static %}
 <section class="relative overflow-hidden bg-[var(--navy)] text-white">
+  <canvas class="hero-scene" aria-hidden="true"></canvas>
   <span class="pointer-events-none absolute -right-20 -top-24 w-80 h-80 rounded-full border-[28px] border-[var(--orange)]/20" aria-hidden="true"></span>
   <span class="pointer-events-none absolute right-16 top-10 w-3 h-3 rounded-full bg-[var(--orange)]" aria-hidden="true"></span>
   <span class="pointer-events-none absolute right-36 bottom-24 w-2 h-2 rounded-full bg-white/30" aria-hidden="true"></span>
@@ -45,3 +47,5 @@
     </aside>
   </div>
 </section>
+
+<script type="module" defer src="{% static 'js/hero-scene.js' %}"></script>
