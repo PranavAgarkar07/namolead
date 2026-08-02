@@ -2,28 +2,47 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
-<div class="max-w-2xl mb-10">
-  <h1 class="text-3xl font-bold tracking-tight">Fresh opportunities</h1>
-  <p class="text-[var(--ink-muted)] mt-2">Curated openings for the NamoLead community. Filter by category; exclusive posts unlock via email.</p>
-</div>
+{% include "components/hero.html" %}
 
-<form method="get" class="flex flex-wrap items-center gap-3 mb-8">
-  <label for="category" class="text-sm text-[var(--ink-muted)]">Category</label>
-  <select name="category" id="category" class="border border-[var(--border)] rounded-[var(--radius)] bg-[var(--surface-2)] px-3 py-2 text-sm">
-    <option value="">All</option>
-    {% for value, label in categories %}
-      <option value="{{ value }}" {% if value == active_category %}selected{% endif %}>{{ label }}</option>
+<section id="how-it-works" class="max-w-2xl mt-12 mb-10">
+  <h2 class="text-2xl font-bold tracking-tight mb-2">How it works</h2>
+  <p class="text-[var(--ink-muted)] mb-6">Three steps, about a minute of your time.</p>
+  <ol class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <li class="bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] p-5">
+      <div class="flex items-center gap-2 mb-2"><span class="flex items-center justify-center w-6 h-6 rounded-full bg-[var(--navy)] text-white text-xs font-bold">1</span><span class="font-semibold">Browse</span></div>
+      <p class="text-sm text-[var(--ink-muted)]">Scan fresh internships and programs filtered by what suits you.</p>
+    </li>
+    <li class="bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] p-5">
+      <div class="flex items-center gap-2 mb-2"><span class="flex items-center justify-center w-6 h-6 rounded-full bg-[var(--navy)] text-white text-xs font-bold">2</span><span class="font-semibold">Unlock</span></div>
+      <p class="text-sm text-[var(--ink-muted)]">For exclusive posts, confirm with one email link — no spam, ever.</p>
+    </li>
+    <li class="bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] p-5">
+      <div class="flex items-center gap-2 mb-2"><span class="flex items-center justify-center w-6 h-6 rounded-full bg-[var(--navy)] text-white text-xs font-bold">3</span><span class="font-semibold">Apply</span></div>
+      <p class="text-sm text-[var(--ink-muted)]">Land on the official application page and put your best foot forward.</p>
+    </li>
+  </ol>
+</section>
+
+<div class="mb-10">
+  <h2 id="opportunities" class="text-2xl font-bold tracking-tight mb-4">Latest opportunities</h2>
+  <form method="get" class="flex flex-wrap items-center gap-3 mb-8">
+    <label for="category" class="text-sm text-[var(--ink-muted)]">Category</label>
+    <select name="category" id="category" class="border border-[var(--border)] rounded-[var(--radius)] bg-[var(--surface-2)] px-3 py-2 text-sm">
+      <option value="">All</option>
+      {% for value, label in categories %}
+        <option value="{{ value }}" {% if value == active_category %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="bg-[var(--navy)] text-white rounded-[var(--radius)] px-4 py-2 text-sm hover:bg-[var(--navy-soft)] transition-colors">Filter</button>
+    {% if active_category %}{% include "components/filter-chip.html" with label=active_category %}{% endif %}
+  </form>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for opp in opportunities %}
+      {% include "components/card.html" with post=opp %}
+    {% empty %}
+      {% include "components/empty-state.html" with title="No possibilities yet" body="There are no posts to show right now." action_label="View all posts" action_url="/" %}
     {% endfor %}
-  </select>
-  <button type="submit" class="bg-[var(--navy)] text-white rounded-[var(--radius)] px-4 py-2 text-sm hover:bg-[var(--navy-soft)] transition-colors">Filter</button>
-  {% if active_category %}{% include "components/filter-chip.html" with label=active_category %}{% endif %}
-</form>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  {% for opp in opportunities %}
-    {% include "components/card.html" with post=opp %}
-  {% empty %}
-    {% include "components/empty-state.html" with title="No possibilities yet" body="There are no posts to show right now." action_label="View all posts" action_url="/" %}
-  {% endfor %}
+  </div>
 </div>
 {% endblock %}
