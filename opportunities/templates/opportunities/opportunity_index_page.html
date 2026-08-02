@@ -2,30 +2,28 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">Opportunities</h1>
+<div class="max-w-2xl mb-10">
+  <h1 class="text-3xl font-bold tracking-tight">Fresh opportunities</h1>
+  <p class="text-[var(--ink-muted)] mt-2">Curated openings for the NamoLead community. Filter by category; exclusive posts unlock via email.</p>
+</div>
 
-<form method="get" class="mb-6">
-  <label for="category" class="mr-2 text-sm">Category</label>
-  <select name="category" id="category" class="border rounded px-3 py-2">
+<form method="get" class="flex flex-wrap items-center gap-3 mb-8">
+  <label for="category" class="text-sm text-[var(--ink-muted)]">Category</label>
+  <select name="category" id="category" class="border border-[var(--border)] rounded-[var(--radius)] bg-[var(--surface-2)] px-3 py-2 text-sm">
     <option value="">All</option>
     {% for value, label in categories %}
       <option value="{{ value }}" {% if value == active_category %}selected{% endif %}>{{ label }}</option>
     {% endfor %}
   </select>
-  <button type="submit" class="bg-blue-600 text-white rounded px-4 py-2 ml-2">Filter</button>
+  <button type="submit" class="bg-[var(--navy)] text-white rounded-[var(--radius)] px-4 py-2 text-sm hover:bg-[var(--navy-soft)] transition-colors">Filter</button>
+  {% if active_category %}{% include "components/filter-chip.html" with label=active_category %}{% endif %}
 </form>
 
-<div class="space-y-4">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
   {% for opp in opportunities %}
-    <a href="{% pageurl opp %}" class="block bg-white border rounded-lg p-4 hover:shadow">
-      {% image opp.featured_image width-800 as card_img %}
-      {% if card_img %}<img src="{{ card_img.url }}" class="rounded-md mb-2 h-40 w-full object-cover" alt="">{% endif %}
-      <div class="text-xs text-gray-500 uppercase mb-1">{{ opp.get_category_display }}{% if opp.organization %} · {{ opp.organization }}{% endif %}</div>
-      <h2 class="font-semibold">{{ opp.title }}</h2>
-      <p class="text-sm text-gray-600">{{ opp.short_description|truncatechars:200 }}</p>
-    </a>
+    {% include "components/card.html" with post=opp %}
   {% empty %}
-    <p>No opportunities yet.</p>
+    {% include "components/empty-state.html" with title="No possibilities yet" body="There are no posts to show right now." action_label="View all posts" action_url="/" %}
   {% endfor %}
 </div>
 {% endblock %}

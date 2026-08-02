@@ -4,17 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}NamoLead Opportunities{% endblock %}</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/tokens.css' %}">
 <script src="https://cdn.tailwindcss.com"></script>
+<style>body{font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:var(--surface)}</style>
+{% block head %}{% endblock %}
 </head>
-<body class="bg-gray-50 text-gray-900">
-<nav class="bg-white border-b px-6 py-4">
-  <a href="/" class="font-bold text-lg">NamoLead Opportunities</a>
-</nav>
-<main class="max-w-3xl mx-auto px-6 py-8">
+<body class="bg-[var(--surface)] text-[var(--ink)] min-h-screen">
+{% include "components/nav.html" %}
+<main class="max-w-5xl mx-auto px-6 py-10">
 {% if messages %}
-  {% for m in messages %}<div class="bg-yellow-100 border border-yellow-300 text-yellow-900 px-4 py-2 rounded mb-4">{{ m }}</div>{% endfor %}
+  <div class="space-y-2 mb-6">
+    {% for m in messages %}
+      {% include "components/message.html" with message=m level=m.tags %}
+    {% endfor %}
+  </div>
 {% endif %}
 {% block content %}{% endblock %}
 </main>
+<footer class="border-t border-[var(--border)] text-center text-sm text-[var(--ink-muted)] py-6">
+  NamoLead · <a href="https://instagram.com/namoleads" target="_blank" class="text-[var(--navy)] hover:text-[var(--orange)] underline">@namoleads</a>
+</footer>
 </body>
 </html>

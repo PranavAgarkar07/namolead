@@ -1,0 +1,5 @@
+<div class="text-center py-16 bg-[var(--surface-2)] border border-dashed border-[var(--border)] rounded-[var(--radius-lg)]">
+  <h2 class="font-semibold text-lg text-[var(--ink)]">{{ title }}</h2>
+  <p class="text-sm text-[var(--ink-muted)] mt-1">{{ body }}</p>
+  {% if action_label %}<div class="mt-4">{% include "components/button.html" with label=action_label url=action_url %}</div>{% endif %}
+</div>

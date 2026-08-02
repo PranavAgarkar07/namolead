@@ -1,0 +1,6 @@
+<div
+  {% if level == "error" %}class="rounded-[var(--radius)] bg-[var(--destructive-soft)] text-[var(--destructive)] border border-[var(--destructive)] px-4 py-2 text-sm"
+  {% elif level == "success" %}class="rounded-[var(--radius)] bg-[var(--success-soft)] text-[var(--success)] border border-[var(--success)] px-4 py-2 text-sm"
+  {% else %}class="rounded-[var(--radius)] bg-[var(--navy-tint)] text-[var(--navy)] border border-[var(--border)] px-4 py-2 text-sm"{% endif %}>
+  {{ message }}
+</div>
