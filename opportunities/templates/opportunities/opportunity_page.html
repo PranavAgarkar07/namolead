@@ -9,7 +9,7 @@
   {% if hero %}<img src="{{ hero.url }}" class="rounded-[var(--radius-lg)] w-full mb-6 object-cover aspect-[2/1]" alt="">{% endif %}
 
   <div class="flex flex-wrap items-center gap-2 mb-3">
-    <span class="inline-flex items-center rounded-full bg-[var(--navy-tint)] text-[var(--navy)] px-2.5 py-0.5 text-xs font-medium">{{ page.get_category_display }}</span>
+    <span class="inline-flex items-center bg-[var(--navy-tint)] text-[var(--navy)] px-2.5 py-0.5 text-xs font-medium">{{ page.get_category_display }}</span>
     {% if page.organization %}<span class="text-sm text-[var(--ink-muted)]">{{ page.organization }}</span>{% endif %}
   </div>
 

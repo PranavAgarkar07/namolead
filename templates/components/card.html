@@ -6,7 +6,7 @@
     <div class="flex items-center justify-between gap-2 mb-2">
       <div class="text-xs uppercase tracking-widest text-[var(--ink-muted)]">{{ post.get_category_display }}{% if post.organization %} · {{ post.organization }}{% endif %}</div>
       {% if post.is_exclusive %}
-        <span class="inline-flex items-center rounded-full bg-[var(--orange-soft)] text-[var(--orange-strong)] px-2 py-0.5 text-xs font-bold">Exclusive</span>
+        <span class="inline-flex items-center bg-[var(--orange-soft)] text-[var(--orange-strong)] px-2 py-0.5 text-xs font-bold border border-[var(--orange)]/30">Exclusive</span>
       {% endif %}
     </div>
     <h3 class="font-semibold text-lg text-[var(--ink)]">{{ post.title }}</h3>
