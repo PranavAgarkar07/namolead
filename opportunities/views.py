@@ -10,9 +10,11 @@ VALID_SOURCES = {"whatsapp", "instagram", "direct"}
 
 
 def go_redirect(request, slug):
-    page = OpportunityPage.objects.filter(slug=slug).first()
+    page = OpportunityPage.objects.live().filter(slug=slug).first()
     if page is None:
         raise Http404
+    if page.is_exclusive and not request.session.get(f"unlocked_{page.pk}"):
+        return redirect(page.get_url(request))
     from tracking.models import ClickEvent
     from tracking.utils import hash_ip
 
@@ -30,7 +32,7 @@ def go_redirect(request, slug):
 
 
 def pageview(request, slug):
-    page = OpportunityPage.objects.filter(slug=slug).first()
+    page = OpportunityPage.objects.live().filter(slug=slug).first()
     if page is not None:
         from tracking.models import PageView
         from tracking.utils import hash_ip
