@@ -1,9 +1,16 @@
 <header class="bg-[var(--navy)] text-white">
-  <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-    {% include "components/brand.html" %}
-    <nav class="flex items-center gap-6 text-sm">
-      <a href="/" class="hover:text-[var(--orange)] transition-colors">Opportunities</a>
-      <a href="/analytics/" class="hover:text-[var(--orange)] transition-colors">Analytics</a>
-    </nav>
+  <div class="max-w-5xl mx-auto px-6 pt-3">
+    <div class="flex items-center justify-between pb-1">
+      {% include "components/brand.html" with on_paper=True %}
+      <nav class="flex items-center gap-6 text-sm font-medium">
+        <a href="/" class="marker-link {% if request.path == '/' %}is-active{% endif %} px-0.5 hover:text-[var(--ink)] transition-colors">Opportunities</a>
+        <a href="/analytics/" class="marker-link {% if request.path == '/analytics/' %}is-active{% endif %} px-0.5 hover:text-[var(--ink)] transition-colors">Analytics</a>
+        <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-full bg-[var(--orange)] text-white text-xs font-bold px-3 py-1.5 hover:bg-[var(--orange-strong)] transition-colors">
+          @namoleads
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </nav>
+    </div>
   </div>
+  <div class="h-3 bg-[var(--surface-2)] rounded-t-lg" aria-hidden="true"></div>
 </header>

@@ -7,11 +7,11 @@
 {% load static %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-[var(--surface)] text-[var(--ink)] min-h-screen">
+<body class="text-[var(--ink)] min-h-screen">
 {% include "components/nav.html" %}
 <main class="max-w-5xl mx-auto px-6 py-10">
 {% if messages %}
@@ -23,7 +23,7 @@
 {% endif %}
 {% block content %}{% endblock %}
 </main>
-<footer class="border-t border-[var(--border)] text-center text-sm text-[var(--ink-muted)] py-6">
+<footer class="border-t border-[var(--border)] text-center text-sm text-[var(--ink-muted)] py-6 bg-[var(--surface-2)]/70">
   NamoLead · <a href="https://instagram.com/namoleads" target="_blank" class="text-[var(--navy)] hover:text-[var(--orange)] underline">@namoleads</a>
 </footer>
 </body>

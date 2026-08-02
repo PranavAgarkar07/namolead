@@ -1,17 +1,19 @@
-/* NamoLead design tokens — orange / white / navy */
+/* NamoLead design tokens — orange / white / navy, notebook-paper edu surfaces */
 :root {
   /* type */
   --font-display: "Newsreader", Georgia, "Times New Roman", serif;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-hand: "Caveat", "Comic Sans MS", cursive;
 
-  /* surfaces */
-  --surface: #fafafa;            /* page background */
-  --surface-2: #ffffff;          /* cards, panels */
-  --surface-3: #f4f5f7;          /* inset fills, hover tint */
+  /* surfaces — paper theme */
+  --surface: #fdf9f3;          /* notebook paper page background */
+  --surface-2: #fffdf8;        /* cards, panels (paper card) */
+  --surface-3: #f3eee4;        /* inset fills, hover tint */
+  --paper: #fdf9f3;
 
   /* ink */
-  --ink: #0d1b2a;                /* navy-blue text, headings */
-  --ink-muted: #5b6570;          /* secondary text */
+  --ink: #17233f;              /* navy-blue ink text, headings */
+  --ink-muted: #5a6b85;        /* secondary text */
 
   /* navy (dominant) */
   --navy: #102a43;
@@ -56,12 +58,45 @@ h1, h2, h3, h4 {
   letter-spacing: -0.01em;
   line-height: 1.1;
 }
+.font-hand {
+  font-family: var(--font-hand) !important;
+  letter-spacing: 0.01em;
+}
 .text-navy { color: var(--navy) !important; }
+
+/* edu marker-underline links — highlighter swipe under nav links */
+.marker-link {
+  position: relative;
+  text-decoration: none;
+  background-image: linear-gradient(120deg, var(--orange-soft) 0%, var(--orange-soft) 100%);
+  background-repeat: no-repeat;
+  background-size: 0% 0.45em;
+  background-position: 0 88%;
+  transition: background-size 0.25s ease;
+}
+.marker-link:hover,
+.marker-link.is-active {
+  background-size: 100% 0.45em;
+}
 
 /* Flat, tactile, accessible base */
 body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  background-color: var(--surface);
+  /* ruled notebook paper: horizontal lines with left margin rule */
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 30px,
+      rgba(23, 35, 63, 0.06) 30px,
+      rgba(23, 35, 63, 0.06) 31px
+    ),
+    linear-gradient(to right, transparent 64px, rgba(217, 45, 32, 0.12) 64px, rgba(217, 45, 32, 0.12) 66px, transparent 66px);
+  background-position: 0 0;
+  background-size: 100% 100%, 100% 100%;
+  background-attachment: fixed;
 }
 button, a, select, input, [role="button"] { cursor: pointer; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
