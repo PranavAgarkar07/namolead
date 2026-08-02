@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Opportunities</h1>
+
+<form method="get" class="mb-6">
+  <label for="category" class="mr-2 text-sm">Category</label>
+  <select name="category" id="category" class="border rounded px-3 py-2">
+    <option value="">All</option>
+    {% for value, label in categories %}
+      <option value="{{ value }}" {% if value == active_category %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit" class="bg-blue-600 text-white rounded px-4 py-2 ml-2">Filter</button>
+</form>
+
+<div class="space-y-4">
+  {% for opp in opportunities %}
+    <a href="{% pageurl opp %}" class="block bg-white border rounded-lg p-4 hover:shadow">
+      {% image opp.featured_image width-800 as card_img %}
+      {% if card_img %}<img src="{{ card_img.url }}" class="rounded-md mb-2 h-40 w-full object-cover" alt="">{% endif %}
+      <div class="text-xs text-gray-500 uppercase mb-1">{{ opp.get_category_display }}{% if opp.organization %} · {{ opp.organization }}{% endif %}</div>
+      <h2 class="font-semibold">{{ opp.title }}</h2>
+      <p class="text-sm text-gray-600">{{ opp.short_description|truncatechars:200 }}</p>
+    </a>
+  {% empty %}
+    <p>No opportunities yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

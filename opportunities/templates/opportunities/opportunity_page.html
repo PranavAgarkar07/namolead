@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load wagtailimages_tags %}
+
+{% block title %}{{ page.title }} · NamoLead{% endblock %}
+
+{% block content %}
+{% image page.featured_image width-800 as hero %}
+{% if hero %}<img src="{{ hero.url }}" class="rounded-lg w-full mb-4" alt="">{% endif %}
+<h1 class="text-2xl font-bold">{{ page.title }}</h1>
+<p class="text-sm text-gray-500 mb-4">
+  {{ page.get_category_display }}{% if page.organization %} · {{ page.organization }}{% endif %}
+</p>
+<p class="mb-6 whitespace-pre-line">{{ page.short_description }}</p>
+
+{% url 'opportunities:pageview' page.slug as pageview_url %}
+<img src="{{ pageview_url }}" width="1" height="1" alt="">
+
+{% if page.is_exclusive and not unlocked %}
+<div class="border-2 border-dashed border-blue-300 bg-blue-50 rounded-lg p-6 text-center">
+  <p class="font-semibold mb-2">This post is exclusive to the NamoLead community</p>
+  <ol class="text-sm text-left mx-auto max-w-md mb-4 list-decimal list-inside">
+    <li>Follow <a href="https://instagram.com/namolead" target="_blank" class="text-blue-600 underline">@namolead</a> on Instagram</li>
+    <li>Enter your email and press Unlock</li>
+  </ol>
+  {% url 'opportunities:unlock' page.slug as unlock_url %}
+  <form method="post" action="{{ unlock_url }}" class="flex gap-2 max-w-md mx-auto">
+    {% csrf_token %}
+    <input type="email" name="email" required class="flex-1 border rounded px-3 py-2" placeholder="you@example.com">
+    <button type="submit" class="bg-blue-600 text-white rounded px-4 py-2">I've followed — Unlock</button>
+  </form>
+  <p class="text-xs text-gray-500 mt-3">Instagram follows can't be verified automatically — we trust you.</p>
+</div>
+{% else %}
+{% url 'opportunities:go' page.slug as go_url %}
+<a href="{{ go_url }}" class="inline-block bg-blue-600 text-white font-semibold rounded-lg px-6 py-3">Apply now</a>
+{% endif %}
+{% endblock %}
