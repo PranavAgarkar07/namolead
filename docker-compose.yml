@@ -4,21 +4,28 @@ services:
     env_file: .env
     ports:
       - "8000:8000"
+    restart: unless-stopped
     volumes:
-      - static:/app/staticfiles
       - media:/app/media
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   db:
     image: postgres:16-alpine
+    restart: unless-stopped
     environment:
       POSTGRES_DB: namolead
       POSTGRES_USER: namolead
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U namolead -d namolead"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     volumes:
       - pgdata:/var/lib/postgresql/data
 
 volumes:
   pgdata: {}
-  static: {}
   media: {}
