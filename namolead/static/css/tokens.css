@@ -51,6 +51,12 @@ h1, h2, h3, h4 {
   letter-spacing: -0.01em;
   line-height: 1.1;
 }
+.font-display {
+  font-family: var(--font-display) !important;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.text-navy { color: var(--navy) !important; }
 
 /* Flat, tactile, accessible base */
 body {

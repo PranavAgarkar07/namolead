@@ -23,6 +23,10 @@ class OpportunityIndexPage(Page):
         if category in Category.values:
             qs = qs.filter(category=category)
         ctx["opportunities"] = qs
+        radar = OpportunityPage.objects.child_of(self).live()
+        if category in Category.values:
+            radar = radar.filter(category=category)
+        ctx["radar"] = radar.order_by("-first_published_at")[:3]
         ctx["categories"] = Category.choices
         ctx["active_category"] = category
         return ctx

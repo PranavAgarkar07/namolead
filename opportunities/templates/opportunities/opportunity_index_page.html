@@ -4,23 +4,44 @@
 {% block content %}
 {% include "components/hero.html" %}
 
-<section id="how-it-works" class="max-w-2xl mt-12 mb-10">
-  <h2 class="text-2xl font-bold tracking-tight mb-2">How it works</h2>
-  <p class="text-[var(--ink-muted)] mb-6">Three steps, about a minute of your time.</p>
-  <ol class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-    <li class="bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] p-5">
-      <div class="flex items-center gap-2 mb-2"><span class="flex items-center justify-center w-6 h-6 rounded-full bg-[var(--navy)] text-white text-xs font-bold">1</span><span class="font-semibold">Browse</span></div>
-      <p class="text-sm text-[var(--ink-muted)]">Scan fresh internships and programs filtered by what suits you.</p>
+<section id="how-it-works" class="mt-16 mb-10">
+  <div class="max-w-2xl mb-8">
+    <h2 class="text-3xl font-semibold tracking-tight mb-2">How it works</h2>
+    <p class="text-[var(--ink-muted)]">Three steps, about a minute of your time.</p>
+  </div>
+  <ol class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[var(--border)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden">
+    <li class="bg-[var(--surface-2)] p-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="flex items-center justify-center w-9 h-9 rounded-full bg-[var(--navy)] text-white font-bold font-display">01</span>
+        <span class="font-semibold">Browse</span>
+      </div>
+      <p class="text-sm text-[var(--ink-muted)] leading-relaxed">Scan fresh internships and programs filtered by what suits you.</p>
     </li>
-    <li class="bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] p-5">
-      <div class="flex items-center gap-2 mb-2"><span class="flex items-center justify-center w-6 h-6 rounded-full bg-[var(--navy)] text-white text-xs font-bold">2</span><span class="font-semibold">Unlock</span></div>
-      <p class="text-sm text-[var(--ink-muted)]">For exclusive posts, confirm with one email link — no spam, ever.</p>
+    <li class="bg-[var(--surface-2)] p-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="flex items-center justify-center w-9 h-9 rounded-full bg-[var(--orange)] text-white font-bold font-display">02</span>
+        <span class="font-semibold">Unlock</span>
+      </div>
+      <p class="text-sm text-[var(--ink-muted)] leading-relaxed">For exclusive posts, confirm with one email link — no spam, ever.</p>
     </li>
-    <li class="bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] p-5">
-      <div class="flex items-center gap-2 mb-2"><span class="flex items-center justify-center w-6 h-6 rounded-full bg-[var(--navy)] text-white text-xs font-bold">3</span><span class="font-semibold">Apply</span></div>
-      <p class="text-sm text-[var(--ink-muted)]">Land on the official application page and put your best foot forward.</p>
+    <li class="bg-[var(--surface-2)] p-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="flex items-center justify-center w-9 h-9 rounded-full bg-[var(--navy)] text-white font-bold font-display">03</span>
+        <span class="font-semibold">Apply</span>
+      </div>
+      <p class="text-sm text-[var(--ink-muted)] leading-relaxed">Land on the official application page and put your best foot forward.</p>
     </li>
   </ol>
+</section>
+
+<section class="rounded-[var(--radius-lg)] bg-[var(--orange-soft)] border border-[var(--orange)]/25 px-6 py-7 mb-14 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+  <span class="flex-none flex items-center justify-center w-12 h-12 rounded-full bg-[var(--orange)] text-white" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+  </span>
+  <div>
+    <p class="font-semibold text-[var(--ink)]">No middleman, no fee, no catch.</p>
+    <p class="text-sm text-[var(--ink-muted)] mt-1">Every "Apply" button routes through a tracked link that lands on the official application page. If it ever points elsewhere, that's a bug — tell us on Instagram and we'll fix it.</p>
+  </div>
 </section>
 
 <div class="mb-10">
