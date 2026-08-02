@@ -70,6 +70,18 @@ class TrackingTests(TestCase):
         response = self.client.get("/exclusive-c/")
         self.assertContains(response, "Apply now")
 
+    def test_exclusive_go_redirect_enforces_gate_then_unlocks(self):
+        response = self.client.get("/go/exclusive-c/")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/exclusive-c/")
+        self.assertEqual(ClickEvent.objects.count(), 0)
+
+        self.client.post("/unlock/exclusive-c/", {"email": "a@b.com"})
+        response = self.client.get("/go/exclusive-c/")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "https://example.com/secret")
+        self.assertEqual(ClickEvent.objects.count(), 1)
+
     def test_invalid_email_rejected_no_unlock_created(self):
         self.client.post("/unlock/exclusive-c/", {"email": "not-an-email"})
         self.assertEqual(Unlock.objects.count(), 0)
