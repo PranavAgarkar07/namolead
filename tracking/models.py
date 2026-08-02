@@ -21,9 +21,16 @@ class PageView(models.Model):
 
 
 class Unlock(models.Model):
+    class Status(models.TextChoices):
+        PENDING = "pending", "Pending"
+        VERIFIED = "verified", "Verified"
+
     opportunity = models.ForeignKey(
         "opportunities.OpportunityPage", null=True, on_delete=models.SET_NULL, related_name="unlocks"
     )
     email = models.EmailField()
     hashed_ip = models.CharField(max_length=64, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    token = models.CharField(max_length=64, db_index=True, default="")
+    status = models.CharField(max_length=16, choices=Status.choices, default=Status.PENDING)
+    expires_at = models.DateTimeField(null=True, blank=True)

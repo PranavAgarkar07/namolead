@@ -47,6 +47,7 @@ def dashboard(request):
         "clicks": ClickEvent.objects.count(),
         "views": PageView.objects.count(),
         "unlocks": Unlock.objects.count(),
+        "verified": Unlock.objects.filter(status=Unlock.Status.VERIFIED).count(),
     }
     totals["ctr"] = round(totals["clicks"] / totals["views"], 3) if totals["views"] else 0
 

@@ -1,8 +1,15 @@
+from datetime import timedelta
+import secrets
+
+from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
 from django.core.validators import validate_email
 from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+from django.utils import timezone
 
 from .models import OpportunityPage
 
@@ -54,7 +61,62 @@ def unlock(request, slug):
     from tracking.models import Unlock
     from tracking.utils import hash_ip
 
-    Unlock.objects.create(opportunity=page, email=email, hashed_ip=hash_ip(request))
-    request.session[f"unlocked_{page.pk}"] = True
-    messages.success(request, "Unlocked! Follow @namolead on Instagram for more.")
-    return HttpResponseRedirect(page.get_url(request))
+    ip_key = hash_ip(request)
+    too_many = Unlock.objects.filter(
+        hashed_ip=ip_key, timestamp__gte=timezone.now() - timedelta(hours=1)
+    ).count() >= settings.UNLOCK_RATE_LIMIT
+    if too_many:
+        messages.error(request, "Too many unlock requests from this device — try again later.")
+        return redirect(page.get_url(request))
+
+    token = secrets.token_urlsafe(32)
+    expires_at = timezone.now() + timedelta(minutes=settings.UNLOCK_LINK_TTL_MINUTES)
+    unlock = Unlock.objects.create(
+        opportunity=page,
+        email=email,
+        hashed_ip=ip_key,
+        token=token,
+        expires_at=expires_at,
+    )
+
+    verify_url = request.build_absolute_uri(
+        reverse("opportunities:verify", kwargs={"token": token})
+    )
+    apply_url = request.build_absolute_uri(
+        reverse("opportunities:go", kwargs={"slug": page.slug}) + "?utm_source=email"
+    )
+    subject = f"Your exclusive NamoLead unlock — {page.title}"
+    message = (
+        f"Hi,\n\nTo unlock \"{page.title}\" on NamoLead:\n\n"
+        f"1. Confirm it's you: {verify_url}\n"
+        f"2. Apply directly: {apply_url}\n\n"
+        f"The 1 click link expires in {settings.UNLOCK_LINK_TTL_MINUTES} minutes.\n\n"
+        f"Follow @namoleads on Instagram for more.\n— NamoLead"
+    )
+    sent = send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email], fail_silently=True)
+    if not sent:
+        unlock.delete()
+        messages.error(request, "Email send failed — try again shortly.")
+        return redirect(page.get_url(request))
+    return render(request, "opportunities/unlock_email_sent.html", {"page": page, "to_email": email})
+
+
+def verify(request, token):
+    from tracking.models import Unlock
+
+    unlock = Unlock.objects.filter(token=token).first()
+    valid = (
+        unlock is not None
+        and unlock.status == Unlock.Status.PENDING
+        and unlock.expires_at
+        and unlock.expires_at >= timezone.now()
+    )
+    if not valid:
+        messages.error(request, "That verification link is invalid or has expired.")
+        return redirect("/")
+    unlock.status = Unlock.Status.VERIFIED
+    unlock.save(update_fields=["status"])
+    if unlock.opportunity_id:
+        request.session[f"unlocked_{unlock.opportunity_id}"] = True
+        return HttpResponseRedirect(unlock.opportunity.get_url(request))
+    return HttpResponseRedirect("/")

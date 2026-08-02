@@ -2,7 +2,8 @@
 
 Wagtail CMS site: editors publish opportunities (image + paragraph + apply link),
 outbound clicks tracked via /go/<slug>/, exclusive posts gated behind an
-Instagram-follow soft gate, staff analytics at /analytics/.
+Instagram-follow soft gate + email magic-link verification, staff analytics at
+/analytics/.
 
 ## Local dev
 
@@ -26,6 +27,7 @@ A `.env` file must exist with POSTGRES_PASSWORD set before `docker compose up`
 (copy .env.example and fill it in).
 
 Production env vars (see .env.example): DJANGO_SECRET_KEY, DEBUG=False,
-ALLOWED_HOSTS, IP_HASH_SALT, DATABASE_URL (Postgres), POSTGRES_PASSWORD.
+ALLOWED_HOSTS, IP_HASH_SALT, DATABASE_URL (Postgres), POSTGRES_PASSWORD, and
+EMAIL_* (unlock emails; default console backend prints to the server log).
 Media files live on the `media` volume; swap to R2 via django-storages when the
 site grows. HTTPS via Caddy/certbot or the platform's TLS terminator.
