@@ -1,10 +1,10 @@
-{% load wagtailimages_tags %}
+{% load wagtailimages_tags opp_tags %}
 {% image post.featured_image width-800 as card_img %}
 <a href="{{ post.url }}" class="group block bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden hover:border-[var(--navy)] hover:bg-white hover:shadow-[var(--shadow)] active:scale-[0.99] transition-all">
   <div class="flex flex-col sm:flex-row">
     {% if card_img %}
       <div class="sm:w-[45%] sm:shrink-0">
-        <img src="{{ card_img.url }}" alt="" data-lightbox data-lightbox-src="{{ post.featured_image.file.url }}" data-lightbox-caption="{{ post.title }}" tabindex="0" role="button" aria-label="View {{ post.title }} image larger" class="w-full {% if post.is_portrait %}aspect-[210/297]{% else %}aspect-[16/9]{% endif %} sm:aspect-auto sm:h-full object-cover transition-transform duration-500 group-hover:scale-105 cursor-zoom-in">
+        <img src="{{ card_img.url }}" alt="" class="w-full {% if post.is_portrait %}aspect-[210/297]{% else %}aspect-[16/9]{% endif %} sm:aspect-auto sm:h-full object-cover transition-transform duration-500 group-hover:scale-105">
       </div>
     {% endif %}
     <div class="p-6 sm:flex-1">
@@ -12,7 +12,11 @@
         <div class="text-[13px] uppercase tracking-widest text-[var(--ink-muted)]">{{ post.get_category_display }}{% if post.organization %} · {{ post.organization }}{% endif %}</div>
         <div class="flex items-center gap-1.5">
           {% if post.is_expired %}
-            <span class="inline-flex items-center bg-[var(--destructive-soft)] text-[var(--destructive)] px-2 py-0.5 text-xs font-bold border border-[var(--destructive)]/30">Deadline passed</span>
+            <span class="deadline-chip is-closed">Deadline passed</span>
+          {% elif post.deadline %}
+            {% with dl=post.deadline|days_left %}
+              <span class="deadline-chip {% if dl <= 7 %}is-urgent{% endif %}">Closes {{ post.deadline|date:"j M" }}</span>
+            {% endwith %}
           {% endif %}
         </div>
       </div>
@@ -23,7 +27,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
           Posted {{ post.first_published_at|timesince }} ago
         </span>
-        <span class="text-[var(--ink-muted)] group-hover:text-[var(--orange-strong)] group-hover:translate-x-1 transition-all">Apply →</span>
+        <span class="text-[var(--ink-muted)] group-hover:text-[var(--orange-ink)] group-hover:translate-x-1 transition-all">Apply →</span>
       </div>
     </div>
   </div>

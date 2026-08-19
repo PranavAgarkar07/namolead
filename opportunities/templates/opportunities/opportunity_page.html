@@ -30,4 +30,15 @@
     </div>
   {% endif %}
 </article>
+
+<div class="apply-bar">
+  <span class="text-sm font-semibold">
+    {% if page.is_expired %}Deadline passed{% elif page.deadline %}Apply by {{ page.deadline|date:"j M" }}{% else %}Open application{% endif %}
+  </span>
+  {% url 'opportunities:go' page.slug as go_url %}
+  <a href="{{ go_url }}" class="inline-flex items-center gap-2 bg-[var(--orange)] text-[var(--navy)] font-bold px-6 py-2.5 active:scale-[0.97] transition-all">Apply now
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
+</div>
+<div class="apply-bar-spacer"></div>
 {% endblock %}

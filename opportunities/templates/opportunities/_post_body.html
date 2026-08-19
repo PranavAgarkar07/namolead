@@ -1,4 +1,5 @@
 {% load wagtailcore_tags wagtailimages_tags %}
+{% url 'opportunities:go' page.slug as go_url %}
 
 <div class="flex flex-wrap items-center gap-3 mb-4">
   <span class="inline-flex items-center bg-[var(--navy-tint)] text-[var(--navy)] px-2.5 py-0.5 text-xs font-medium">{{ page.get_category_display }}</span>
@@ -8,6 +9,9 @@
   {% elif page.deadline %}
     <span class="inline-flex items-center text-xs font-medium text-[var(--ink-muted)]">Apply by <b class="ml-1 text-[var(--ink)]">{{ page.deadline|date:"j M" }}</b></span>
   {% endif %}
+  <a href="{{ go_url }}" class="inline-flex items-center gap-2 bg-[var(--navy)] text-white font-semibold text-sm px-5 py-2.5 hover:bg-[var(--navy-soft)] active:scale-[0.97] transition-all">Apply now
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
 </div>
 
 <h1 class="text-4xl sm:text-5xl font-semibold tracking-tight leading-[1.08] mb-6">{{ page.title }}</h1>
@@ -34,8 +38,7 @@
 <img src="{{ pageview_url }}" width="1" height="1" alt="">
 
 <div>
-  {% url 'opportunities:go' page.slug as go_url %}
-  <a href="{{ go_url }}" class="inline-flex items-center gap-2.5 bg-[var(--orange)] text-white font-semibold rounded-[var(--radius)] px-8 py-3.5 text-base hover:bg-[var(--orange-strong)] active:scale-[0.97] transition-all">Apply now
+  <a href="{{ go_url }}" class="inline-flex items-center gap-2.5 bg-[var(--orange)] text-[var(--navy)] font-semibold rounded-[var(--radius)] px-8 py-3.5 text-base hover:bg-[var(--orange-strong)] active:scale-[0.97] transition-all">Apply now
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
   </a>
 </div>

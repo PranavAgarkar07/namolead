@@ -203,8 +203,37 @@ class OpportunityTests(TestCase):
         self.assertIn("sm:flex-row", landscape_card)
         self.assertIn("aspect-[16/9]", landscape_card)
         self.assertNotIn("aspect-[210/297]", landscape_card)
-        self.assertIn("data-lightbox-src=", portrait_card)
-        self.assertIn('role="button"', portrait_card)
+        self.assertNotIn("data-lightbox-src=", portrait_card)
+        self.assertNotIn('role="button"', portrait_card)
+        self.assertNotIn('tabindex="0"', portrait_card)
+
+    def test_card_deadline_chips(self):
+        from datetime import timedelta
+        from django.utils import timezone
+
+        local_today = timezone.localdate()
+        publish(
+            self.index,
+            title="Closing Soon",
+            category="scholarship",
+            short_description="Chip urgent",
+            apply_url="https://example.com/soon",
+            deadline=local_today + timedelta(days=3),
+        )
+        publish(
+            self.index,
+            title="Closing Later",
+            category="scholarship",
+            short_description="Chip normal",
+            apply_url="https://example.com/later",
+            deadline=local_today + timedelta(days=30),
+        )
+        closing = self.client.get("/api/search/", {"q": "Closing Soon"}).json()["html"]
+        self.assertIn("deadline-chip is-urgent", closing)
+        self.assertIn(f"Closes {(local_today + timedelta(days=3)).strftime('%d %b').lstrip('0')}", closing)
+        later = self.client.get("/api/search/", {"q": "Closing Later"}).json()["html"]
+        self.assertIn("deadline-chip", later)
+        self.assertNotIn("is-urgent", later)
 
     def test_rich_body_renders(self):
         rich = publish(
