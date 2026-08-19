@@ -5,6 +5,11 @@ services:
     ports:
       - "8000:8000"
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.75"
+          memory: 512M
     volumes:
       - media:/app/media
     depends_on:
@@ -13,6 +18,11 @@ services:
   db:
     image: postgres:16-alpine
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.75"
+          memory: 384M
     environment:
       POSTGRES_DB: namolead
       POSTGRES_USER: namolead
