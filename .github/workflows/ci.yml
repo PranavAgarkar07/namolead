@@ -35,5 +35,6 @@ jobs:
             cd /srv/namolead
             git pull --ff-only origin main
             docker compose up -d --build
+            docker compose run --rm web python manage.py migrate --noinput
             sleep 10
             curl -fsS http://localhost/health/ || exit 1

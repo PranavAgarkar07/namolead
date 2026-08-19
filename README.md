@@ -10,7 +10,7 @@ Instagram-follow soft gate + email magic-link verification, staff analytics at
     python3 -m venv .venv && source .venv/bin/activate
     pip install -r requirements.txt
     python manage.py migrate
-    python manage.py seed_demo
+    SEED_DEMO=1 python manage.py seed_demo   # demo content, dev only
     python manage.py createsuperuser   # editor + analytics access
     python manage.py runserver
 
@@ -20,11 +20,16 @@ Editor UI: http://127.0.0.1:8000/admin/  ·  Dashboard: /analytics/
 
     docker compose up -d --build
     docker compose run web python manage.py migrate
-    docker compose run web python manage.py seed_demo
     docker compose run web python manage.py createsuperuser
 
 A `.env` file must exist with POSTGRES_PASSWORD set before `docker compose up`
 (copy .env.example and fill it in).
+
+Content (opportunity posts, images) is authored in the Wagtail admin on the
+server — production is the single source of truth. The local SQLite database
+is a dev sandbox only; it is gitignored and never deployed. CI runs migrations
+on deploy automatically. A daily pg_dump + media backup is installed by the
+server bootstrap script.
 
 Health check: GET /health/ returns 200 `{"status":"ok","database":"ok"}` when the
 app and database are healthy; 503 otherwise. The container HEALTHCHECK hits it.

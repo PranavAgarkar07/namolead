@@ -1,3 +1,4 @@
+import environ
 from django.core.management.base import BaseCommand
 from wagtail.models import Page, Site
 
@@ -5,9 +6,12 @@ from opportunities.models import OpportunityIndexPage, OpportunityPage
 
 
 class Command(BaseCommand):
-    help = "Create the index page at / and two demo posts."
+    help = "Create the index page at / and two demo posts. Dev only; set SEED_DEMO=1."
 
     def handle(self, *args, **options):
+        if not environ.Env().bool("SEED_DEMO", default=False):
+            self.stdout.write("Skipped. Run with SEED_DEMO=1 (dev only).")
+            return
         if OpportunityIndexPage.objects.exists():
             self.stdout.write("Already seeded.")
             return
