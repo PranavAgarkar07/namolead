@@ -1,46 +1,33 @@
 {% extends "base.html" %}
-{% load wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block title %}{{ page.title }} · NamoLead{% endblock %}
 
 {% block content %}
 <article>
-  {% image page.featured_image width-800 as hero %}
-  {% if hero %}<img src="{{ hero.url }}" class="rounded-[var(--radius-lg)] w-full mb-6 object-cover aspect-[2/1]" alt="">{% endif %}
+  {% include "components/breadcrumbs.html" %}
+  {% image page.featured_image max-1200x1200 as hero %}
 
-  <div class="flex flex-wrap items-center gap-2 mb-3">
-    <span class="inline-flex items-center bg-[var(--navy-tint)] text-[var(--navy)] px-2.5 py-0.5 text-xs font-medium">{{ page.get_category_display }}</span>
-    {% if page.organization %}<span class="text-sm text-[var(--ink-muted)]">{{ page.organization }}</span>{% endif %}
-  </div>
-
-  <h1 class="text-3xl font-bold tracking-tight">{{ page.title }}</h1>
-  <p class="my-6 whitespace-pre-line text-[var(--ink)]">{{ page.short_description }}</p>
-
-  {% url 'opportunities:pageview' page.slug as pageview_url %}
-  <img src="{{ pageview_url }}" width="1" height="1" alt="">
-
-  {% if page.is_exclusive and not unlocked %}
-  <div class="mt-8 border-2 border-dashed border-[var(--navy)] bg-[var(--surface-2)] rounded-[var(--radius-lg)] p-6 lg:p-8">
-    <p class="text-lg font-semibold mb-4">This post is exclusive to the NamoLead community</p>
-    <ol class="text-sm text-[var(--ink-muted)] mx-auto list-decimal list-inside mb-6 max-w-md text-left">
-      <li>Follow <a href="https://instagram.com/namoleads" target="_blank" class="text-[var(--orange-strong)] hover:underline">@namoleads</a> on Instagram</li>
-      <li>Enter your email and press Unlock</li>
-      <li>Confirm from your inbox (~1 min) to reveal the apply link</li>
-    </ol>
-    {% url 'opportunities:unlock' page.slug as unlock_url %}
-    <form method="post" action="{{ unlock_url }}" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-      {% csrf_token %}
-      <input type="email" name="email" required class="flex-1 border border-[var(--border)] rounded-[var(--radius)] bg-[var(--surface)] px-3 py-2" placeholder="you@example.com">
-      <button type="submit" class="bg-[var(--navy)] text-white rounded-[var(--radius)] px-5 py-2 font-semibold hover:bg-[var(--navy-soft)] transition-colors">Unlock</button>
-    </form>
+  {% if hero and page.is_portrait %}
+  <div class="grid lg:grid-cols-[1fr_1.25fr] gap-10 lg:gap-14 items-start mb-12">
+    <div class="lg:sticky lg:top-28">
+      <button type="button" class="block w-full bg-transparent border-0 p-0 cursor-zoom-in" aria-label="View {{ page.title }} image larger">
+        <img src="{{ hero.url }}" data-lightbox data-lightbox-src="{{ page.featured_image.file.url }}" data-lightbox-caption="{{ page.title }}" class="w-full h-auto" alt="">
+      </button>
+    </div>
+    <div>
+      {% include "opportunities/_post_body.html" %}
+    </div>
   </div>
   {% else %}
-  <div class="mt-8">
-    {% url 'opportunities:go' page.slug as go_url %}
-    <a href="{{ go_url }}" class="inline-flex items-center gap-2 bg-[var(--orange)] text-white font-semibold rounded-[var(--radius)] px-6 py-3 hover:bg-[var(--orange-strong)] active:scale-[0.97] transition-all">Apply now
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
-  </div>
+    {% if hero %}
+      <button type="button" class="block w-full bg-transparent border-0 p-0 cursor-zoom-in mb-12" aria-label="View {{ page.title }} image larger">
+        <img src="{{ hero.url }}" data-lightbox data-lightbox-src="{{ page.featured_image.file.url }}" data-lightbox-caption="{{ page.title }}" class="w-full h-auto" alt="">
+      </button>
+    {% endif %}
+    <div class="max-w-3xl">
+      {% include "opportunities/_post_body.html" %}
+    </div>
   {% endif %}
 </article>
 {% endblock %}

@@ -5,15 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}NamoLead Opportunities{% endblock %}</title>
 {% load static %}
+<link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32.png' %}">
+<link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600;1,6..72,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NamoLead">
+<meta property="og:title" content="NamoLead — Fresh internships &amp; university programs for Indian students">
+<meta property="og:description" content="Hand-picked internships, simulations, scholarships and university programs for Indian students — free, official links only.">
+<meta property="og:image" content="{% if request %}{{ request.build_absolute_uri }}{% endif %}{% static 'img/og-cover.png' %}">
+<meta property="og:url" content="{% if request %}{{ request.build_absolute_uri }}{% endif %}">
+<meta name="twitter:card" content="summary_large_image">
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="text-[var(--ink)] min-h-screen">
 {% include "components/nav.html" %}
-<main class="max-w-5xl mx-auto px-6 py-10">
+<main class="max-w-6xl mx-auto px-6 py-12">
 {% if messages %}
   <div class="space-y-2 mb-6">
     {% for m in messages %}
@@ -23,8 +33,33 @@
 {% endif %}
 {% block content %}{% endblock %}
 </main>
-<footer class="border-t border-[var(--border)] text-center text-sm text-[var(--ink-muted)] py-6 bg-[var(--surface-2)]/70">
-  NamoLead · <a href="https://instagram.com/namoleads" target="_blank" class="text-[var(--navy)] hover:text-[var(--orange)] underline">@namoleads</a>
+<footer class="border-t border-[var(--border)] bg-[var(--surface-2)]">
+  <div class="max-w-6xl mx-auto px-6 py-14 grid gap-10 sm:grid-cols-[1.4fr_1fr_1fr]">
+    <div>
+      {% include "components/brand.html" %}
+      <p class="text-sm text-[var(--ink-muted)] mt-3 max-w-xs leading-relaxed">Fresh internships, simulations, scholarships, and university programs for Indian students — free, official links only.</p>
+    </div>
+    <nav aria-label="Explore" class="text-sm">
+      <h3 class="uppercase tracking-widest text-xs font-bold text-[var(--ink)] mb-3">Explore</h3>
+      <ul class="space-y-2 text-[var(--ink-muted)]">
+        <li><a href="/" class="hover:text-[var(--orange-strong)] transition-colors">Latest opportunities</a></li>
+        <li><a href="/#how-it-works" class="hover:text-[var(--orange-strong)] transition-colors">How it works</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Connect" class="text-sm">
+      <h3 class="uppercase tracking-widest text-xs font-bold text-[var(--ink)] mb-3">Connect</h3>
+      <ul class="space-y-2 text-[var(--ink-muted)]">
+        <li><a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="hover:text-[var(--orange-strong)] transition-colors">Instagram — @namoleads</a></li>
+        <li><a href="mailto:hello@namoleads.in" class="hover:text-[var(--orange-strong)] transition-colors">Email us</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="border-t border-[var(--border)] py-5 text-center text-xs text-[var(--ink-muted)]">
+    NamoLead · free for students, always
+  </div>
 </footer>
+<script type="module" defer src="{% static 'js/immersive.js' %}"></script>
+<script type="module" defer src="{% static 'js/lightbox.js' %}"></script>
+{% block extra_js %}{% endblock %}
 </body>
 </html>

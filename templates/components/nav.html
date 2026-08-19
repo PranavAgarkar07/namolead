@@ -1,15 +1,23 @@
-<header class="bg-[var(--navy)] text-white">
-  <div class="max-w-5xl mx-auto px-6 pt-3">
-    <div class="flex items-center justify-between pb-1">
-      {% include "components/brand.html" with on_paper=True %}
-      <nav class="flex items-center gap-6 text-sm font-medium">
-        <a href="/" class="marker-link {% if request.path == '/' %}is-active{% endif %} px-0.5 hover:text-[var(--ink)] transition-colors">Opportunities</a>
-        <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 bg-[var(--orange)] text-white text-xs font-bold px-3 py-1.5 hover:bg-[var(--orange-strong)] transition-colors">
-          @namoleads
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<header class="nav-shell sticky top-0 z-40 bg-[var(--navy)] text-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="flex items-center justify-between gap-4 py-4">
+      {% include "components/brand.html" with dark=True big=True %}
+      <nav class="flex items-center gap-3 sm:gap-8 text-[11px] font-semibold uppercase tracking-[0.18em] leading-none" aria-label="Primary">
+        <a href="/" class="nav-link {% if request.path == '/' %}is-active{% endif %}">Opportunities</a>
+        <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="nav-link group inline-flex items-center gap-1.5" aria-label="NamoLead on Instagram">
+          <span class="sm:hidden" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </span>
+          <span class="hidden sm:inline">Instagram</span>
+          <svg class="hidden sm:block transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
         </a>
       </nav>
     </div>
+    <div class="hidden md:flex items-center justify-between border-t border-white/10 py-2.5 text-[10px] font-semibold uppercase tracking-[0.22em] leading-none text-white/50">
+      <span>Curated for Indian students</span>
+      <span class="flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--orange)]" aria-hidden="true"></span>Week {% now "W" %} · updated weekly
+      </span>
+    </div>
   </div>
-  <div class="h-3 bg-[var(--surface-2)] rounded-t-lg" aria-hidden="true"></div>
 </header>

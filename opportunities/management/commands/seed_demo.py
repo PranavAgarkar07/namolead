@@ -24,15 +24,13 @@ class Command(BaseCommand):
                 organization="Google",
                 short_description="Paid remote internship writing open-source code. Apply before the deadline.",
                 apply_url="https://summerofcode.withgoogle.com/",
-                is_exclusive=False,
             ),
             dict(
                 title="Forage: JPMorgan Virtual Simulation",
                 category="simulation",
                 organization="Forage",
-                short_description="Free 5-hour virtual job simulation. Exclusive details unlocked below.",
+                short_description="Free 5-hour virtual job simulation.",
                 apply_url="https://www.theforage.com/",
-                is_exclusive=True,
             ),
         ]
         for data in demo:

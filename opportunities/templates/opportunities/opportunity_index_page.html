@@ -1,30 +1,29 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
+{% include "components/breadcrumbs.html" %}
 {% include "components/hero.html" %}
+{% include "components/ticker.html" %}
 
 <section id="how-it-works" class="mt-16 mb-10">
-  <div class="max-w-2xl mb-8">
-    <h2 class="text-3xl font-semibold tracking-tight mb-2">How it works</h2>
-    <p class="text-[var(--ink-muted)]">Three steps, about a minute of your time. <span class="font-hand text-[var(--orange-strong)] text-xl inline-block ml-1 -rotate-1">(really, it's that quick)</span></p>
-  </div>
+  {% include "components/section-heading.html" with eyebrow="The drill" title="How it works" sub="Three steps, about a minute of your time. <span class='text-[var(--orange-strong)]'>(really, it's that quick)</span>" %}
   <ol class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[var(--border)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden">
-    <li class="bg-[var(--surface-2)] p-6">
+    <li class="reveal bg-[var(--surface-2)] p-6">
       <div class="flex items-center gap-3 mb-3">
         <span class="flex items-center justify-center w-9 h-9 bg-[var(--navy)] text-white font-bold font-display">01</span>
         <span class="font-semibold">Browse</span>
       </div>
       <p class="text-sm text-[var(--ink-muted)] leading-relaxed">Scan fresh internships and programs filtered by what suits you.</p>
     </li>
-    <li class="bg-[var(--surface-2)] p-6">
+    <li class="reveal reveal-d1 bg-[var(--surface-2)] p-6">
       <div class="flex items-center gap-3 mb-3">
         <span class="flex items-center justify-center w-9 h-9 bg-[var(--orange)] text-white font-bold font-display">02</span>
-        <span class="font-semibold">Unlock</span>
+        <span class="font-semibold">Learn</span>
       </div>
-      <p class="text-sm text-[var(--ink-muted)] leading-relaxed">For exclusive posts, confirm with one email link — no spam, ever.</p>
+      <p class="text-sm text-[var(--ink-muted)] leading-relaxed">Read full details, eligibility and deadlines before you apply.</p>
     </li>
-    <li class="bg-[var(--surface-2)] p-6">
+    <li class="reveal reveal-d2 bg-[var(--surface-2)] p-6">
       <div class="flex items-center gap-3 mb-3">
         <span class="flex items-center justify-center w-9 h-9 bg-[var(--navy)] text-white font-bold font-display">03</span>
         <span class="font-semibold">Apply</span>
@@ -33,6 +32,21 @@
     </li>
   </ol>
 </section>
+
+<div class="grid grid-cols-3 gap-px bg-[var(--border)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden mb-10">
+  <div class="reveal bg-[var(--surface-2)] p-5 text-center">
+    <p class="font-display font-semibold text-3xl text-[var(--navy)]">{{ stats.live }}</p>
+    <p class="text-xs uppercase tracking-widest text-[var(--ink-muted)] mt-1">Live opportunities</p>
+  </div>
+  <div class="reveal reveal-d1 bg-[var(--surface-2)] p-5 text-center">
+    <p class="font-display font-semibold text-3xl text-[var(--orange-strong)]">{{ stats.this_week }}</p>
+    <p class="text-xs uppercase tracking-widest text-[var(--ink-muted)] mt-1">Added this week</p>
+  </div>
+  <div class="reveal reveal-d2 bg-[var(--surface-2)] p-5 text-center">
+    <p class="font-display font-semibold text-3xl text-[var(--navy)]">{{ stats.categories }}</p>
+    <p class="text-xs uppercase tracking-widest text-[var(--ink-muted)] mt-1">Categories</p>
+  </div>
+</div>
 
 <section class="rounded-[var(--radius-lg)] bg-[var(--orange-soft)] border border-[var(--orange)]/25 px-6 py-7 mb-14 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
   <span class="flex-none flex items-center justify-center w-12 h-12 bg-[var(--orange)] text-white" aria-hidden="true">
@@ -45,25 +59,62 @@
 </section>
 
 <div class="mb-10">
-  <h2 id="opportunities" class="text-2xl font-bold tracking-tight mb-4">Latest opportunities</h2>
-  <form method="get" class="flex flex-wrap items-center gap-3 mb-8">
-    <label for="category" class="text-sm text-[var(--ink-muted)]">Category</label>
-    <select name="category" id="category" class="border border-[var(--border)] rounded-[var(--radius)] bg-[var(--surface-2)] px-3 py-2 text-sm">
-      <option value="">All</option>
-      {% for value, label in categories %}
-        <option value="{{ value }}" {% if value == active_category %}selected{% endif %}>{{ label }}</option>
-      {% endfor %}
-    </select>
-    <button type="submit" class="bg-[var(--navy)] text-white rounded-[var(--radius)] px-4 py-2 text-sm hover:bg-[var(--navy-soft)] transition-colors">Filter</button>
-    {% if active_category %}{% include "components/filter-chip.html" with label=active_category %}{% endif %}
+  {% include "components/section-heading.html" with eyebrow="Fresh picks" title="Latest opportunities" %}
+
+  <form id="search-form" method="get" action="/" role="search" class="relative max-w-md mb-5">
+    <label for="search-input" class="sr-only">Search opportunities</label>
+    <svg class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--ink-muted)]" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="search-input" type="search" name="q" value="{{ query }}" placeholder="Search roles, companies, fields…" autocomplete="off" spellcheck="false"
+      class="w-full h-12 pl-11 pr-11 border border-[var(--border)] bg-[var(--surface-2)] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--navy)]/20 focus:border-[var(--navy)] transition-colors placeholder:text-[var(--ink-muted)]">
+    {% if active_category %}<input type="hidden" name="category" id="search-category" value="{{ active_category }}">{% endif %}
+    <svg id="search-spinner" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--ink-muted)] animate-spin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
   </form>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div id="search-meta" class="flex items-center justify-between gap-3 mb-4 {% if not query %}hidden{% endif %}">
+    <p class="text-sm text-[var(--ink-muted)]" role="status">
+      <span id="search-count">{{ result_count|default:0 }}</span> result{{ result_count|pluralize }} for "<span id="search-query" class="font-semibold text-[var(--ink)]">{{ query }}</span>"
+    </p>
+    <a id="search-clear" href="{% if active_category %}?category={{ active_category }}{% else %}/{% endif %}" class="text-sm font-semibold text-[var(--orange-strong)] hover:text-[var(--orange)]">Clear</a>
+  </div>
+
+  <nav class="flex flex-wrap items-center gap-2 mb-8" aria-label="Filter by category">
+    <a href="{% if query %}?q={{ query|urlencode }}{% else %}/{% endif %}" class="px-3 py-1.5 text-sm font-semibold border transition-colors {% if not active_category %}bg-[var(--navy)] text-white border-[var(--navy)]{% else %}border-[var(--border)] text-[var(--ink-muted)] hover:border-[var(--navy)] hover:text-[var(--navy)]{% endif %}" {% if not active_category %}aria-current="page"{% endif %}>All</a>
+    {% for value, label in categories %}
+      <a href="?category={{ value }}{% if query %}&amp;q={{ query|urlencode }}{% endif %}" class="px-3 py-1.5 text-sm font-semibold border transition-colors {% if value == active_category %}bg-[var(--navy)] text-white border-[var(--navy)]{% else %}border-[var(--border)] text-[var(--ink-muted)] hover:border-[var(--navy)] hover:text-[var(--navy)]{% endif %}" {% if value == active_category %}aria-current="page"{% endif %}>{{ label }}</a>
+    {% endfor %}
+  </nav>
+
+  <div id="opportunity-grid" class="grid grid-cols-1 md:grid-cols-2 gap-7 transition-opacity duration-200">
     {% for opp in opportunities %}
-      {% include "components/card.html" with post=opp %}
+      <div class="reveal {% cycle 'reveal-d1' 'reveal-d2' 'reveal-d3' 'reveal-d4' 'reveal-d5' %}">{% include "components/card.html" with post=opp %}</div>
     {% empty %}
-      {% include "components/empty-state.html" with title="No possibilities yet" body="There are no posts to show right now." action_label="View all posts" action_url="/" %}
+      <div id="search-empty" class="col-span-full">
+        {% if query %}
+          {% include "components/empty-state.html" with title="No matches" body="Nothing matches your search — try a broader term or another field." action_label="View all posts" action_url="/" %}
+        {% else %}
+          {% include "components/empty-state.html" with title="No possibilities yet" body="There are no posts to show right now." action_label="View all posts" action_url="/" %}
+        {% endif %}
+      </div>
     {% endfor %}
   </div>
 </div>
+
+<section class="rounded-[var(--radius-lg)] border-2 border-dashed border-[var(--navy)] px-6 py-8 mb-14 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+  <div class="flex items-center gap-4">
+    <span class="flex-none flex items-center justify-center w-12 h-12 bg-[var(--navy)] text-white" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    </span>
+    <div>
+      <p class="font-semibold text-[var(--ink)]">Picks land on Instagram first</p>
+      <p class="text-sm text-[var(--ink-muted)]">Follow <span class="font-semibold text-[var(--navy)]">@namoleads</span> for daily drops, quick tips, and early access links.</p>
+    </div>
+  </div>
+  <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-[var(--navy)] text-white font-semibold px-6 py-3 rounded-[var(--radius)] hover:bg-[var(--navy-soft)] active:scale-[0.97] transition-all">Follow @namoleads
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </a>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module" defer src="{% static 'js/live-search.js' %}"></script>
 {% endblock %}

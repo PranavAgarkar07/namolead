@@ -3,7 +3,7 @@ from django.db.models import Count
 from django.db.models.functions import TruncWeek
 from django.shortcuts import render
 
-from .models import ClickEvent, PageView, Unlock
+from .models import ClickEvent, PageView
 
 
 @staff_member_required
@@ -46,8 +46,6 @@ def dashboard(request):
     totals = {
         "clicks": ClickEvent.objects.count(),
         "views": PageView.objects.count(),
-        "unlocks": Unlock.objects.count(),
-        "verified": Unlock.objects.filter(status=Unlock.Status.VERIFIED).count(),
     }
     totals["ctr"] = round(totals["clicks"] / totals["views"], 3) if totals["views"] else 0
 

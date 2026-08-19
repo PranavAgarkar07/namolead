@@ -6,11 +6,9 @@
 {% block content %}
 <h1 class="text-2xl font-bold mb-6">Analytics</h1>
 
-<div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
   {% include "components/stat-card.html" with label="Total clicks" value=totals.clicks %}
   {% include "components/stat-card.html" with label="Page views" value=totals.views %}
-  {% include "components/stat-card.html" with label="Unlocks" value=totals.unlocks %}
-  {% include "components/stat-card.html" with label="Verified" value=totals.verified accent="true" %}
   {% include "components/stat-card.html" with label="View→click CTR" value=totals.ctr %}
 </div>
 
@@ -30,16 +28,18 @@
 </div>
 
 <h2 class="text-lg font-semibold mt-8 mb-2">Per-post breakdown</h2>
+<div class="overflow-x-auto">
 <table class="w-full bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] text-sm overflow-hidden">
   <thead><tr class="text-left border-b border-[var(--border)] text-[var(--ink-muted)]"><th class="p-3">Post</th><th class="p-3">Clicks</th><th class="p-3">Views</th><th class="p-3">CTR</th></tr></thead>
   <tbody>
   {% for p in per_post %}
-    <tr class="border-b border-[var(--border)]"><td class="p-3">{{ p.title }}</td><td class="p-3">{{ p.clicks }}</td><td class="p-3">{{ p.views }}</td><td class="p-3">{{ p.ctr }}</td></tr>
+    <tr class="border-b border-[var(--border)]"><td class="p-3 whitespace-nowrap">{{ p.title }}</td><td class="p-3">{{ p.clicks }}</td><td class="p-3">{{ p.views }}</td><td class="p-3">{{ p.ctr }}</td></tr>
   {% empty %}
     <tr><td class="p-3" colspan="4">No clicks yet.</td></tr>
   {% endfor %}
   </tbody>
 </table>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {{ per_post|json_script:"per-post" }}
