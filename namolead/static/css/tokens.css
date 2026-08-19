@@ -23,6 +23,7 @@
   --orange: #ff6b35;
   --orange-strong: #f05a24;
   --orange-soft: #fff1ea;
+  --orange-ink: #c2410c;         /* orange text on white: 5.2:1 AA */
 
   /* state */
   --success: #1f8454;
@@ -249,3 +250,60 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .lightbox-nav { top: 50%; transform: translateY(-50%); }
 .lightbox-prev { left: 1rem; }
 .lightbox-next { right: 1rem; }
+
+/* Contrast policy — mobile sticky apply bar */
+.apply-bar-spacer { display: none; }
+
+@media (max-width: 767px) {
+  .apply-bar {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1.25rem calc(0.75rem + env(safe-area-inset-bottom));
+    background: var(--navy);
+    color: white;
+    box-shadow: 0 -8px 24px rgba(16, 42, 67, 0.18);
+  }
+  .apply-bar-spacer {
+    display: block;
+    height: 5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .apply-bar { display: none; }
+}
+
+/* Contrast policy — deadline chip (urgency + closed states) */
+.deadline-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--border);
+  color: var(--ink-muted);
+}
+.deadline-chip.is-urgent {
+  background: var(--destructive-soft);
+  color: var(--destructive);
+  border-color: rgba(217, 45, 32, 0.3);
+}
+.deadline-chip.is-closed {
+  background: var(--destructive-soft);
+  color: var(--destructive);
+  border-color: rgba(217, 45, 32, 0.3);
+}
+
+/* Contrast policy — hero dart motif container */
+.dart-motif {
+  display: block;
+  max-width: 26rem;
+  margin-left: auto;
+  pointer-events: none;
+}

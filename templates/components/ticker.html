@@ -1,18 +1,18 @@
 {% load wagtailcore_tags %}
-<div class="ticker bg-[var(--orange)] text-white border-y-2 border-[var(--navy)]" role="region" aria-label="Fresh this week">
+<div class="ticker bg-[var(--orange)] text-[var(--navy)] border-y-2 border-[var(--navy)]" role="region" aria-label="Fresh this week">
   <div class="ticker-track py-2 text-sm font-semibold">
     {% for item in ticker_items %}
-      <a href="{{ item.url }}" class="inline-flex items-center gap-2 whitespace-nowrap hover:text-[var(--navy)] transition-colors">
+      <a href="{{ item.url }}" class="inline-flex items-center gap-2 whitespace-nowrap hover:underline">
         <span class="w-1.5 h-1.5 rounded-full bg-[var(--navy)]" aria-hidden="true"></span>
         {{ item.title }}
-        <span class="font-normal text-white/90">{{ item.get_category_display }}</span>
+        <span class="font-normal text-[var(--navy)]/80">{{ item.get_category_display }}</span>
       </a>
     {% endfor %}
     {% for item in ticker_items %}
-      <a href="{{ item.url }}" class="inline-flex items-center gap-2 whitespace-nowrap hover:text-[var(--navy)] transition-colors" aria-hidden="true" tabindex="-1">
+      <a href="{{ item.url }}" class="inline-flex items-center gap-2 whitespace-nowrap hover:underline" aria-hidden="true" tabindex="-1">
         <span class="w-1.5 h-1.5 rounded-full bg-[var(--navy)]" aria-hidden="true"></span>
         {{ item.title }}
-        <span class="font-normal text-white/90">{{ item.get_category_display }}</span>
+        <span class="font-normal text-[var(--navy)]/80">{{ item.get_category_display }}</span>
       </a>
     {% endfor %}
   </div>
