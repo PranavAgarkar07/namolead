@@ -1,7 +1,37 @@
 {% load static %}
 <a href="/" class="inline-flex items-center group" aria-label="NamoLead — home">
-  <span class="brand-box bg-white flex items-center gap-3 {% if big %}px-3.5 py-2{% else %}px-3 py-2{% endif %} {% if dark %}shadow-sm{% else %}border border-[var(--border)] shadow-sm{% endif %}">
-    <img src="{% static 'img/namolead-logo.svg' %}" alt="" class="{% if big %}h-9 sm:h-10{% else %}h-7{% endif %} w-auto object-contain">
-    <span class="wordmark {% if big %}text-[1.35rem] sm:text-[1.6rem] leading-none{% else %}text-[1.15rem] leading-none{% endif %} text-[var(--ink)]">Namo<span class="font-extrabold text-[var(--orange)]">Lead</span></span>
+  <span class="brand-box bg-white flex items-center gap-3.5 {% if big %}px-4 py-2.5{% else %}px-3.5 py-2{% endif %} {% if dark %}shadow-md{% else %}border border-[var(--border)] shadow-sm{% endif %} relative overflow-hidden">
+    <!-- Left orange accent bar — 'line to success' -->
+    <span class="absolute left-0 top-0 bottom-0 w-[3px] bg-[var(--orange)]" aria-hidden="true"></span>
+    <!-- Icon — enlarged, inline SVG for tassel life -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-hidden="true" class="brand-mark {% if big %}h-11 sm:h-[3.25rem]{% else %}h-9{% endif %} w-auto shrink-0">
+      <defs>
+        <linearGradient id="navy-b" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#102E5A"/><stop offset="1" stop-color="#0B2850"/>
+        </linearGradient>
+        <linearGradient id="orange-b" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#FF8500"/><stop offset="1" stop-color="#F35A00"/>
+        </linearGradient>
+      </defs>
+      <path d="M75 94 L255 20 L435 94 L255 153 Z" fill="url(#navy-b)"/>
+      <g class="brand-tassel">
+        <path d="M101 102 V165" fill="none" stroke="#102E5A" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="103" cy="176" r="10" fill="#102E5A"/>
+        <path d="M98 185 L89 231 Q103 237 116 231 L108 185 Z" fill="#102E5A"/>
+      </g>
+      <path d="M153 127 Q204 98 255 127 Q306 98 359 127 L359 154 Q307 143 255 158 Q205 143 153 154 Z" fill="url(#navy-b)"/>
+      <path d="M153 127 Q204 98 255 127 Q306 98 359 127" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+      <path d="M145 175 H194 L307 304 V204 Q307 175 335 175 H364 V375 H312 L202 252 V392 L145 374 Z" fill="url(#navy-b)"/>
+      <path d="M307 204 Q307 175 335 175 H364 V199 L307 259 Z" fill="url(#orange-b)"/>
+      <path d="M145 349 L202 289 V392 L145 374 Z" fill="url(#orange-b)"/>
+      <path d="M40 361 Q111 365 170 395 Q211 415 246 450 Q175 414 112 408 Q76 404 53 403 Z" fill="url(#navy-b)"/>
+      <path d="M30 399 Q105 393 164 414 Q207 429 246 450 Q181 442 119 435 Q77 430 49 424 Z" fill="url(#orange-b)"/>
+      <path d="M460 361 Q389 365 330 395 Q289 415 254 450 Q325 414 388 408 Q424 404 447 403 Z" fill="url(#navy-b)"/>
+      <path d="M470 399 Q395 393 336 414 Q293 429 254 450 Q319 442 381 435 Q423 430 451 424 Z" fill="url(#orange-b)"/>
+    </svg>
+    <span class="flex flex-col leading-none">
+      <span class="wordmark {% if big %}text-[1.45rem] sm:text-[1.75rem]{% else %}text-[1.25rem]{% endif %} leading-none text-[var(--ink)]">Namo<span class="font-extrabold text-[var(--orange)]">Lead</span></span>
+      {% if big %}<span class="hidden sm:block text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--ink-muted)] mt-0.5">Learn • Lead • Grow</span>{% endif %}
+    </span>
   </span>
 </a>

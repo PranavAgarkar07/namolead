@@ -98,11 +98,27 @@ h1, h2, h3, h4 {
 }
 .group:hover .brand-box {
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(16, 42, 67, 0.18);
+  box-shadow: 0 10px 28px rgba(16, 42, 67, 0.22);
 }
 .group:active .brand-box {
   transform: translateY(0) scale(0.99);
   transition-duration: 0.12s;
+}
+.brand-mark {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.group:hover .brand-mark {
+  transform: scale(1.04);
+}
+.brand-tassel {
+  transform-origin: 101px 102px;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.group:hover .brand-tassel {
+  transform: rotate(6deg);
+}
+.group:active .brand-tassel {
+  transform: rotate(-2deg);
 }
 .text-navy { color: var(--navy) !important; }
 
