@@ -127,7 +127,7 @@ class OpportunityTests(TestCase):
         self.assertFalse(expired.is_portrait)
         card = self.client.get("/").content.decode()
         self.assertIn("Expired Post", card)
-        self.assertIn("Deadline passed", card)
+        self.assertIn('is-closed', card)
         detail = self.client.get("/expired-post/").content.decode()
         self.assertIn("Deadline passed", detail)
 

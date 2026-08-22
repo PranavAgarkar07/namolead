@@ -7,54 +7,54 @@
 {% include "components/ticker.html" %}
 
 <section id="how-it-works" class="mt-16 mb-10">
-  {% include "components/section-heading.html" with eyebrow="The drill" title="How it works" sub="Three steps, about a minute of your time. <span class='text-[var(--orange-strong)]'>(really, it's that quick)</span>" %}
-  <ol class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[var(--border)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden">
-    <li class="reveal bg-[var(--surface-2)] p-6">
-      <div class="flex items-center gap-3 mb-3">
-        <span class="flex items-center justify-center w-9 h-9 bg-[var(--navy)] text-white font-bold font-display">01</span>
-        <span class="font-semibold">Browse</span>
+  {% include "components/section-heading.html" with eyebrow="The drill" title="How it works" sub="Three steps, about a minute. No account, no gatekeeping." %}
+  <ol class="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-[var(--border)] border border-[var(--border)] bg-white">
+    <li class="reveal p-6 sm:p-7">
+      <div class="flex items-baseline gap-3 mb-2">
+        <span class="font-display font-bold text-[11px] tracking-[0.14em] uppercase text-[var(--orange-ink)]">01 — Browse</span>
+        <span class="h-px flex-1 bg-[var(--border)]"></span>
       </div>
-      <p class="text-sm text-[var(--ink-muted)] leading-relaxed">Scan fresh internships and programs filtered by what suits you.</p>
+      <p class="text-[13.5px] leading-relaxed text-[var(--ink-muted)]">Scan fresh internships and programs. Filter by what suits you — not what’s trending.</p>
     </li>
-    <li class="reveal reveal-d1 bg-[var(--surface-2)] p-6">
-      <div class="flex items-center gap-3 mb-3">
-        <span class="flex items-center justify-center w-9 h-9 bg-[var(--orange)] text-[var(--navy)] font-bold font-display">02</span>
-        <span class="font-semibold">Learn</span>
+    <li class="reveal reveal-d1 p-6 sm:p-7">
+      <div class="flex items-baseline gap-3 mb-2">
+        <span class="font-display font-bold text-[11px] tracking-[0.14em] uppercase text-[var(--orange-ink)]">02 — Learn</span>
+        <span class="h-px flex-1 bg-[var(--border)]"></span>
       </div>
-      <p class="text-sm text-[var(--ink-muted)] leading-relaxed">Read full details, eligibility and deadlines before you apply.</p>
+      <p class="text-[13.5px] leading-relaxed text-[var(--ink-muted)]">Read the full brief: eligibility, dates, and what they actually need from you.</p>
     </li>
-    <li class="reveal reveal-d2 bg-[var(--surface-2)] p-6">
-      <div class="flex items-center gap-3 mb-3">
-        <span class="flex items-center justify-center w-9 h-9 bg-[var(--navy)] text-white font-bold font-display">03</span>
-        <span class="font-semibold">Apply</span>
+    <li class="reveal reveal-d2 p-6 sm:p-7">
+      <div class="flex items-baseline gap-3 mb-2">
+        <span class="font-display font-bold text-[11px] tracking-[0.14em] uppercase text-[var(--orange-ink)]">03 — Apply</span>
+        <span class="h-px flex-1 bg-[var(--border)]"></span>
       </div>
-      <p class="text-sm text-[var(--ink-muted)] leading-relaxed">Land on the official application page and put your best foot forward.</p>
+      <p class="text-[13.5px] leading-relaxed text-[var(--ink-muted)]">Hit Apply and land on the official page. Your data stays with them, not us.</p>
     </li>
   </ol>
 </section>
 
-<div class="grid grid-cols-3 gap-px bg-[var(--border)] border border-[var(--border)] rounded-[var(--radius-lg)] overflow-hidden mb-10">
-  <div class="reveal bg-[var(--surface-2)] p-5 text-center">
-    <p class="font-display font-semibold text-3xl text-[var(--navy)]">{{ stats.live }}</p>
-    <p class="text-xs uppercase tracking-widest text-[var(--ink-muted)] mt-1">Live opportunities</p>
+<div class="grid grid-cols-3 divide-x divide-[var(--border)] border border-[var(--border)] bg-white mb-10 text-center">
+  <div class="reveal py-5 px-3">
+    <p class="font-display font-bold text-3xl tracking-[-0.02em] text-[var(--ink)]">{{ stats.live }}</p>
+    <p class="text-[10px] uppercase tracking-[0.14em] font-semibold text-[var(--ink-muted)] mt-1">Live now</p>
   </div>
-  <div class="reveal reveal-d1 bg-[var(--surface-2)] p-5 text-center">
-    <p class="font-display font-semibold text-3xl text-[var(--orange-strong)]">{{ stats.this_week }}</p>
-    <p class="text-xs uppercase tracking-widest text-[var(--ink-muted)] mt-1">Added this week</p>
+  <div class="reveal reveal-d1 py-5 px-3 bg-[var(--surface-3)]">
+    <p class="font-display font-bold text-3xl tracking-[-0.02em] text-[var(--orange-ink)]">{{ stats.this_week }}</p>
+    <p class="text-[10px] uppercase tracking-[0.14em] font-semibold text-[var(--ink-muted)] mt-1">This week</p>
   </div>
-  <div class="reveal reveal-d2 bg-[var(--surface-2)] p-5 text-center">
-    <p class="font-display font-semibold text-3xl text-[var(--navy)]">{{ stats.categories }}</p>
-    <p class="text-xs uppercase tracking-widest text-[var(--ink-muted)] mt-1">Categories</p>
+  <div class="reveal reveal-d2 py-5 px-3">
+    <p class="font-display font-bold text-3xl tracking-[-0.02em] text-[var(--ink)]">{{ stats.categories }}</p>
+    <p class="text-[10px] uppercase tracking-[0.14em] font-semibold text-[var(--ink-muted)] mt-1">Categories</p>
   </div>
 </div>
 
-<section class="rounded-[var(--radius-lg)] bg-[var(--orange-soft)] border border-[var(--orange)]/25 px-6 py-7 mb-14 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-  <span class="flex-none flex items-center justify-center w-12 h-12 bg-[var(--orange)] text-[var(--navy)]" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+<section class="border-l-2 border-[var(--orange)] bg-[var(--surface-3)] px-6 py-5 mb-14 flex gap-4">
+  <span class="hidden sm:grid place-items-center w-9 h-9 bg-white border border-[var(--border)] text-[var(--ink)] shrink-0" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
   </span>
   <div>
-    <p class="font-semibold text-[var(--ink)]">No middleman, no fee, no catch.</p>
-    <p class="text-sm text-[var(--ink-muted)] mt-1">Every "Apply" button routes through a tracked link that lands on the official application page. If it ever points elsewhere, that's a bug — tell us on Instagram and we'll fix it.</p>
+    <p class="font-display font-semibold text-[15px] text-[var(--ink)]">No middleman. No fee. No catch.</p>
+    <p class="text-[13px] leading-relaxed text-[var(--ink-muted)] mt-1">Every “Apply” lands on the official site via a tracked redirect. If it ever doesn’t, that’s our bug — DM <a href="https://instagram.com/namoleads" class="underline decoration-[var(--orange)]/30 underline-offset-4 hover:text-[var(--orange-ink)]">@namoleads</a> and we’ll fix it that day.</p>
   </div>
 </section>
 
@@ -99,18 +99,18 @@
   </div>
 </div>
 
-<section class="rounded-[var(--radius-lg)] border-2 border-dashed border-[var(--navy)] px-6 py-8 mb-14 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-  <div class="flex items-center gap-4">
-    <span class="flex-none flex items-center justify-center w-12 h-12 bg-[var(--navy)] text-white" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+<section class="border border-[var(--border)] bg-white px-6 py-6 mb-14 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+  <div class="flex items-center gap-3">
+    <span class="hidden sm:grid place-items-center w-9 h-9 border border-[var(--border)] bg-[var(--surface-3)] text-[var(--ink)]" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
     </span>
     <div>
-      <p class="font-semibold text-[var(--ink)]">Picks land on Instagram first</p>
-      <p class="text-sm text-[var(--ink-muted)]">Follow <span class="font-semibold text-[var(--navy)]">@namoleads</span> for daily drops, quick tips, and early access links.</p>
+      <p class="font-display font-semibold text-[14px] text-[var(--ink)]">Picks land on Instagram first</p>
+      <p class="text-xs tracking-wide text-[var(--ink-muted)]">Daily drops &amp; early links — <span class="font-semibold text-[var(--ink)]">@namoleads</span></p>
     </div>
   </div>
-  <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-[var(--navy)] text-white font-semibold px-6 py-3 rounded-[var(--radius)] hover:bg-[var(--navy-soft)] active:scale-[0.97] transition-all">Follow @namoleads
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-[var(--navy)] text-white text-sm font-semibold px-5 py-2.5 hover:bg-[var(--navy-soft)] active:scale-[0.98] transition-colors">Follow
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
   </a>
 </section>
 {% endblock %}

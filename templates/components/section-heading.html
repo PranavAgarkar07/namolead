@@ -1,5 +1,10 @@
-<div class="max-w-2xl mb-8">
-  {% if eyebrow %}<p class="inline-flex items-center gap-2 text-[var(--orange-strong)] uppercase tracking-widest text-xs font-bold mb-2"><span class="w-2 h-2 bg-[var(--orange)]" aria-hidden="true"></span>{{ eyebrow }}</p>{% endif %}
-  <h2 class="text-3xl font-semibold tracking-tight marker-link w-fit">{{ title }}</h2>
-  {% if sub %}<p class="text-[var(--ink-muted)] mt-2">{{ sub }}</p>{% endif %}
+<div class="mb-8 border-t-2 border-[var(--ink)] pt-3">
+  <div class="flex items-baseline justify-between gap-4">
+    <div>
+      {% if eyebrow %}<p class="text-[11px] uppercase tracking-[0.16em] font-bold text-[var(--orange-ink)] mb-1">{{ eyebrow }}</p>{% endif %}
+      <h2 class="font-display text-[22px] sm:text-2xl font-bold tracking-[-0.02em] text-[var(--ink)]">{{ title }}</h2>
+    </div>
+    <span class="hidden sm:block h-px flex-1 bg-[var(--border)] ml-6" aria-hidden="true"></span>
+  </div>
+  {% if sub %}<p class="text-sm text-[var(--ink-muted)] mt-2 max-w-2xl leading-relaxed">{{ sub }}</p>{% endif %}
 </div>

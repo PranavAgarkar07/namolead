@@ -1,61 +1,82 @@
 {% load static %}
-<section class="relative overflow-hidden bg-[var(--navy)] text-white">
-  <div class="absolute inset-0 hero-glow" aria-hidden="true"></div>
-  <svg class="dart-motif absolute bottom-0 left-0 hidden lg:block w-[24rem]" viewBox="0 0 420 170" aria-hidden="true">
-    <path d="M24 146 Q 170 18 348 52" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-dasharray="5 7" stroke-linecap="round"/>
-    <path d="M312 41 L272 33 L280 45 Z" fill="var(--orange)"/>
-    <path d="M312 41 L280 45 L274 57 Z" fill="var(--orange-strong)"/>
-    <path d="M312 41 L280 45" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
-    <circle cx="24" cy="158" r="3" fill="rgba(255,255,255,0.15)"/>
-    <circle cx="52" cy="155" r="4" fill="rgba(255,255,255,0.3)"/>
-    <circle cx="80" cy="159" r="3" fill="rgba(255,255,255,0.15)"/>
-    <circle cx="108" cy="156" r="3.5" fill="rgba(255,255,255,0.15)"/>
-    <circle cx="136" cy="159" r="2.5" fill="rgba(255,255,255,0.3)"/>
-    <circle cx="164" cy="155" r="4" fill="rgba(255,255,255,0.15)"/>
-    <circle cx="194" cy="158" r="3" fill="rgba(255,255,255,0.15)"/>
-    <circle cx="222" cy="156" r="3.5" fill="rgba(255,255,255,0.3)"/>
-    <circle cx="252" cy="159" r="2.5" fill="rgba(255,255,255,0.15)"/>
-    <circle cx="282" cy="156" r="3" fill="rgba(255,255,255,0.15)"/>
-    <circle cx="312" cy="159" r="4" fill="rgba(255,255,255,0.3)"/>
-    <circle cx="344" cy="156" r="3" fill="rgba(255,255,255,0.15)"/>
-    <circle cx="374" cy="159" r="3.5" fill="rgba(255,255,255,0.15)"/>
-    <circle cx="400" cy="157" r="2.5" fill="rgba(255,255,255,0.3)"/>
-  </svg>
+<section class="bg-[var(--paper)] border-y border-[var(--border)] relative">
+  <!-- subtle paper grain -->
+  <div class="absolute inset-0 pointer-events-none opacity-[0.035]" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;)" aria-hidden="true"></div>
 
-  <div class="relative z-10 max-w-6xl mx-auto px-6 py-16 lg:py-24 grid lg:grid-cols-[1.4fr_1fr] gap-12 items-center">
-    <div>
-      <span class="reveal inline-flex items-center gap-2 text-[var(--orange)] uppercase tracking-widest text-xs font-bold mb-5">
-        <span class="w-2 h-2 rounded-full bg-[var(--orange)]"></span>Curated for Indian students
+  <div class="relative max-w-6xl mx-auto px-6">
+    <!-- masthead meta bar — newspaper dateline -->
+    <div class="masthead-rule flex flex-wrap items-center justify-between gap-2 text-[10px] tracking-[0.16em] uppercase font-semibold">
+      <span class="text-[var(--ink-muted)]">Est. 2024 — New Delhi • Curated for Indian students</span>
+      <span class="hidden sm:inline-flex items-center gap-2 text-[var(--ink-muted)]">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--orange)]"></span>
+        Edition № {% now "W" %} — {% now "j F Y" %}
       </span>
-      <h1 class="reveal reveal-d1 text-[2.25rem] sm:text-6xl font-semibold tracking-tight leading-[1.05]">
-        Fresh internships &amp; university programs, <span class="text-[var(--orange)]">updated every week</span>
-      </h1>
-      <p class="reveal reveal-d2 mt-6 text-white/75 leading-relaxed text-lg max-w-lg">Hand-picked openings kept current, so you're never late to apply. Every link goes straight to the official application — free, no middleman, no spam.</p>
-      <div class="reveal reveal-d3 mt-9 flex flex-wrap gap-3">
-        <a href="#opportunities" class="inline-flex items-center justify-center gap-2 font-semibold rounded-[var(--radius)] px-6 py-3 bg-[var(--orange)] text-[var(--navy)] hover:bg-[var(--orange-strong)] active:scale-[0.97] transition-all">Browse new opportunities
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-        <a href="#how-it-works" class="inline-flex items-center justify-center gap-2 font-semibold rounded-[var(--radius)] px-6 py-3 border border-white/25 text-white hover:bg-white/10 active:scale-[0.97] transition-all">How it works</a>
-      </div>
+      <span class="sm:hidden text-[var(--ink-muted)]">Ed. {% now "W" %}</span>
     </div>
 
-    <aside class="reveal reveal-d2">
-      <div class="bg-[var(--orange)] rounded-[var(--radius-lg)] p-7">
-        <p class="uppercase tracking-widest text-xs font-bold text-[var(--navy)]/75 mb-4">This week's radar</p>
-        <ul class="space-y-4">
+    <div class="grid lg:grid-cols-[1.35fr_0.75fr] gap-8 lg:gap-10 py-10 lg:py-12 items-start">
+      <!-- Left: Editorial headline -->
+      <div class="reveal">
+        <span class="inline-flex items-center gap-2 text-[var(--orange-ink)] uppercase tracking-[0.14em] text-[11px] font-bold mb-4">
+          <span class="h-px w-6 bg-[var(--orange)]"></span>
+          Hand-picked &bull; Verified &bull; Free
+        </span>
+        <h1 class="font-display text-[2.4rem] sm:text-[3.4rem] lg:text-[3.7rem] font-[650] tracking-[-0.03em] leading-[0.92] text-[var(--ink)]">
+          Opportunities<br>
+          <span class="font-normal italic text-[var(--ink)]">worth your time.</span>
+        </h1>
+        <p class="mt-4 text-[15px] leading-relaxed text-[var(--ink-muted)] max-w-[42ch] border-l-2 border-[var(--orange)] pl-4">
+          Every opening is checked, dated, and linked straight to the official application. No middleman, no spam — just the next step, on time.
+        </p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="#opportunities" class="inline-flex items-center gap-2 font-semibold px-6 py-3 bg-[var(--navy)] text-white hover:bg-[var(--navy-soft)] active:scale-[0.98] transition-all">
+            Browse fresh picks
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#how-it-works" class="inline-flex items-center gap-2 font-medium px-6 py-3 border border-[var(--border-strong)] bg-white hover:bg-[var(--surface-3)] active:scale-[0.98] transition-colors">
+            How we vet
+          </a>
+        </div>
+        <div class="mt-6 flex items-center gap-4 text-xs text-[var(--ink-muted)]">
+          <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-[var(--success)]"></span>Updated weekly</span>
+          <span class="w-px h-3 bg-[var(--border)]"></span>
+          <span>Official links only</span>
+          <span class="w-px h-3 bg-[var(--border)]"></span>
+          <span>Always free</span>
+        </div>
+      </div>
+
+      <!-- Right: Lead story / this week's radar — newspaper sidebar -->
+      <aside class="reveal reveal-d1 lg:border-l lg:border-[var(--border)] lg:pl-8">
+        <div class="flex items-baseline justify-between border-b border-[var(--border-strong)] pb-2 mb-4">
+          <p class="edition-label">This week’s radar</p>
+          <span class="text-[10px] tracking-widest uppercase text-[var(--ink-muted)]">{{ radar|length }} picks</span>
+        </div>
+        {% if radar %}
+        <ul class="divide-y divide-[var(--border)]">
           {% for r in radar %}
-          <li{% if not forloop.first %} class="border-t border-white/20 pt-4"{% endif %}>
-            <a href="{{ r.url }}" class="block group">
-              <span class="block text-[var(--navy)] font-semibold text-lg group-hover:underline">{{ r.title }}</span>
-              <span class="text-sm text-[var(--navy)]/75">{% if r.organization %}{{ r.organization }}{% else %}{{ r.get_category_display }}{% endif %}</span>
+          <li class="py-4 first:pt-0">
+            <a href="{{ r.url }}" class="group block">
+              <span class="text-[10px] uppercase tracking-[0.14em] font-semibold text-[var(--orange-ink)]">{{ r.get_category_display }}</span>
+              <span class="mt-1 block font-display font-semibold text-[17px] leading-tight text-[var(--ink)] group-hover:text-[var(--navy)] group-hover:underline decoration-[var(--orange)]/30 underline-offset-4">{{ r.title }}</span>
+              <span class="mt-1 block text-xs text-[var(--ink-muted)]">{% if r.organization %}{{ r.organization }} • {% endif %}Posted {{ r.first_published_at|timesince }} ago</span>
             </a>
           </li>
           {% endfor %}
         </ul>
-        <a href="#opportunities" class="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-navy hover:underline transition-colors">See all today
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <a href="#opportunities" class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-[var(--ink)] hover:text-[var(--orange-ink)] transition-colors">
+          See all picks <span aria-hidden="true">→</span>
         </a>
-      </div>
-    </aside>
+        {% else %}
+        <p class="text-sm text-[var(--ink-muted)]">Fresh picks land here every week.</p>
+        {% endif %}
+
+        <!-- trust mini-strip -->
+        <div class="mt-6 bg-[var(--surface-3)] border border-[var(--border)] p-3 flex items-center gap-3 text-xs leading-tight">
+          <span class="flex-none w-8 h-8 grid place-items-center bg-[var(--navy)] text-white">✓</span>
+          <span class="text-[var(--ink-muted)]"><strong class="text-[var(--ink)] font-semibold">Why trust us?</strong> We track every Apply link and archive expired posts. If a link breaks, we fix it or remove it.</span>
+        </div>
+      </aside>
+    </div>
   </div>
 </section>
