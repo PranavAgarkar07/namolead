@@ -1,13 +1,7 @@
 {% load static %}
-<a href="/" class="inline-flex items-center gap-2.5 group {% if big %}h-10 sm:h-11{% else %}h-8{% endif %}" aria-label="NamoLead — home">
-  {% if dark %}
-  <span class="brand-icon bg-white flex items-center justify-center h-full aspect-square p-1.5 shadow-sm">
-    <img src="{% static 'img/namolead-logo.svg' %}" alt="" class="h-full w-auto object-contain">
+<a href="/" class="inline-flex items-center group" aria-label="NamoLead — home">
+  <span class="brand-box bg-white flex items-center gap-3 {% if big %}px-3.5 py-2{% else %}px-3 py-2{% endif %} {% if dark %}shadow-sm{% else %}border border-[var(--border)] shadow-sm{% endif %}">
+    <img src="{% static 'img/namolead-logo.svg' %}" alt="" class="{% if big %}h-9 sm:h-10{% else %}h-7{% endif %} w-auto object-contain">
+    <span class="wordmark {% if big %}text-[1.35rem] sm:text-[1.6rem] leading-none{% else %}text-[1.15rem] leading-none{% endif %} text-[var(--ink)]">Namo<span class="font-extrabold text-[var(--orange)]">Lead</span></span>
   </span>
-  {% else %}
-  <span class="brand-icon bg-white flex items-center justify-center h-full aspect-square p-1 border border-[var(--border)] shadow-sm">
-    <img src="{% static 'img/namolead-logo.svg' %}" alt="" class="h-full w-auto object-contain">
-  </span>
-  {% endif %}
-  <span class="wordmark {% if big %}text-[1.35rem] sm:text-[1.6rem] leading-none{% else %}text-[1.15rem] leading-none{% endif %}">Namo<span class="font-extrabold text-[var(--orange)]">Lead</span></span>
 </a>

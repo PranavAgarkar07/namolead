@@ -169,7 +169,7 @@ class OpportunityTests(TestCase):
     def test_logo_and_branding_everywhere(self):
         index = self.client.get("/").content.decode()
         self.assertIn("namolead-logo.svg", index)
-        self.assertIn("aspect-square", index)
+        self.assertIn("brand-box", index)
         self.assertIn("bg-white", index)
         self.assertIn("apple-touch-icon.png", index)
         self.assertIn("og:image", index)

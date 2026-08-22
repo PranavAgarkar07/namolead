@@ -92,16 +92,16 @@ h1, h2, h3, h4 {
   transform: scaleX(1);
 }
 
-/* Brand icon square — premium lift */
-.brand-icon {
+/* Brand box — icon + wordmark together, premium lift */
+.brand-box {
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.25s ease;
 }
-.group:hover .brand-icon {
-  transform: translateY(-1px) scale(1.03);
+.group:hover .brand-box {
+  transform: translateY(-1px);
   box-shadow: 0 8px 20px rgba(16, 42, 67, 0.18);
 }
-.group:active .brand-icon {
-  transform: translateY(0) scale(0.98);
+.group:active .brand-box {
+  transform: translateY(0) scale(0.99);
   transition-duration: 0.12s;
 }
 .text-navy { color: var(--navy) !important; }
