@@ -1,114 +1,99 @@
-<svg xmlns="http://www.w3.org/2000/svg"
-     viewBox="0 0 573 508"
-     width="573" height="508"
-     role="img" aria-labelledby="title desc">
-  <title id="title">NamoLead educational community logo</title>
-  <desc id="desc">Three stylized people rising from an open book with a star above.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-labelledby="title desc">
+  <title id="title">NamoLead style graduation logo</title>
+  <desc id="desc">A navy graduation cap above a stylized N with orange accents and an open-book motif.</desc>
 
-  <!-- Brand colors -->
   <defs>
-    <style>
-      .navy { fill:#FFFFFF; }
-      .orange { fill:#FF6A00; }
-      .blue { fill:#1672C9; }
-    </style>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FFFFFF"/>
+    </linearGradient>
+    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF8500"/>
+      <stop offset="1" stop-color="#F35A00"/>
+    </linearGradient>
   </defs>
 
-  <!-- Star -->
-  <path fill="#FF6A00" d="
-    M281.5 77.5
-    L292.8 106.4
-    L322.0 107.2
-    L298.8 124.9
-    L308.5 153.0
-    L281.5 136.2
-    L255.0 153.0
-    L264.1 124.9
-    L241.0 107.2
-    L270.2 106.4 Z"/>
+  <!-- Graduation cap -->
+  <path d="M75 94 L255 20 L435 94 L255 153 Z" fill="url(#navy)"/>
 
-  <!-- Central person's head -->
-  <circle fill="#FFFFFF" cx="282.5" cy="205.7" r="31.5"/>
+  <!-- Tassel -->
+  <path d="M101 102 V165" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="103" cy="176" r="10" fill="#FFFFFF"/>
+  <path d="M98 185 L89 231 Q103 237 116 231 L108 185 Z" fill="#FFFFFF"/>
 
-  <!-- Central person / raised arms -->
-  <path fill="#FFFFFF" d="
-    M167.5 176.5
-    C190.5 209.0 226.5 244.0 281.8 260.5
-    C337.0 244.0 373.5 209.0 400.5 176.0
-    C391.5 208.5 375.0 238.5 358.0 267.0
-    C336.0 304.5 310.0 350.0 282.7 451.0
-    C256.0 350.0 229.0 304.5 207.0 267.0
-    C190.0 238.5 176.0 207.5 167.5 176.5 Z"/>
+  <!-- Academic ribbon / collar beneath cap -->
+  <path d="M153 127
+           Q204 98 255 127
+           Q306 98 359 127
+           L359 154
+           Q307 143 255 158
+           Q205 143 153 154 Z"
+        fill="url(#navy)"/>
+  <path d="M153 127
+           Q204 98 255 127
+           Q306 98 359 127"
+        fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
 
-  <!-- Left person's head -->
-  <circle fill="#FF6A00" cx="116.8" cy="261.5" r="24.8"/>
+  <!-- Central N -->
+  <path d="M145 175
+           H194
+           L307 304
+           V204
+           Q307 175 335 175
+           H364
+           V375
+           H312
+           L202 252
+           V392
+           L145 374 Z"
+        fill="url(#navy)"/>
 
-  <!-- Left person -->
-  <path fill="#FF6A00" d="
-    M149.0 211.0
-    C160.0 228.0 177.5 260.5 193.0 293.0
-    C210.5 329.5 227.0 367.5 253.0 437.0
-    C218.0 407.0 184.0 379.0 145.5 355.0
-    C111.0 333.5 77.0 316.0 44.0 299.5
-    C76.0 302.5 103.0 307.0 124.0 302.0
-    C144.0 297.0 155.0 285.0 155.0 269.0
-    C155.0 249.5 150.0 230.0 149.0 211.0 Z"/>
+  <!-- Orange accent, upper-right -->
+  <path d="M307 204
+           Q307 175 335 175
+           H364
+           V199
+           L307 259 Z"
+        fill="url(#orange)"/>
 
-  <!-- Right person's head -->
-  <circle fill="#1672C9" cx="453.5" cy="261.5" r="24.8"/>
+  <!-- Orange accent, lower-left -->
+  <path d="M145 349
+           L202 289
+           V392
+           L145 374 Z"
+        fill="url(#orange)"/>
 
-  <!-- Right person -->
-  <path fill="#1672C9" d="
-    M417.0 211.0
-    C406.0 228.0 388.5 260.5 373.0 293.0
-    C355.5 329.5 339.0 367.5 313.0 437.0
-    C348.0 407.0 382.0 379.0 420.5 355.0
-    C455.0 333.5 489.0 316.0 522.0 299.5
-    C490.0 302.5 463.0 307.0 442.0 302.0
-    C422.0 297.0 411.0 285.0 411.0 269.0
-    C411.0 249.5 416.0 230.0 417.0 211.0 Z"/>
+  <!-- Left book page: navy -->
+  <path d="M40 361
+           Q111 365 170 395
+           Q211 415 246 450
+           Q175 414 112 408
+           Q76 404 53 403
+           Z"
+        fill="url(#navy)"/>
 
-  <!-- Open book: upper left page -->
-  <path fill="#FFFFFF" d="
-    M72.0 369.0
-    C116.0 373.0 165.0 393.0 205.0 418.0
-    C231.0 434.0 253.0 450.0 276.0 469.0
-    C242.0 454.0 209.0 444.0 173.0 436.0
-    C136.0 428.0 99.0 424.0 40.0 424.0
-    C51.0 404.0 61.0 386.0 72.0 369.0 Z"/>
+  <!-- Left book page: orange -->
+  <path d="M30 399
+           Q105 393 164 414
+           Q207 429 246 450
+           Q181 442 119 435
+           Q77 430 49 424 Z"
+        fill="url(#orange)"/>
 
-  <!-- Open book: upper right page -->
-  <path fill="#FFFFFF" d="
-    M493.0 369.0
-    C449.0 373.0 400.0 393.0 360.0 418.0
-    C334.0 434.0 312.0 450.0 289.0 469.0
-    C323.0 454.0 356.0 444.0 392.0 436.0
-    C429.0 428.0 466.0 424.0 525.0 424.0
-    C514.0 404.0 504.0 386.0 493.0 369.0 Z"/>
+  <!-- Right book page: navy -->
+  <path d="M460 361
+           Q389 365 330 395
+           Q289 415 254 450
+           Q325 414 388 408
+           Q424 404 447 403
+           Z"
+        fill="url(#navy)"/>
 
-  <!-- Open book: lower left page -->
-  <path fill="#FFFFFF" d="
-    M42.0 444.0
-    C105.0 428.0 161.0 438.0 207.0 456.0
-    C234.0 466.5 258.0 478.5 282.0 491.0
-    C250.0 486.0 218.0 480.0 185.0 476.0
-    C133.0 469.5 84.0 470.0 1.0 477.0
-    C12.0 464.0 27.0 451.0 42.0 444.0 Z"/>
-
-  <!-- Open book: lower right page -->
-  <path fill="#FFFFFF" d="
-    M531.0 444.0
-    C468.0 428.0 412.0 438.0 366.0 456.0
-    C339.0 466.5 315.0 478.5 291.0 491.0
-    C323.0 486.0 355.0 480.0 388.0 476.0
-    C440.0 469.5 489.0 470.0 572.0 477.0
-    C561.0 464.0 546.0 451.0 531.0 444.0 Z"/>
-
-  <!-- Book spine / center -->
-  <path fill="#FFFFFF" d="
-    M271.0 482.0
-    C275.0 478.0 279.0 476.0 282.0 476.0
-    C285.0 476.0 289.0 478.0 293.0 482.0
-    C292.0 490.0 287.5 496.0 282.0 498.0
-    C276.5 496.0 272.0 490.0 271.0 482.0 Z"/>
+  <!-- Right book page: orange -->
+  <path d="M470 399
+           Q395 393 336 414
+           Q293 429 254 450
+           Q319 442 381 435
+           Q423 430 451 424 Z"
+        fill="url(#orange)"/>
 </svg>
