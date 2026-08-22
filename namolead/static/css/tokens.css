@@ -59,12 +59,12 @@ h1, h2, h3, h4 {
   line-height: 1.1;
 }
 
-/* Masthead wordmark — editorial italic, the brand's signature mark */
+/* Wordmark — standard font, consistent with site body */
 .wordmark {
-  font-family: var(--font-display);
-  font-style: italic;
+  font-family: var(--font-body);
+  font-style: normal;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 .text-navy { color: var(--navy) !important; }
 
