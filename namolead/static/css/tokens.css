@@ -67,29 +67,6 @@ h1, h2, h3, h4 {
   letter-spacing: -0.02em;
   position: relative;
   display: inline-block;
-  transition: color 0.25s ease, letter-spacing 0.3s cubic-bezier(0.22, 1, 0.36, 1), transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.wordmark::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 100%;
-  height: 2.5px;
-  background: linear-gradient(90deg, var(--orange) 0%, var(--orange-strong) 100%);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.group:hover .wordmark {
-  color: var(--orange);
-  letter-spacing: -0.005em;
-}
-.group:hover .wordmark::after {
-  transform: scaleX(1);
-}
-.group:focus-visible .wordmark::after {
-  transform: scaleX(1);
 }
 
 /* Brand box — icon + wordmark together, premium lift */
