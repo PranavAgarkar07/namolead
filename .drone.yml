@@ -1,0 +1,14 @@
+pipeline:
+  ssh-deploy:
+    image: plugins/sh
+    settings:
+      server: http://13.207.243.149
+      host: 13.207.243.149
+      username: ubuntu
+      port: 22
+      key:
+        from_secret: DEPLOY_KEY
+      script:
+        - chmod +x entrypoint.sh
+        - ./entrypoint.sh
+EOF
