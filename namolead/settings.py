@@ -83,7 +83,7 @@ TIME_ZONE = "Asia/Kolkata"
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "namolead" / "static"]
 STORAGES = {
@@ -96,12 +96,13 @@ STORAGES = {
         )
     },
 }
-MEDIA_URL = "media/"
+MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 WAGTAIL_SITE_NAME = "NamoLead Opportunities"
+WAGTAILADMIN_BASE_URL = env("WAGTAILADMIN_BASE_URL", default="http://127.0.0.1:8000")
 LOGIN_URL = "/admin/login/"
 
 IP_HASH_SALT = env("IP_HASH_SALT", default="dev-salt")

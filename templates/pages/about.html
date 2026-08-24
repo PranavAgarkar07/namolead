@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About NamoLead & Aim · Learn · Lead · Grow{% endblock %}
+
+{% block og_tags %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NamoLead">
+<meta property="og:title" content="About NamoLead & Aim — Breaking the Student Opportunity Gap">
+<meta property="og:description" content="Discover the mission, purpose, benefits, and origin story of NamoLead — India's student-first career and opportunity discovery engine.">
+<meta property="og:image" content="{% if request %}{{ request.build_absolute_uri }}{% endif %}{% static 'img/og-cover.png' %}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+{% block content %}
+<article>
+  {% include "components/breadcrumbs.html" %}
+
+  <h1 class="govuk-heading-xl">Democratizing career opportunities for every Indian student</h1>
+  <p class="govuk-body-l">
+    NamoLead was created to ensure that no student in India misses a career-defining internship, scholarship, or virtual job simulation simply because they didn't know it existed.
+  </p>
+
+  <!-- What is NamoLead -->
+  <div class="govuk-section-break govuk-section-break--visible"></div>
+  <section style="padding: 30px 0;">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <p class="govuk-body-s" style="margin-bottom: 5px; color: var(--govuk-secondary-text);">01 — Definition</p>
+        <h2 class="govuk-heading-l">What is NamoLead?</h2>
+      </div>
+      <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-body">
+          <strong>NamoLead</strong> is a verified, student-first career opportunity discovery platform designed specifically for college students and recent graduates across India.
+        </p>
+        <p class="govuk-body">
+          Instead of drowning in clickbait telegram channels, bloated WhatsApp forwards, and paywalled job boards, students use NamoLead to access a curated, daily-updated catalog of Fortune 500 virtual simulations, corporate internships, government defense openings, hackathons, and national scholarships.
+        </p>
+        <div class="govuk-inset-text">
+          <p class="govuk-body" style="margin-bottom: 0;">
+            <strong>Our strict promise:</strong> Every single listing links directly to the verified official portal. Zero registration fees, zero gatekeeping, and zero spam.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Origin -->
+  <div class="govuk-section-break govuk-section-break--visible"></div>
+  <section style="padding: 30px 0;">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <p class="govuk-body-s" style="margin-bottom: 5px; color: var(--govuk-secondary-text);">02 — The Origin</p>
+        <h2 class="govuk-heading-l">Aim to Start NamoLead</h2>
+      </div>
+      <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-body">
+          While premier metro colleges often have established training and placement pipelines, thousands of talented engineers, arts, and commerce students in tier-2, tier-3 cities and regional institutions face severe information asymmetry.
+        </p>
+        <p class="govuk-body">
+          Prestigious virtual simulations (by JPMorgan, Goldman Sachs, BCG), government defense fellowships, and high-impact student grants are 100% free and open to everyone — yet most students discover them weeks after the deadline has passed.
+        </p>
+        <p class="govuk-body">
+          <strong>NamoLead was started with one urgent aim:</strong> to level the playing field. To provide an indexed, fast, and transparent platform where Indian students can Learn, Lead, and Grow without barriers.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Purpose & Benefits -->
+  <div class="govuk-section-break govuk-section-break--visible"></div>
+  <section style="padding: 30px 0;">
+    <h2 class="govuk-heading-l">Purpose &amp; Student Benefits</h2>
+    <p class="govuk-body" style="color: var(--govuk-secondary-text);">Why thousands of Indian students check NamoLead every week.</p>
+
+    <div class="govuk-grid-row" style="margin-top: 20px;">
+      <div class="govuk-grid-column-one-third">
+        <div class="nlc-card">
+          <h3 class="govuk-heading-m" style="margin-top: 0; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-circle-check" style="color: var(--govuk-success); font-size: 20px;" aria-hidden="true"></i>
+            <span>100% Free &amp; Verified</span>
+          </h3>
+          <p class="govuk-body" style="margin-bottom: 15px;">No subscription fees, no locked apply buttons, and no deceptive middlemen. You apply directly on the organization's official career portal.</p>
+          <p class="govuk-body-s" style="margin-bottom: 0; color: var(--govuk-success); font-weight: 700;">Direct Verification Guarantee</p>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <div class="nlc-card">
+          <h3 class="govuk-heading-m" style="margin-top: 0; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-bolt" style="color: var(--orange); font-size: 20px;" aria-hidden="true"></i>
+            <span>Early Drop Alerts</span>
+          </h3>
+          <p class="govuk-body" style="margin-bottom: 15px;">Fresh corporate internships and scholarships are posted within hours of opening, giving you the early-applicant advantage before spots fill.</p>
+          <p class="govuk-body-s" style="margin-bottom: 0; color: var(--navy); font-weight: 700;">Live Urgency Countdown</p>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <div class="nlc-card">
+          <h3 class="govuk-heading-m" style="margin-top: 0; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-layer-group" style="color: var(--navy); font-size: 20px;" aria-hidden="true"></i>
+            <span>Comprehensive Breadth</span>
+          </h3>
+          <p class="govuk-body" style="margin-bottom: 15px;">From coding hackathons and virtual simulations to defense recruitment exams and university merit grants — all under one unified search index.</p>
+          <p class="govuk-body-s" style="margin-bottom: 0; color: var(--navy); font-weight: 700;">Multi-Domain Coverage</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <div class="govuk-section-break govuk-section-break--visible"></div>
+  <section style="padding: 30px 0;">
+    <h2 class="govuk-heading-l">Our Future Aim &amp; Roadmap</h2>
+    <p class="govuk-body" style="color: var(--govuk-secondary-text);">What we are actively building to take Indian student success to the next level.</p>
+
+    <div class="govuk-grid-row" style="margin-top: 20px;">
+      <div class="govuk-grid-column-one-half">
+        <div class="nlc-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <span class="govuk-tag">In Active Development</span>
+            <span class="govuk-body-s" style="margin-bottom: 0; color: var(--govuk-secondary-text); font-weight: 600;">Q4 2024</span>
+          </div>
+          <h3 class="govuk-heading-m" style="margin-top: 0; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-robot" style="color: var(--navy); font-size: 20px;" aria-hidden="true"></i>
+            <span>AI Career &amp; Opportunity Chatbot</span>
+          </h3>
+          <p class="govuk-body" style="margin-bottom: 0;">An intelligent AI assistant trained on eligibility criteria, branches, and deadlines. Students can chat naturally to get instant personalized matching.</p>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <div class="nlc-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <span class="govuk-tag govuk-tag--green">Community Driven</span>
+            <span class="govuk-body-s" style="margin-bottom: 0; color: var(--govuk-secondary-text); font-weight: 600;">Q1 2025</span>
+          </div>
+          <h3 class="govuk-heading-m" style="margin-top: 0; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-comments" style="color: var(--govuk-success); font-size: 20px;" aria-hidden="true"></i>
+            <span>Student Feedback &amp; Verification Loop</span>
+          </h3>
+          <p class="govuk-body" style="margin-bottom: 0;">An integrated community feedback widget allowing students to report broken links, request specific corporate openings, and suggest college drives directly to our editorial team.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frequently Asked Questions (FAQ) -->
+  <div class="govuk-section-break govuk-section-break--visible"></div>
+  <section style="padding: 30px 0;">
+    <h2 class="govuk-heading-l">Frequently Asked Questions (FAQ)</h2>
+    <p class="govuk-body" style="color: var(--govuk-secondary-text);">Common queries from students, placement cells, and university partners.</p>
+
+    <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 24px;">
+      <div class="nlc-card" style="border-left: 4px solid var(--navy);">
+        <h3 class="govuk-heading-s" style="margin-top: 0; margin-bottom: 6px;">How does NamoLead verify each opening?</h3>
+        <p class="govuk-body" style="margin-bottom: 0; font-size: 14px;">Every single internship, virtual job simulation, defense exam, and scholarship is manually verified by our team directly against the hiring organization's official domain before it is published.</p>
+      </div>
+
+      <div class="nlc-card" style="border-left: 4px solid var(--navy);">
+        <h3 class="govuk-heading-s" style="margin-top: 0; margin-bottom: 6px;">Are there any fees or subscription costs?</h3>
+        <p class="govuk-body" style="margin-bottom: 0; font-size: 14px;">Zero. NamoLead is 100% free for all Indian college students. We never charge for access, and every application button directs straight to the official employer application portal.</p>
+      </div>
+
+      <div class="nlc-card" style="border-left: 4px solid var(--navy);">
+        <h3 class="govuk-heading-s" style="margin-top: 0; margin-bottom: 6px;">How can our college or club partner with NamoLead?</h3>
+        <p class="govuk-body" style="margin-bottom: 0; font-size: 14px;">We deliver free career discovery workshops, resume masterclasses, and orientation drives. Reach out to our outreach team at <a href="mailto:namolead@gmail.com" class="govuk-link">namolead@gmail.com</a> or message us on WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us -->
+  <div class="govuk-section-break govuk-section-break--visible"></div>
+  <section id="contact" style="padding: 30px 0;">
+    <h2 class="govuk-heading-l">Contact &amp; Student Support</h2>
+    <p class="govuk-body" style="color: var(--govuk-secondary-text);">Have questions, found a broken link, or want to collaborate? Connect with us directly.</p>
+
+    <div class="govuk-grid-row" style="margin-top: 20px;">
+      <div class="govuk-grid-column-one-third">
+        <div class="nlc-card" style="text-align: center; padding: 24px;">
+          <i class="fa-solid fa-envelope" style="font-size: 28px; color: var(--navy); margin-bottom: 12px;" aria-hidden="true"></i>
+          <h3 class="govuk-heading-s" style="margin-top: 0; margin-bottom: 6px;">Email Us</h3>
+          <p class="govuk-body-s" style="margin-bottom: 14px;">For partnerships &amp; inquiries</p>
+          <a href="mailto:namolead@gmail.com" class="govuk-button govuk-button--secondary" style="font-size: 13px; padding: 6px 12px; min-height: 36px;">
+            namolead@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <div class="nlc-card" style="text-align: center; padding: 24px;">
+          <i class="fa-brands fa-whatsapp" style="font-size: 28px; color: var(--govuk-success); margin-bottom: 12px;" aria-hidden="true"></i>
+          <h3 class="govuk-heading-s" style="margin-top: 0; margin-bottom: 6px;">WhatsApp Support</h3>
+          <p class="govuk-body-s" style="margin-bottom: 14px;">Direct student helpline</p>
+          <a href="https://wa.me/919371479131" target="_blank" rel="noopener" class="govuk-button govuk-button--secondary" style="font-size: 13px; padding: 6px 12px; min-height: 36px;">
+            +91 93714 79131
+          </a>
+        </div>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <div class="nlc-card" style="text-align: center; padding: 24px;">
+          <i class="fa-brands fa-instagram" style="font-size: 28px; color: var(--orange); margin-bottom: 12px;" aria-hidden="true"></i>
+          <h3 class="govuk-heading-s" style="margin-top: 0; margin-bottom: 6px;">Instagram</h3>
+          <p class="govuk-body-s" style="margin-bottom: 14px;">Daily drops &amp; quick DMs</p>
+          <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="govuk-button govuk-button--secondary" style="font-size: 13px; padding: 6px 12px; min-height: 36px;">
+            @namoleads
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community CTA -->
+  <section style="background: var(--navy); color: #ffffff; padding: 40px 30px; text-align: center; margin-bottom: 30px; border-radius: 4px; box-shadow: 0 8px 24px rgba(16, 42, 67, 0.15);">
+    <p class="govuk-body-s" style="color: #ff8533; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; font-weight: 700;">Join 15,000+ Students</p>
+    <h2 class="govuk-heading-l" style="color: #ffffff; margin-bottom: 12px;">Never miss an opportunity drop.</h2>
+    <p class="govuk-body" style="color: rgba(255,255,255,0.85); max-width: 580px; margin: 0 auto 24px;">
+      Connect with our daily broadcast channels on WhatsApp and Instagram for instant link drops and early application windows.
+    </p>
+    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+      <a href="https://chat.whatsapp.com/invite/namolead" target="_blank" rel="noopener" class="govuk-button govuk-button--orange">
+        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+        <span>Join WhatsApp Channel</span>
+      </a>
+      <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="govuk-button govuk-button--secondary">
+        <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+        <span>Follow @namoleads</span>
+      </a>
+    </div>
+  </section>
+</article>
+{% endblock %}

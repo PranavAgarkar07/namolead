@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Opportunities Directory · NamoLead{% endblock %}
+
+{% block og_tags %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NamoLead">
+<meta property="og:title" content="Opportunities Directory — NamoLead">
+<meta property="og:description" content="Browse and search all verified internships, virtual job simulations, government defense exams, and scholarships for Indian college students.">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+{% block content %}
+<article>
+  {% include "components/breadcrumbs.html" %}
+
+  <h1 class="govuk-heading-xl">All opportunities and career openings</h1>
+  <p class="govuk-body-l">
+    Search and filter verified opportunities across top technology companies, virtual simulations, government defense exams, and student scholarships across India.
+  </p>
+
+  <!-- Stats -->
+  <div class="govuk-grid-row" style="margin-bottom: 30px;">
+    <div class="govuk-grid-column-one-third">
+      <div class="nlc-stat">
+        <div class="nlc-stat__value">{{ stats.live }}</div>
+        <div class="nlc-stat__label">Live listings</div>
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <div class="nlc-stat">
+        <div class="nlc-stat__value">{{ stats.this_week }}</div>
+        <div class="nlc-stat__label">This week</div>
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <div class="nlc-stat">
+        <div class="nlc-stat__value">{{ stats.categories }}</div>
+        <div class="nlc-stat__label">Fields covered</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guarantee -->
+  <div class="govuk-inset-text">
+    <p class="govuk-body" style="margin-bottom: 0;">
+      <strong>Direct links only. No paywalls. No middlemen.</strong> Every post routes directly to the official portal via tracked redirect. If a link expires or changes, let us know via <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="govuk-link">@namoleads</a>.
+    </p>
+  </div>
+
+  <!-- Search & Directory Section -->
+  <section id="directory" style="margin-bottom: 40px;">
+
+    <!-- Search Input -->
+    <form id="search-form" method="get" action="/opportunities/" role="search" class="govuk-form-group" style="max-width: 500px; margin-bottom: 20px;">
+      <label for="search-input" class="govuk-label">Search opportunities</label>
+      <div class="govuk-hint">Search roles, companies, fields</div>
+      <input id="search-input" type="search" name="q" value="{{ query }}" placeholder="e.g. Python internship" autocomplete="off" spellcheck="false"
+        class="govuk-input">
+      <input type="hidden" name="category" id="search-category" value="{{ active_category }}">
+      <i id="search-spinner" class="fa-solid fa-circle-notch fa-spin" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--navy); display: none; font-size: 16px;" aria-hidden="true"></i>
+    </form>
+
+    <!-- Search Meta Result Bar -->
+    <div id="search-meta" class="govuk-body" style="margin-bottom: 10px; {% if not query %}display: none;{% endif %}">
+      <span id="search-count">{{ result_count|default:0 }}</span> result{{ result_count|pluralize }} for "<span id="search-query" class="govuk-body" style="font-weight: 700; margin-bottom: 0;">{{ query }}</span>"
+      <a id="search-clear" href="{% if active_category %}?category={{ active_category }}#directory{% else %}/opportunities/#directory{% endif %}" class="govuk-link" style="margin-left: 10px;">Clear</a>
+    </div>
+
+    <!-- Category Filter Pills -->
+    <nav class="nlc-filters" aria-label="Filter by category">
+      <a href="{% if query %}?q={{ query|urlencode }}{% else %}/opportunities/{% endif %}#directory"
+        data-filter-btn
+        data-category=""
+        class="nlc-filter-tag {% if not active_category %}nlc-filter-tag--active{% endif %}"
+        {% if not active_category %}aria-current="page"{% endif %}>All</a>
+      {% for value, label in categories %}
+        <a href="?category={{ value }}{% if query %}&amp;q={{ query|urlencode }}{% endif %}#directory"
+          data-filter-btn
+          data-category="{{ value }}"
+          class="nlc-filter-tag {% if value == active_category %}nlc-filter-tag--active{% endif %}"
+          {% if value == active_category %}aria-current="page"{% endif %}>{{ label }}</a>
+      {% endfor %}
+    </nav>
+
+    <!-- Opportunity Grid -->
+    <div id="opportunity-grid" class="govuk-grid-row" style="transition: opacity 200ms;">
+      {% for opp in opportunities %}
+        <div class="govuk-grid-column-one-half">{% include "components/card.html" with post=opp %}</div>
+      {% empty %}
+        <div id="search-empty" class="govuk-grid-column-full">
+          {% if query %}
+            {% include "components/empty-state.html" with title="No matches found" body="Nothing matches your search — try a broader term or another category filter." action_label="View all listings" action_url="/opportunities/" %}
+          {% else %}
+            {% include "components/empty-state.html" with title="No opportunities listed yet" body="There are no posts in this category right now. Check back soon!" action_label="View all listings" action_url="/opportunities/" %}
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Community CTA -->
+  <section style="background: var(--govuk-page-background); border: 1px solid var(--govuk-border); padding: 24px; margin-bottom: 40px; border-left: 5px solid var(--orange);">
+    <div class="govuk-grid-row" style="align-items: center;">
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m" style="margin-top: 0; margin-bottom: 6px;">New opportunities drop on Instagram &amp; WhatsApp first</h2>
+        <p class="govuk-body" style="margin-bottom: 0; color: var(--ink-muted);">Early links &amp; deadline reminders &mdash; follow <strong>@namoleads</strong></p>
+      </div>
+      <div class="govuk-grid-column-one-third" style="display: flex; align-items: center; justify-content: flex-end;">
+        <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="govuk-button">
+          <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+          <span>Follow @namoleads</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</article>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module" defer src="{% static 'js/live-search.js' %}"></script>
+{% endblock %}

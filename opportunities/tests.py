@@ -50,41 +50,59 @@ class OpportunityTests(TestCase):
             apply_url="https://example.com/scholarship",
         )
 
-    def test_index_lists_published_posts(self):
+    def test_index_lists_latest_published_posts(self):
         response = self.client.get("/")
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Internship A")
         self.assertContains(response, "Scholarship B")
+        self.assertContains(response, "Latest Opportunities")
+        self.assertContains(response, "See All Opportunities")
+        self.assertContains(response, "/opportunities/")
 
-    def test_index_filters_by_category(self):
-        response = self.client.get("/", {"category": "scholarship"})
+    def test_opportunities_directory_lists_all_posts(self):
+        response = self.client.get("/opportunities/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Internship A")
+        self.assertContains(response, "Scholarship B")
+        self.assertContains(response, "opportunities and career openings")
+        self.assertContains(response, 'id="search-input"')
+
+    def test_opportunities_directory_filters_by_category(self):
+        response = self.client.get("/opportunities/", {"category": "scholarship"})
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Scholarship B")
         self.assertNotContains(response, "Internship A")
 
-    def test_index_search_by_title(self):
-        response = self.client.get("/", {"q": "internship"})
+    def test_opportunities_directory_search_by_title(self):
+        response = self.client.get("/opportunities/", {"q": "internship"})
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Internship A")
         self.assertNotContains(response, "Scholarship B")
         self.assertContains(response, 'id="search-count">1<')
 
-    def test_index_search_by_organization(self):
-        response = self.client.get("/", {"q": "acme"})
+    def test_opportunities_directory_search_by_organization(self):
+        response = self.client.get("/opportunities/", {"q": "acme"})
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Internship A")
         self.assertNotContains(response, "Scholarship B")
 
-    def test_index_search_by_description(self):
-        response = self.client.get("/", {"q": "funded"})
+    def test_opportunities_directory_search_by_description(self):
+        response = self.client.get("/opportunities/", {"q": "funded"})
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Scholarship B")
         self.assertNotContains(response, "Internship A")
 
-    def test_index_search_respects_category_and_keeps_query(self):
-        response = self.client.get("/", {"q": "study", "category": "scholarship"})
+    def test_opportunities_directory_search_respects_category_and_keeps_query(self):
+        response = self.client.get("/opportunities/", {"q": "study", "category": "scholarship"})
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Scholarship B")
         self.assertContains(response, 'value="study"')
         self.assertContains(response, "?category=internship&amp;q=study")
 
-    def test_index_search_no_results_shows_empty_state(self):
-        response = self.client.get("/", {"q": "zzznomatch"})
-        self.assertContains(response, "No matches")
+    def test_opportunities_directory_search_no_results_shows_empty_state(self):
+        response = self.client.get("/opportunities/", {"q": "zzznomatch"})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No matches found")
         self.assertNotContains(response, "Internship A")
 
     def test_api_search_returns_card_fragments(self):
@@ -127,7 +145,7 @@ class OpportunityTests(TestCase):
         self.assertFalse(expired.is_portrait)
         card = self.client.get("/").content.decode()
         self.assertIn("Expired Post", card)
-        self.assertIn('is-closed', card)
+        self.assertIn('govuk-tag--red', card)  # GOV.UK red tag for closed/expired
         detail = self.client.get("/expired-post/").content.decode()
         self.assertIn("Deadline passed", detail)
 
@@ -145,10 +163,9 @@ class OpportunityTests(TestCase):
         )
         self.assertTrue(portrait.is_portrait)
         detail = self.client.get("/portrait-post/").content.decode()
-        self.assertIn("lg:grid-cols-[1fr_1.25fr]", detail)
-        self.assertIn("data-lightbox", detail)
+        self.assertIn("data-lightbox", detail)  # Lightbox attribute present
         self.assertIn("data-lightbox-src=", detail)
-        self.assertIn("cursor-zoom-in", detail)
+        self.assertIn("cursor: zoom-in", detail)  # GOV.UK detail page uses inline cursor style
 
     def test_breadcrumb_navigation(self):
         publish(
@@ -163,14 +180,14 @@ class OpportunityTests(TestCase):
         self.assertIn("?category=scholarship", detail)
         self.assertIn('aria-current="page"', detail)
         self.assertIn("BreadcrumbList", detail)
-        index = self.client.get("/").content.decode()
-        self.assertIn('aria-label="Breadcrumb"', index)
+        opps = self.client.get("/opportunities/").content.decode()
+        self.assertIn('aria-label="Breadcrumb"', opps)
 
     def test_logo_and_branding_everywhere(self):
         index = self.client.get("/").content.decode()
-        self.assertIn("brand-box", index)
-        self.assertIn("brand-mark", index)
-        self.assertIn("bg-white", index)
+        # GOV.UK header contains logo SVG and NamoLead wordmark
+        self.assertIn("govuk-header__logotype", index)
+        self.assertIn("NamoLead", index)
         self.assertIn("apple-touch-icon.png", index)
         self.assertIn("og:image", index)
         self.assertIn("og-cover.png", index)
@@ -196,17 +213,15 @@ class OpportunityTests(TestCase):
             apply_url="https://example.com/wide",
             featured_image=wide,
         )
+        # GOV.UK card: both portrait and landscape show image + metadata + title
         portrait_card = self.client.get("/api/search/", {"q": "Portrait Card"}).json()["html"]
-        self.assertIn("sm:flex-row", portrait_card)
-        self.assertIn("aspect-[210/297]", portrait_card)
-        self.assertNotIn("aspect-[16/9]", portrait_card)
+        self.assertIn("Portrait Card", portrait_card)
+        self.assertIn("nlc-card", portrait_card)  # GOV.UK card class
+        self.assertIn("govuk-tag", portrait_card)  # Category tag
         landscape_card = self.client.get("/api/search/", {"q": "Landscape Card"}).json()["html"]
-        self.assertIn("sm:flex-row", landscape_card)
-        self.assertIn("aspect-[16/9]", landscape_card)
-        self.assertNotIn("aspect-[210/297]", landscape_card)
-        self.assertNotIn("data-lightbox-src=", portrait_card)
-        self.assertNotIn('role="button"', portrait_card)
-        self.assertNotIn('tabindex="0"', portrait_card)
+        self.assertIn("Landscape Card", landscape_card)
+        self.assertIn("nlc-card", landscape_card)
+        self.assertIn("govuk-tag", landscape_card)
 
     def test_card_deadline_chips(self):
         from datetime import timedelta
@@ -229,12 +244,14 @@ class OpportunityTests(TestCase):
             apply_url="https://example.com/later",
             deadline=local_today + timedelta(days=30),
         )
+        # GOV.UK card uses govuk-tag--red for urgent/closing soon, govuk-tag--grey for normal
         closing = self.client.get("/api/search/", {"q": "Closing Soon"}).json()["html"]
-        self.assertIn("deadline-chip is-urgent", closing)
-        self.assertIn(f"Closes {(local_today + timedelta(days=3)).strftime('%d %b').lstrip('0')}", closing)
+        self.assertIn("govuk-tag--red", closing)  # Red tag for imminent deadline
+        target_date = local_today + timedelta(days=3)
+        self.assertIn(f"Closes {target_date.day} {target_date.strftime('%b')}", closing)
         later = self.client.get("/api/search/", {"q": "Closing Later"}).json()["html"]
-        self.assertIn("deadline-chip", later)
-        self.assertNotIn("is-urgent", later)
+        self.assertIn("govuk-tag", later)  # Has a tag (grey for non-urgent)
+        self.assertNotIn("govuk-tag--red", later)  # Not urgent
 
     def test_rich_body_renders(self):
         rich = publish(
@@ -248,3 +265,72 @@ class OpportunityTests(TestCase):
         detail = self.client.get("/rich-post/").content.decode()
         self.assertIn("rich-text", detail)
         self.assertIn("Full <b>details</b> here", detail)
+
+    def test_about_page_renders_successfully(self):
+        response = self.client.get("/about/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "What is NamoLead?")
+        self.assertContains(response, "Aim to Start NamoLead")
+        self.assertContains(response, "Purpose &amp; Student Benefits")
+        self.assertContains(response, "Our Future Aim &amp; Roadmap")
+        self.assertContains(response, "AI Career &amp; Opportunity Chatbot")
+        self.assertContains(response, "WhatsApp")
+
+    def test_team_page_renders_successfully(self):
+        response = self.client.get("/team/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Namokar Raka")
+        self.assertContains(response, "Founder Spotlight")
+        self.assertContains(response, "Core Team Members")
+        self.assertContains(response, "Technical Head")
+        # When founder has no github, github profile link should NOT be present
+        self.assertNotContains(response, "GitHub Profile")
+
+    def test_team_page_renders_with_database_team_members(self):
+        from .models import TeamMember
+
+        # Create founder with github and department head without github
+        TeamMember.objects.create(
+            name="Namokar Raka",
+            role="Founder & President",
+            department="Leadership",
+            tier=TeamMember.Tier.FOUNDER,
+            bio="Leading the founding team.",
+            quote="Talent is evenly distributed.",
+            github_url="https://github.com/example-user",
+            instagram_url="https://instagram.com/namokar",
+            sort_order=1,
+            is_active=True,
+        )
+        TeamMember.objects.create(
+            name="Sarah Jenkins",
+            role="AI Research Head",
+            department="Machine Learning",
+            tier=TeamMember.Tier.HEAD,
+            bio="Directing AI programs.",
+            linkedin_url="https://linkedin.com/in/sarah",
+            sort_order=1,
+            is_active=True,
+        )
+        response = self.client.get("/team/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Namokar Raka")
+        self.assertContains(response, "Sarah Jenkins")
+        self.assertContains(response, "AI Research Head")
+        self.assertContains(response, "Machine Learning")
+        # Since founder has github, GitHub link should appear
+        self.assertContains(response, "https://github.com/example-user")
+        self.assertContains(response, "fa-github")  # GitHub icon shown (GOV.UK button with icon)
+        # Sarah Jenkins has LinkedIn
+        self.assertContains(response, "https://linkedin.com/in/sarah")
+
+
+    def test_events_page_renders_successfully(self):
+        response = self.client.get("/events/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Events &amp; Campus Drives")
+        self.assertContains(response, "the Horizon")  # 'Exciting Sessions Are on the Horizon'
+        self.assertContains(response, "WhatsApp")
+        self.assertContains(response, "Campus Orientation Drives")  # Event type listed
+
+

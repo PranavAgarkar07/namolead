@@ -6,13 +6,13 @@
   overlay.setAttribute("aria-label", "Image viewer");
   overlay.innerHTML = `
     <button type="button" class="lightbox-close" aria-label="Close image viewer">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
     </button>
     <button type="button" class="lightbox-nav lightbox-prev" aria-label="Previous image">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
     </button>
     <button type="button" class="lightbox-nav lightbox-next" aria-label="Next image">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
     </button>
     <figure>
       <img alt="">

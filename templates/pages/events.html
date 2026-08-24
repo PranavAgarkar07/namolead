@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Events & Workshops · Coming Soon · NamoLead{% endblock %}
+
+{% block og_tags %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NamoLead">
+<meta property="og:title" content="Events & Campus Drives — Coming Soon · NamoLead">
+<meta property="og:description" content="NamoLead campus drives, workshops, and career hackathons for Academic Year 2026–27 are coming soon. Join our community for live updates.">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+{% block content %}
+<article>
+  {% include "components/breadcrumbs.html" %}
+
+  <h1 class="govuk-heading-xl">Events &amp; Campus Drives</h1>
+  <p class="govuk-body-l">
+    We haven't hosted our first official public event yet, but our founding team is actively planning pan-India orientation drives, hackathons, and career workshops for the 2026–27 academic year.
+  </p>
+
+  <!-- Coming Soon Section -->
+  <section style="background: var(--govuk-page-background); border: 1px solid var(--govuk-border); padding: 40px 30px; text-align: center; margin-bottom: 30px;">
+    <span class="govuk-body-s" style="text-transform: uppercase; letter-spacing: 2px; color: var(--govuk-secondary-text);">In the Pipeline</span>
+    <h2 class="govuk-heading-l">Exciting Sessions Are on the Horizon</h2>
+    <p class="govuk-body" style="max-width: 600px; margin: 0 auto 30px;">
+      Our team is currently preparing dynamic workshops and campus outreach programs to help Indian college students unlock verified career opportunities.
+    </p>
+
+    <div class="govuk-grid-row" style="text-align: left;">
+      <div class="govuk-grid-column-one-half">
+        <div class="nlc-card">
+          <h3 class="govuk-heading-s"><i class="fa-solid fa-bullhorn" style="color: var(--govuk-brand);"></i> Campus Orientation Drives</h3>
+          <p class="govuk-body-s">Step-by-step roadmaps on discovering top internships, virtual job simulations, and government exams.</p>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <div class="nlc-card">
+          <h3 class="govuk-heading-s"><i class="fa-solid fa-code" style="color: var(--govuk-brand);"></i> Builder Hackathons</h3>
+          <p class="govuk-body-s">Pan-India team competitions, project building, and live engineering mentorship from peers.</p>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <div class="nlc-card">
+          <h3 class="govuk-heading-s"><i class="fa-solid fa-file-lines" style="color: var(--govuk-brand);"></i> Resume &amp; ATS Masterclasses</h3>
+          <p class="govuk-body-s">Interactive sessions on crafting high-conversion technical resumes and portfolio presentations.</p>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <div class="nlc-card">
+          <h3 class="govuk-heading-s"><i class="fa-solid fa-video" style="color: var(--govuk-brand);"></i> Virtual Live AMAs</h3>
+          <p class="govuk-body-s">Direct Q&amp;A sessions answering student questions on opportunities, scholarships, and hiring cycles.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 30px;">
+      <a href="https://whatsapp.com/channel/0029Vb7qVrnDTkK9YFfN3x2V" target="_blank" rel="noopener" class="govuk-button">
+        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Join WhatsApp for Event Alerts
+      </a>
+      <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="govuk-button govuk-button--secondary">
+        <i class="fa-brands fa-instagram" aria-hidden="true"></i> Follow @namoleads
+      </a>
+    </div>
+  </section>
+
+  <!-- Host a Session -->
+  <div class="govuk-inset-text">
+    <h3 class="govuk-heading-s" style="margin-top: 0;">Want NamoLead to Host a Drive at Your College?</h3>
+    <p class="govuk-body">We collaborate with student clubs, placement cells, and colleges across India to deliver 100% free career discovery workshops.</p>
+    <p style="margin-bottom: 0;">
+      <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="govuk-link">Connect for Collaboration</a>
+    </p>
+  </div>
+</article>
+{% endblock %}

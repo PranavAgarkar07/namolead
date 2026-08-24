@@ -72,3 +72,15 @@ class TrackingTests(TestCase):
         response = self.client.get("/analytics/")
         self.assertContains(response, "Total clicks")
         self.assertContains(response, "1")
+
+    def test_dashboard_filters_and_range(self):
+        User = get_user_model()
+        user = User.objects.create_user("staff2", password="x", is_staff=True)
+        self.client.force_login(user)
+        self.client.get("/go/internship-a/?utm_source=whatsapp")
+        self.client.get("/track/view/internship-a/")
+        for rng in ["today", "7d", "30d", "all"]:
+            response = self.client.get(f"/analytics/?range={rng}")
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response, "Real-Time Analytics Dashboard")
+            self.assertContains(response, "Live Application Feed")

@@ -2,119 +2,136 @@
 {% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
-{% include "components/breadcrumbs.html" %}
-{% include "components/hero.html" %}
-{% include "components/ticker.html" %}
 
-<section id="how-it-works" class="mt-16 mb-10">
-  {% include "components/section-heading.html" with eyebrow="The drill" title="How it works" sub="Three steps, about a minute. No account, no gatekeeping." %}
-  <ol class="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-[var(--border)] border border-[var(--border)] bg-white">
-    <li class="reveal p-6 sm:p-7">
-      <div class="flex items-baseline gap-3 mb-2">
-        <span class="font-display font-bold text-[11px] tracking-[0.14em] uppercase text-[var(--orange-ink)]">01 — Browse</span>
-        <span class="h-px flex-1 bg-[var(--border)]"></span>
+<!-- Hero Section -->
+<section class="nlc-hero">
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row" style="align-items: center;">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="nlc-hero__tag">
+          <i class="fa-solid fa-circle-check" style="color: #4ade80;" aria-hidden="true"></i>
+          100% Free &bull; Verified Official Portals Only
+        </span>
+        <h1 class="nlc-hero__title">Free career opportunities<br>for Indian <span>students.</span></h1>
+        <p class="nlc-hero__description">
+          Direct, verified links to corporate internships, virtual job simulations, government defense openings, and scholarships &mdash; no middlemen, no fees, no paywalls.
+        </p>
+        <div class="nlc-hero__actions">
+          <a href="/opportunities/" class="govuk-button govuk-button--orange">
+            <span>Browse All Opportunities</span>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </a>
+          <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="govuk-button govuk-button--secondary">
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            <span>Follow @namoleads</span>
+          </a>
+        </div>
+        <div class="nlc-hero__proof">
+          <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+          <span>Every "Apply" routes straight to the official organization via tracked redirect</span>
+        </div>
       </div>
-      <p class="text-[13.5px] leading-relaxed text-[var(--ink-muted)]">Scan fresh internships and programs. Filter by what suits you — not what’s trending.</p>
-    </li>
-    <li class="reveal reveal-d1 p-6 sm:p-7">
-      <div class="flex items-baseline gap-3 mb-2">
-        <span class="font-display font-bold text-[11px] tracking-[0.14em] uppercase text-[var(--orange-ink)]">02 — Learn</span>
-        <span class="h-px flex-1 bg-[var(--border)]"></span>
+      <div class="govuk-grid-column-one-third nlc-hero__visual">
+        <div class="nlc-hero__card" style="width: 100%; max-width: 320px;">
+          <div class="nlc-hero__card-header">
+            <span>Career Pathways</span>
+            <span style="font-size: 12px; color: #4ade80; display: inline-flex; align-items: center; gap: 4px;">
+              <i class="fa-solid fa-circle" style="font-size: 8px;" aria-hidden="true"></i> Verified
+            </span>
+          </div>
+          <ul class="nlc-hero__pillar-list">
+            <li class="nlc-hero__pillar-item">
+              <i class="fa-solid fa-briefcase nlc-hero__pillar-icon" aria-hidden="true"></i>
+              <span>Corporate Internships</span>
+            </li>
+            <li class="nlc-hero__pillar-item">
+              <i class="fa-solid fa-laptop-code nlc-hero__pillar-icon" aria-hidden="true"></i>
+              <span>Job Simulations</span>
+            </li>
+            <li class="nlc-hero__pillar-item">
+              <i class="fa-solid fa-building-columns nlc-hero__pillar-icon" aria-hidden="true"></i>
+              <span>Govt &amp; Defense Exams</span>
+            </li>
+            <li class="nlc-hero__pillar-item">
+              <i class="fa-solid fa-graduation-cap nlc-hero__pillar-icon" aria-hidden="true"></i>
+              <span>Student Scholarships</span>
+            </li>
+          </ul>
+        </div>
       </div>
-      <p class="text-[13.5px] leading-relaxed text-[var(--ink-muted)]">Read the full brief: eligibility, dates, and what they actually need from you.</p>
-    </li>
-    <li class="reveal reveal-d2 p-6 sm:p-7">
-      <div class="flex items-baseline gap-3 mb-2">
-        <span class="font-display font-bold text-[11px] tracking-[0.14em] uppercase text-[var(--orange-ink)]">03 — Apply</span>
-        <span class="h-px flex-1 bg-[var(--border)]"></span>
-      </div>
-      <p class="text-[13.5px] leading-relaxed text-[var(--ink-muted)]">Hit Apply and land on the official page. Your data stays with them, not us.</p>
-    </li>
-  </ol>
-</section>
-
-<div class="grid grid-cols-3 divide-x divide-[var(--border)] border border-[var(--border)] bg-white mb-10 text-center">
-  <div class="reveal py-5 px-3">
-    <p class="font-display font-bold text-3xl tracking-[-0.02em] text-[var(--ink)]">{{ stats.live }}</p>
-    <p class="text-[10px] uppercase tracking-[0.14em] font-semibold text-[var(--ink-muted)] mt-1">Live now</p>
-  </div>
-  <div class="reveal reveal-d1 py-5 px-3 bg-[var(--surface-3)]">
-    <p class="font-display font-bold text-3xl tracking-[-0.02em] text-[var(--orange-ink)]">{{ stats.this_week }}</p>
-    <p class="text-[10px] uppercase tracking-[0.14em] font-semibold text-[var(--ink-muted)] mt-1">This week</p>
-  </div>
-  <div class="reveal reveal-d2 py-5 px-3">
-    <p class="font-display font-bold text-3xl tracking-[-0.02em] text-[var(--ink)]">{{ stats.categories }}</p>
-    <p class="text-[10px] uppercase tracking-[0.14em] font-semibold text-[var(--ink-muted)] mt-1">Categories</p>
-  </div>
-</div>
-
-<section class="border-l-2 border-[var(--orange)] bg-[var(--surface-3)] px-6 py-5 mb-14 flex gap-4">
-  <span class="hidden sm:grid place-items-center w-9 h-9 bg-white border border-[var(--border)] text-[var(--ink)] shrink-0" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-  </span>
-  <div>
-    <p class="font-display font-semibold text-[15px] text-[var(--ink)]">No middleman. No fee. No catch.</p>
-    <p class="text-[13px] leading-relaxed text-[var(--ink-muted)] mt-1">Every “Apply” lands on the official site via a tracked redirect. If it ever doesn’t, that’s our bug — DM <a href="https://instagram.com/namoleads" class="underline decoration-[var(--orange)]/30 underline-offset-4 hover:text-[var(--orange-ink)]">@namoleads</a> and we’ll fix it that day.</p>
-  </div>
-</section>
-
-<div id="opportunities" class="mb-10">
-  {% include "components/section-heading.html" with eyebrow="Fresh picks" title="Latest opportunities" %}
-
-  <form id="search-form" method="get" action="/" role="search" class="relative max-w-md mb-5">
-    <label for="search-input" class="sr-only">Search opportunities</label>
-    <svg class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--ink-muted)]" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-    <input id="search-input" type="search" name="q" value="{{ query }}" placeholder="Search roles, companies, fields…" autocomplete="off" spellcheck="false"
-      class="w-full h-12 pl-11 pr-11 border border-[var(--border)] bg-[var(--surface-2)] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--navy)]/20 focus:border-[var(--navy)] transition-colors placeholder:text-[var(--ink-muted)]">
-    {% if active_category %}<input type="hidden" name="category" id="search-category" value="{{ active_category }}">{% endif %}
-    <svg id="search-spinner" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--ink-muted)] animate-spin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-  </form>
-
-  <div id="search-meta" class="flex items-center justify-between gap-3 mb-4 {% if not query %}hidden{% endif %}">
-    <p class="text-sm text-[var(--ink-muted)]" role="status">
-      <span id="search-count">{{ result_count|default:0 }}</span> result{{ result_count|pluralize }} for "<span id="search-query" class="font-semibold text-[var(--ink)]">{{ query }}</span>"
-    </p>
-    <a id="search-clear" href="{% if active_category %}?category={{ active_category }}{% else %}/{% endif %}" class="text-sm font-semibold text-[var(--orange-strong)] hover:text-[var(--orange)]">Clear</a>
-  </div>
-
-  <nav class="flex flex-wrap items-center gap-2 mb-8" aria-label="Filter by category">
-    <a href="{% if query %}?q={{ query|urlencode }}{% else %}/{% endif %}" class="px-3 py-1.5 text-sm font-semibold border transition-colors {% if not active_category %}bg-[var(--navy)] text-white border-[var(--navy)]{% else %}border-[var(--border)] text-[var(--ink-muted)] hover:border-[var(--navy)] hover:text-[var(--navy)]{% endif %}" {% if not active_category %}aria-current="page"{% endif %}>All</a>
-    {% for value, label in categories %}
-      <a href="?category={{ value }}{% if query %}&amp;q={{ query|urlencode }}{% endif %}" class="px-3 py-1.5 text-sm font-semibold border transition-colors {% if value == active_category %}bg-[var(--navy)] text-white border-[var(--navy)]{% else %}border-[var(--border)] text-[var(--ink-muted)] hover:border-[var(--navy)] hover:text-[var(--navy)]{% endif %}" {% if value == active_category %}aria-current="page"{% endif %}>{{ label }}</a>
-    {% endfor %}
-  </nav>
-
-  <div id="opportunity-grid" class="grid grid-cols-1 md:grid-cols-2 gap-7 transition-opacity duration-200">
-    {% for opp in opportunities %}
-      <div class="reveal {% cycle 'reveal-d1' 'reveal-d2' 'reveal-d3' 'reveal-d4' 'reveal-d5' %}">{% include "components/card.html" with post=opp %}</div>
-    {% empty %}
-      <div id="search-empty" class="col-span-full">
-        {% if query %}
-          {% include "components/empty-state.html" with title="No matches" body="Nothing matches your search — try a broader term or another field." action_label="View all posts" action_url="/" %}
-        {% else %}
-          {% include "components/empty-state.html" with title="No possibilities yet" body="There are no posts to show right now." action_label="View all posts" action_url="/" %}
-        {% endif %}
-      </div>
-    {% endfor %}
-  </div>
-</div>
-
-<section class="border border-[var(--border)] bg-white px-6 py-6 mb-14 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-  <div class="flex items-center gap-3">
-    <span class="hidden sm:grid place-items-center w-9 h-9 border border-[var(--border)] bg-[var(--surface-3)] text-[var(--ink)]" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-    </span>
-    <div>
-      <p class="font-display font-semibold text-[14px] text-[var(--ink)]">Picks land on Instagram first</p>
-      <p class="text-xs tracking-wide text-[var(--ink-muted)]">Daily drops &amp; early links — <span class="font-semibold text-[var(--ink)]">@namoleads</span></p>
     </div>
   </div>
-  <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-[var(--navy)] text-white text-sm font-semibold px-5 py-2.5 hover:bg-[var(--navy-soft)] active:scale-[0.98] transition-colors">Follow
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-  </a>
 </section>
-{% endblock %}
 
-{% block extra_js %}
-<script type="module" defer src="{% static 'js/live-search.js' %}"></script>
+<!-- Stats -->
+<div class="govuk-width-container" style="margin-top: 30px; margin-bottom: 30px;">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <div class="nlc-stat">
+        <div class="nlc-stat__value">{{ stats.live }}</div>
+        <div class="nlc-stat__label">Live listings</div>
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <div class="nlc-stat">
+        <div class="nlc-stat__value">{{ stats.this_week }}</div>
+        <div class="nlc-stat__label">This week</div>
+      </div>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <div class="nlc-stat">
+        <div class="nlc-stat__value">{{ stats.categories }}</div>
+        <div class="nlc-stat__label">Fields covered</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Guarantee -->
+<div class="govuk-width-container">
+  <div class="govuk-inset-text">
+    <p class="govuk-body" style="margin-bottom: 0;">
+      <strong>No middleman. No fee. No catch.</strong> Every "Apply" lands on the official site via a tracked redirect. If it ever doesn't, that's our bug &mdash; DM <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="govuk-link">@namoleads</a> and we'll fix it that day.
+    </p>
+  </div>
+</div>
+
+<!-- Latest Opportunities -->
+<section class="govuk-width-container" style="margin-top: 40px; margin-bottom: 40px;">
+  <h2 class="govuk-heading-l">Latest Opportunities</h2>
+  <p class="govuk-body" style="color: var(--govuk-secondary-text);">Recently added internships, simulations, scholarships, and hiring drives.</p>
+
+  <div class="govuk-grid-row" style="margin-bottom: 20px;">
+    {% for opp in latest_opportunities %}
+      <div class="govuk-grid-column-one-half">{% include "components/card.html" with post=opp %}</div>
+    {% empty %}
+      <div class="govuk-grid-column-full">
+        {% include "components/empty-state.html" with title="No possibilities yet" body="There are no posts to show right now." action_label="View all posts" action_url="/opportunities/#directory" %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="nlc-cta-banner">
+    <div class="nlc-cta-banner__content">
+      <h3 class="govuk-heading-m" style="margin-top: 0;">Looking for More Roles &amp; Filters?</h3>
+      <p class="govuk-body" style="margin-bottom: 0;">Search by keyword, filter by categories, and explore all {{ stats.live }} active listings.</p>
+    </div>
+    <a href="/opportunities/#directory" class="govuk-button">See All Opportunities</a>
+  </div>
+</section>
+
+<!-- Community CTA -->
+<section class="govuk-width-container" style="margin-bottom: 40px;">
+  <div class="nlc-community-cta">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m" style="margin-top: 0;">Picks land on Instagram first</h2>
+        <p class="govuk-body" style="margin-bottom: 0;">Daily drops &amp; early links &mdash; follow <strong>@namoleads</strong></p>
+      </div>
+      <div class="govuk-grid-column-one-third nlc-community-cta__action">
+        <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="govuk-button">Follow @namoleads</a>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

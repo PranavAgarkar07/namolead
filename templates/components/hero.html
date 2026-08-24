@@ -1,82 +1,15 @@
-{% load static %}
-<section class="bg-[var(--paper)] border-y border-[var(--border)] relative">
-  <!-- subtle paper grain -->
-  <div class="absolute inset-0 pointer-events-none opacity-[0.035]" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;)" aria-hidden="true"></div>
-
-  <div class="relative max-w-6xl mx-auto px-6">
-    <!-- masthead meta bar — newspaper dateline -->
-    <div class="masthead-rule flex flex-wrap items-center justify-between gap-2 text-[10px] tracking-[0.16em] uppercase font-semibold">
-      <span class="text-[var(--ink-muted)]">Est. 2024 — New Delhi • Curated for Indian students</span>
-      <span class="hidden sm:inline-flex items-center gap-2 text-[var(--ink-muted)]">
-        <span class="w-1.5 h-1.5 rounded-full bg-[var(--orange)]"></span>
-        Edition № {% now "W" %} — {% now "j F Y" %}
-      </span>
-      <span class="sm:hidden text-[var(--ink-muted)]">Ed. {% now "W" %}</span>
+<section class="govuk-notification-banner govuk-notification-banner--success" role="region" aria-label="Service announcement">
+  <div class="govuk-width-container">
+    <div class="govuk-notification-banner__header">
+      <span class="govuk-notification-banner__title">NamoLead</span>
     </div>
-
-    <div class="grid lg:grid-cols-[1.35fr_0.75fr] gap-8 lg:gap-10 py-10 lg:py-12 items-start">
-      <!-- Left: Editorial headline -->
-      <div class="reveal">
-        <span class="inline-flex items-center gap-2 text-[var(--orange-ink)] uppercase tracking-[0.14em] text-[11px] font-bold mb-4">
-          <span class="h-px w-6 bg-[var(--orange)]"></span>
-          Hand-picked &bull; Verified &bull; Free
-        </span>
-        <h1 class="font-display text-[2.4rem] sm:text-[3.4rem] lg:text-[3.7rem] font-[650] tracking-[-0.03em] leading-[0.92] text-[var(--ink)]">
-          Opportunities<br>
-          <span class="font-normal italic text-[var(--ink)]">worth your time.</span>
-        </h1>
-        <p class="mt-4 text-[15px] leading-relaxed text-[var(--ink-muted)] max-w-[42ch] border-l-2 border-[var(--orange)] pl-4">
-          Every opening is checked, dated, and linked straight to the official application. No middleman, no spam — just the next step, on time.
-        </p>
-        <div class="mt-7 flex flex-wrap gap-3">
-          <a href="#opportunities" class="inline-flex items-center gap-2 font-semibold px-6 py-3 bg-[var(--navy)] text-white hover:bg-[var(--navy-soft)] active:scale-[0.98] transition-all">
-            Browse fresh picks
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a href="#how-it-works" class="inline-flex items-center gap-2 font-medium px-6 py-3 border border-[var(--border-strong)] bg-white hover:bg-[var(--surface-3)] active:scale-[0.98] transition-colors">
-            How we vet
-          </a>
-        </div>
-        <div class="mt-6 flex items-center gap-4 text-xs text-[var(--ink-muted)]">
-          <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-[var(--success)]"></span>Updated weekly</span>
-          <span class="w-px h-3 bg-[var(--border)]"></span>
-          <span>Official links only</span>
-          <span class="w-px h-3 bg-[var(--border)]"></span>
-          <span>Always free</span>
-        </div>
-      </div>
-
-      <!-- Right: Lead story / this week's radar — newspaper sidebar -->
-      <aside class="reveal reveal-d1 lg:border-l lg:border-[var(--border)] lg:pl-8">
-        <div class="flex items-baseline justify-between border-b border-[var(--border-strong)] pb-2 mb-4">
-          <p class="edition-label">This week’s radar</p>
-          <span class="text-[10px] tracking-widest uppercase text-[var(--ink-muted)]">{{ radar|length }} picks</span>
-        </div>
-        {% if radar %}
-        <ul class="divide-y divide-[var(--border)]">
-          {% for r in radar %}
-          <li class="py-4 first:pt-0">
-            <a href="{{ r.url }}" class="group block">
-              <span class="text-[10px] uppercase tracking-[0.14em] font-semibold text-[var(--orange-ink)]">{{ r.get_category_display }}</span>
-              <span class="mt-1 block font-display font-semibold text-[17px] leading-tight text-[var(--ink)] group-hover:text-[var(--navy)] group-hover:underline decoration-[var(--orange)]/30 underline-offset-4">{{ r.title }}</span>
-              <span class="mt-1 block text-xs text-[var(--ink-muted)]">{% if r.organization %}{{ r.organization }} • {% endif %}Posted {{ r.first_published_at|timesince }} ago</span>
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-        <a href="#opportunities" class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-[var(--ink)] hover:text-[var(--orange-ink)] transition-colors">
-          See all picks <span aria-hidden="true">→</span>
-        </a>
-        {% else %}
-        <p class="text-sm text-[var(--ink-muted)]">Fresh picks land here every week.</p>
-        {% endif %}
-
-        <!-- trust mini-strip -->
-        <div class="mt-6 bg-[var(--surface-3)] border border-[var(--border)] p-3 flex items-center gap-3 text-xs leading-tight">
-          <span class="flex-none w-8 h-8 grid place-items-center bg-[var(--navy)] text-white">✓</span>
-          <span class="text-[var(--ink-muted)]"><strong class="text-[var(--ink)] font-semibold">Why trust us?</strong> We track every Apply link and archive expired posts. If a link breaks, we fix it or remove it.</span>
-        </div>
-      </aside>
+    <div class="govuk-notification-banner__content">
+      <p class="govuk-notification-banner__heading">
+        Fresh internships, simulations, scholarships, and university programs for Indian students — free, official links only.
+      </p>
+      <p class="govuk-body" style="margin-bottom: 0;">
+        Every opening is checked, dated, and linked straight to the official application. No middlemen, no paywalls.
+      </p>
     </div>
   </div>
 </section>

@@ -1,65 +1,425 @@
-<!-- tracking/templates/tracking/dashboard.html -->
 {% extends "base.html" %}
 
-{% block title %}Analytics · NamoLead{% endblock %}
+{% block title %}Analytics & Telemetry Intelligence · NamoLead{% endblock %}
 
 {% block content %}
-<h1 class="text-2xl font-bold mb-6">Analytics</h1>
+{% include "components/breadcrumbs.html" %}
 
-<div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-  {% include "components/stat-card.html" with label="Total clicks" value=totals.clicks %}
-  {% include "components/stat-card.html" with label="Page views" value=totals.views %}
-  {% include "components/stat-card.html" with label="View→click CTR" value=totals.ctr %}
+<h1 class="govuk-heading-xl">Real-Time Analytics Dashboard</h1>
+<p class="govuk-body-l">
+  Minute-level tracking of student opportunity discovery, outbound applications, and traffic channels.
+</p>
+
+<!-- Actions: Range Filter & CSV Export -->
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--govuk-border);">
+  <div style="display: inline-flex; border: 1px solid var(--govuk-border); background: var(--govuk-page-background);">
+    <a href="?range=all" class="govuk-body-s govuk-link" style="padding: 8px 16px; text-decoration: none; {% if current_range == 'all' %}background: var(--govuk-black); color: var(--govuk-white);{% endif %}">All Time</a>
+    <a href="?range=30d" class="govuk-body-s govuk-link" style="padding: 8px 16px; text-decoration: none; border-left: 1px solid var(--govuk-border); {% if current_range == '30d' %}background: var(--govuk-black); color: var(--govuk-white);{% endif %}">30 Days</a>
+    <a href="?range=7d" class="govuk-body-s govuk-link" style="padding: 8px 16px; text-decoration: none; border-left: 1px solid var(--govuk-border); {% if current_range == '7d' %}background: var(--govuk-black); color: var(--govuk-white);{% endif %}">7 Days</a>
+    <a href="?range=today" class="govuk-body-s govuk-link" style="padding: 8px 16px; text-decoration: none; border-left: 1px solid var(--govuk-border); {% if current_range == 'today' %}background: var(--govuk-black); color: var(--govuk-white);{% endif %}">Today</a>
+  </div>
+
+  <button type="button" id="export-csv-btn" class="govuk-button" style="margin-bottom: 0;">
+    <i class="fa-solid fa-file-arrow-down" style="margin-right: 5px;"></i> Export CSV
+  </button>
+
+  <span class="govuk-tag">
+    <span style="display: inline-block; width: 8px; height: 8px; background: var(--govuk-success); margin-right: 6px; animation: pulse 2s infinite;"></span>
+    Live Telemetry
+  </span>
 </div>
 
-<div class="grid md:grid-cols-2 gap-6">
-  <div class="bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] p-4 shadow-[var(--shadow-sm)]">
-    <h2 class="font-semibold mb-2">Clicks per post</h2>
-    <canvas id="postChart"></canvas>
+<!-- 6-Metric KPI Grid -->
+<div class="govuk-grid-row" style="margin-bottom: 40px;">
+  <div class="govuk-grid-column-one-third">
+    <div class="nlc-stat">
+      <div class="nlc-stat__value">{{ totals.clicks }}</div>
+      <div class="nlc-stat__label">Total clicks</div>
+      <div class="nlc-stat__sub" style="color: var(--govuk-success);">
+        <i class="fa-solid fa-arrow-trend-up"></i> Outbound Intent
+      </div>
+    </div>
   </div>
-  <div class="bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] p-4 shadow-[var(--shadow-sm)]">
-    <h2 class="font-semibold mb-2">Traffic source</h2>
-    <canvas id="sourceChart"></canvas>
+  <div class="govuk-grid-column-one-third">
+    <div class="nlc-stat">
+      <div class="nlc-stat__value">{{ totals.views }}</div>
+      <div class="nlc-stat__label">Page views</div>
+    </div>
   </div>
-  <div class="bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] p-4 shadow-[var(--shadow-sm)] md:col-span-2">
-    <h2 class="font-semibold mb-2">Clicks per week</h2>
-    <canvas id="weeklyChart"></canvas>
+  <div class="govuk-grid-column-one-third">
+    <div class="nlc-stat">
+      <div class="nlc-stat__value">{{ totals.ctr }}</div>
+      <div class="nlc-stat__label">View→click CTR</div>
+      <div class="nlc-stat__sub" style="color: var(--govuk-secondary-text);">Apply Conversion</div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="nlc-stat">
+      <div class="nlc-stat__value">{{ totals.unique_visitors }}</div>
+      <div class="nlc-stat__label">Unique Visitors</div>
+      <div class="nlc-stat__sub" style="color: var(--govuk-secondary-text);">Hashed IP Devices</div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="nlc-stat">
+      <div class="nlc-stat__value" style="font-size: 18px;">{{ totals.top_source }}</div>
+      <div class="nlc-stat__label">Top Channel</div>
+      <div class="nlc-stat__sub" style="color: var(--govuk-success);">Leading Driver</div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="nlc-stat">
+      <div class="nlc-stat__value" style="font-size: 18px;">{{ totals.top_category }}</div>
+      <div class="nlc-stat__label">Top Field</div>
+      <div class="nlc-stat__sub" style="color: var(--govuk-secondary-text);">Highest Demand</div>
+    </div>
   </div>
 </div>
 
-<h2 class="text-lg font-semibold mt-8 mb-2">Per-post breakdown</h2>
-<div class="overflow-x-auto">
-<table class="w-full bg-[var(--surface-2)] border border-[var(--border)] rounded-[var(--radius-lg)] text-sm overflow-hidden">
-  <thead><tr class="text-left border-b border-[var(--border)] text-[var(--ink-muted)]"><th class="p-3">Post</th><th class="p-3">Clicks</th><th class="p-3">Views</th><th class="p-3">CTR</th></tr></thead>
-  <tbody>
-  {% for p in per_post %}
-    <tr class="border-b border-[var(--border)]"><td class="p-3 whitespace-nowrap">{{ p.title }}</td><td class="p-3">{{ p.clicks }}</td><td class="p-3">{{ p.views }}</td><td class="p-3">{{ p.ctr }}</td></tr>
-  {% empty %}
-    <tr><td class="p-3" colspan="4">No clicks yet.</td></tr>
-  {% endfor %}
-  </tbody>
-</table>
+<!-- Primary Charts Grid -->
+<div class="govuk-grid-row" style="margin-bottom: 40px;">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="nlc-card" style="padding: 20px;">
+      <h2 class="govuk-heading-m">Weekly Application Engagement Trend</h2>
+      <p class="govuk-body-s" style="color: var(--govuk-secondary-text);">Outbound click volume timeline</p>
+      <div style="height: 256px; position: relative;">
+        <canvas id="weeklyChart"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="nlc-card" style="padding: 20px;">
+      <h2 class="govuk-heading-m">Traffic Acquisition (UTM)</h2>
+      <p class="govuk-body-s" style="color: var(--govuk-secondary-text);">WhatsApp vs Instagram vs Direct</p>
+      <div style="height: 256px; position: relative;">
+        <canvas id="sourceChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row" style="margin-bottom: 40px;">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="nlc-card" style="padding: 20px;">
+      <h2 class="govuk-heading-m">Top Opportunity Demand</h2>
+      <p class="govuk-body-s" style="color: var(--govuk-secondary-text);">Highest clicked listings</p>
+      <div style="height: 256px; position: relative;">
+        <canvas id="postChart"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="nlc-card" style="padding: 20px;">
+      <h2 class="govuk-heading-m">Peak Application Hours</h2>
+      <p class="govuk-body-s" style="color: var(--govuk-secondary-text);">Time-of-day distribution (00:00 - 23:00)</p>
+      <div style="height: 256px; position: relative;">
+        <canvas id="hourlyChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Secondary Analytics: Device Breakdown & Live Activity Stream -->
+<div class="govuk-grid-row" style="margin-bottom: 40px;">
+  <div class="govuk-grid-column-one-third">
+    <div class="nlc-card" style="padding: 20px;">
+      <h2 class="govuk-heading-m">Student Platform &amp; Device Share</h2>
+      <p class="govuk-body-s" style="color: var(--govuk-secondary-text);">Hardware and environment telemetry</p>
+
+      {% for dev in by_device %}
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--govuk-border);">
+        <span class="govuk-body-s" style="margin-bottom: 0;">
+          {% if "Android" in dev.device %}
+            <i class="fa-brands fa-android" style="color: var(--govuk-success); margin-right: 6px;"></i>
+          {% elif "Apple" in dev.device or "iOS" in dev.device or "mac" in dev.device %}
+            <i class="fa-brands fa-apple" style="margin-right: 6px;"></i>
+          {% elif "Windows" in dev.device %}
+            <i class="fa-brands fa-windows" style="color: var(--govuk-link); margin-right: 6px;"></i>
+          {% else %}
+            <i class="fa-solid fa-mobile-screen" style="color: var(--govuk-secondary-text); margin-right: 6px;"></i>
+          {% endif %}
+          {{ dev.device }}
+        </span>
+        <strong class="govuk-body-s" style="margin-bottom: 0;">{{ dev.count }} clicks</strong>
+      </div>
+      {% empty %}
+      <p class="govuk-body" style="padding: 20px 0;">No device records captured yet.</p>
+      {% endfor %}
+
+      <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--govuk-border);">
+        <h3 class="govuk-heading-s">Browser Agents</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          {% for br in by_browser %}
+          <span class="govuk-tag">{{ br.browser }}: {{ br.count }}</span>
+          {% empty %}
+          <span class="govuk-body-s" style="color: var(--govuk-secondary-text);">No browser telemetry</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+    <div class="nlc-card" style="padding: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <div>
+          <h2 class="govuk-heading-m" style="margin-bottom: 0;">Live Application Feed</h2>
+          <p class="govuk-body-s" style="color: var(--govuk-secondary-text); margin-bottom: 0;">Latest student interactions &amp; redirects</p>
+        </div>
+        <span class="govuk-tag" style="animation: pulse 2s infinite;">
+          <span style="display: inline-block; width: 6px; height: 6px; background: var(--govuk-white); margin-right: 6px;"></span>
+          Streaming
+        </span>
+      </div>
+
+      <div style="max-height: 384px; overflow-y: auto; padding-right: 5px;">
+        {% for event in recent_events %}
+        <div class="nlc-card" style="padding: 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1;">
+            {% if event.source == "whatsapp" %}
+              <span style="width: 32px; height: 32px; background: var(--govuk-success-light); color: var(--govuk-success); display: grid; place-items: center; flex-shrink: 0;">
+                <i class="fa-brands fa-whatsapp"></i>
+              </span>
+            {% elif event.source == "instagram" %}
+              <span style="width: 32px; height: 32px; background: var(--govuk-orange-light); color: var(--govuk-orange); display: grid; place-items: center; flex-shrink: 0;">
+                <i class="fa-brands fa-instagram"></i>
+              </span>
+            {% else %}
+              <span style="width: 32px; height: 32px; background: var(--govuk-light-grey); color: var(--govuk-secondary-text); display: grid; place-items: center; flex-shrink: 0;">
+                <i class="fa-solid fa-link"></i>
+              </span>
+            {% endif %}
+            <div style="min-width: 0;">
+              <p class="govuk-body-s" style="margin-bottom: 0; font-weight: 600;">{{ event.title }}</p>
+              <p class="govuk-body-s" style="margin-bottom: 0; color: var(--govuk-secondary-text); font-family: monospace; font-size: 11px;">{{ event.device }} &bull; {{ event.browser }}</p>
+            </div>
+          </div>
+          <div style="text-align: right; flex-shrink: 0;">
+            <span style="font-family: monospace; font-size: 11px; color: var(--govuk-secondary-text); display: block;">{{ event.timestamp|timesince }} ago</span>
+            <span style="font-size: 10px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; color: var(--govuk-orange);">{{ event.source }}</span>
+          </div>
+        </div>
+        {% empty %}
+        <div class="govuk-inset-text" style="text-align: center;">
+          No recent click stream recorded yet.
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Per-Opportunity Breakdown Table -->
+<div style="margin-bottom: 40px;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+    <div>
+      <h2 class="govuk-heading-l">Per-Opportunity Performance Table</h2>
+      <p class="govuk-body-s" style="color: var(--govuk-secondary-text);">Granular CTR, view counts, and application velocity</p>
+    </div>
+    <span class="govuk-tag">{{ per_post|length }} active listings analyzed</span>
+  </div>
+
+  <div style="overflow-x: auto;">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Opportunity Title</th>
+          <th scope="col" class="govuk-table__header">Field</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Views</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Clicks</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">CTR</th>
+          <th scope="col" class="govuk-table__header">Conversion Health</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        {% for p in per_post %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <span style="display: block; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600;">{{ p.title }}</span>
+            </td>
+            <td class="govuk-table__cell" style="font-family: monospace; text-transform: uppercase; font-size: 12px; color: var(--govuk-secondary-text);">
+              {{ p.category }}
+            </td>
+            <td class="govuk-table__cell govuk-table__cell--numeric" style="font-family: monospace; color: var(--govuk-secondary-text);">{{ p.views }}</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric" style="font-family: monospace; font-weight: 700;">{{ p.clicks }}</td>
+            <td class="govuk-table__cell govuk-table__cell--numeric" style="font-family: monospace; font-weight: 700; color: var(--govuk-orange);">
+              {{ p.ctr|floatformat:3 }}
+            </td>
+            <td class="govuk-table__cell">
+              {% if p.ctr > 0.3 %}
+                <span class="govuk-tag" style="background: var(--govuk-success);">
+                  <i class="fa-solid fa-bolt" style="margin-right: 4px;"></i> High Velocity
+                </span>
+              {% elif p.ctr > 0.1 %}
+                <span class="govuk-tag" style="background: var(--govuk-orange);">
+                  <i class="fa-solid fa-check" style="margin-right: 4px;"></i> Healthy
+                </span>
+              {% else %}
+                <span class="govuk-tag" style="background: var(--govuk-secondary-text);">
+                  <i class="fa-solid fa-chart-simple" style="margin-right: 4px;"></i> Exploring
+                </span>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell" colspan="6" style="text-align: center; padding: 40px;">
+              <i class="fa-solid fa-chart-pie" style="font-size: 24px; color: var(--govuk-secondary-text); opacity: 0.4; display: block; margin-bottom: 10px;"></i>
+              No application click telemetry recorded for this timeframe.
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {{ per_post|json_script:"per-post" }}
 {{ by_source|json_script:"by-source" }}
 {{ weekly|json_script:"weekly" }}
+{{ hourly|json_script:"hourly" }}
+{{ per_category|json_script:"per-category" }}
+
 <script>
-const perPost = JSON.parse(document.getElementById('per-post').textContent);
-const bySource = JSON.parse(document.getElementById('by-source').textContent);
-const weekly = JSON.parse(document.getElementById('weekly').textContent);
-new Chart(document.getElementById('postChart'), {
-  type: 'bar',
-  data: { labels: perPost.map(p => p.title), datasets: [{ label: 'Clicks', data: perPost.map(p => p.clicks) }] }
-});
-new Chart(document.getElementById('sourceChart'), {
-  type: 'pie',
-  data: { labels: bySource.map(s => s.source), datasets: [{ data: bySource.map(s => s.clicks) }] }
-});
-new Chart(document.getElementById('weeklyChart'), {
-  type: 'line',
-  data: { labels: weekly.map(w => w.week), datasets: [{ label: 'Clicks', data: weekly.map(w => w.clicks) }] }
+document.addEventListener('DOMContentLoaded', () => {
+  const perPost = JSON.parse(document.getElementById('per-post').textContent || '[]');
+  const bySource = JSON.parse(document.getElementById('by-source').textContent || '[]');
+  const weekly = JSON.parse(document.getElementById('weekly').textContent || '[]');
+  const hourly = JSON.parse(document.getElementById('hourly').textContent || '[]');
+  const perCategory = JSON.parse(document.getElementById('per-category').textContent || '[]');
+
+  const textColor = '#5a6b85';
+  const gridColor = 'rgba(16, 42, 67, 0.08)';
+
+  Chart.defaults.color = textColor;
+  Chart.defaults.borderColor = gridColor;
+  Chart.defaults.font.family = '"Newsreader", Georgia, serif';
+
+  // 1. Weekly Volume Trend Line/Area
+  if (document.getElementById('weeklyChart')) {
+    new Chart(document.getElementById('weeklyChart'), {
+      type: 'line',
+      data: {
+        labels: weekly.length ? weekly.map(w => w.week) : ['W1', 'W2', 'W3', 'W4'],
+        datasets: [{
+          label: 'Application Clicks',
+          data: weekly.length ? weekly.map(w => w.clicks) : [0, 0, 0, 0],
+          borderColor: '#ff6b35',
+          backgroundColor: 'rgba(255, 107, 53, 0.12)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: '#ff6b35',
+          borderWidth: 2,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false } },
+          y: { grid: { color: gridColor }, beginAtZero: true }
+        }
+      }
+    });
+  }
+
+  // 2. Traffic Sources Doughnut
+  if (document.getElementById('sourceChart')) {
+    new Chart(document.getElementById('sourceChart'), {
+      type: 'doughnut',
+      data: {
+        labels: bySource.length ? bySource.map(s => s.source.toUpperCase()) : ['DIRECT', 'WHATSAPP', 'INSTAGRAM'],
+        datasets: [{
+          data: bySource.length ? bySource.map(s => s.clicks) : [1, 0, 0],
+          backgroundColor: ['#25D366', '#ff6b35', '#0b0c0c', '#38BDF8'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } }
+        }
+      }
+    });
+  }
+
+  // 3. Top Opportunities Bar
+  if (document.getElementById('postChart')) {
+    new Chart(document.getElementById('postChart'), {
+      type: 'bar',
+      data: {
+        labels: perPost.length ? perPost.slice(0, 6).map(p => p.title.length > 18 ? p.title.substring(0, 18) + '...' : p.title) : ['No listings'],
+        datasets: [{
+          label: 'Clicks',
+          data: perPost.length ? perPost.slice(0, 6).map(p => p.clicks) : [0],
+          backgroundColor: '#ff6b35',
+          borderRadius: 0,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false } },
+          y: { grid: { color: gridColor }, beginAtZero: true }
+        }
+      }
+    });
+  }
+
+  // 4. Peak Application Hours (24h)
+  if (document.getElementById('hourlyChart')) {
+    new Chart(document.getElementById('hourlyChart'), {
+      type: 'bar',
+      data: {
+        labels: hourly.map(h => h.hour),
+        datasets: [{
+          label: 'Activity',
+          data: hourly.map(h => h.clicks),
+          backgroundColor: '#0b0c0c',
+          borderRadius: 0,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxTicksLimit: 6 } },
+          y: { grid: { color: gridColor }, beginAtZero: true }
+        }
+      }
+    });
+  }
+
+  // Export CSV Handler
+  const exportBtn = document.getElementById('export-csv-btn');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      if (!perPost.length) {
+        alert('No data available to export.');
+        return;
+      }
+      let csvContent = 'data:text/csv;charset=utf-8,';
+      csvContent += 'Opportunity Title,Category,Clicks,Views,CTR\n';
+      perPost.forEach(p => {
+        csvContent += `"${p.title.replace(/"/g, '""')}","${p.category}",${p.clicks},${p.views},${p.ctr}\n`;
+      });
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `namolead_telemetry_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
 });
 </script>
 {% endblock %}

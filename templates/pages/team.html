@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Founding Team (2026–27) · NamoLead{% endblock %}
+
+{% block og_tags %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NamoLead">
+<meta property="og:title" content="Meet the Founding Team (2026–27) — NamoLead">
+<meta property="og:description" content="Meet the founding team and president behind NamoLead for Academic Year 2026–27, building open access to career opportunities for Indian college students.">
+<meta property="og:image" content="{% if request %}{{ request.build_absolute_uri }}{% endif %}{% static 'img/team/president_pranav.jpg' %}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+{% block content %}
+<article>
+  {% include "components/breadcrumbs.html" %}
+
+  <h1 class="govuk-heading-xl">The people behind NamoLead</h1>
+  <p class="govuk-body-l">
+    Introducing our founding leadership, department heads, and operations team committed to empowering students to Learn, Lead &amp; Grow with free access to internships, simulations, and career programs.
+  </p>
+
+  <!-- Founder & President Spotlight -->
+  <div class="govuk-section-break govuk-section-break--visible"></div>
+  <section id="founder" class="team-founder">
+    <span class="govuk-tag" style="margin-bottom: 20px; display: inline-block;">Founder Spotlight &middot; President</span>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third team-founder__photo-col">
+        {% if founder.photo_url %}
+          <img src="{{ founder.photo_url }}" alt="{{ founder.name }}" class="team-avatar team-avatar--xl">
+        {% else %}
+          <img src="{% static founder.image %}" alt="{{ founder.name }}" class="team-avatar team-avatar--xl">
+        {% endif %}
+      </div>
+      <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-body-s" style="margin-bottom: 5px; color: var(--govuk-secondary-text);">{{ founder.role }} &middot; {{ founder.tenure }}</p>
+        <h2 class="govuk-heading-l">{{ founder.name }}</h2>
+
+        <div class="govuk-inset-text">
+          <p class="govuk-body" style="margin-bottom: 0; font-style: italic;">&ldquo;{{ founder.quote }}&rdquo;</p>
+        </div>
+
+        <p class="govuk-body">{{ founder.bio }}</p>
+
+        {% if founder.github_url or founder.instagram_url or founder.linkedin_url or founder.portfolio_url or founder.email %}
+        <div class="team-social">
+          {% if founder.github_url %}
+          <a href="{{ founder.github_url }}" target="_blank" rel="noopener" class="govuk-button govuk-button--secondary">
+            <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+          </a>
+          {% endif %}
+          {% if founder.linkedin_url %}
+          <a href="{{ founder.linkedin_url }}" target="_blank" rel="noopener" class="govuk-button govuk-button--secondary">
+            <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn
+          </a>
+          {% endif %}
+          {% if founder.instagram_url %}
+          <a href="{{ founder.instagram_url }}" target="_blank" rel="noopener" class="govuk-button govuk-button--secondary">
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i> Instagram
+          </a>
+          {% endif %}
+          {% if founder.portfolio_url %}
+          <a href="{{ founder.portfolio_url }}" target="_blank" rel="noopener" class="govuk-button govuk-button--secondary">
+            <i class="fa-solid fa-globe" aria-hidden="true"></i> Portfolio
+          </a>
+          {% endif %}
+          {% if founder.email %}
+          <a href="mailto:{{ founder.email }}" class="govuk-button govuk-button--secondary">
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i> Email
+          </a>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Department Heads Grid -->
+  <div class="govuk-section-break govuk-section-break--visible"></div>
+  <section id="department-heads" class="team-section">
+    <h2 class="govuk-heading-l">Core Team Members &amp; Department Heads</h2>
+    <p class="govuk-body" style="color: var(--govuk-secondary-text);">Leading technical infrastructure, creative design, marketing, campus outreach, and community operations.</p>
+
+    <div class="team-grid">
+      {% for member in heads %}
+      <div>
+        <div class="nlc-card team-card">
+          {% if member.photo_url %}
+            <img src="{{ member.photo_url }}" alt="{{ member.name }}" class="team-avatar team-avatar--lg">
+          {% else %}
+            <img src="{% static member.image %}" alt="{{ member.name }}" class="team-avatar team-avatar--lg">
+          {% endif %}
+          <span class="govuk-tag govuk-tag--blue" style="margin-bottom: 12px;">{{ member.department }}</span>
+          <h3 class="govuk-heading-s" style="margin-top: 0; margin-bottom: 4px;">{{ member.name }}</h3>
+          <p class="govuk-body-s team-card__role">{{ member.role }}</p>
+          <p class="govuk-body-s team-card__bio">{{ member.bio }}</p>
+          <div class="team-social team-social--compact">
+            {% if member.github_url %}
+            <a href="{{ member.github_url }}" target="_blank" rel="noopener" class="team-social-link" aria-label="{{ member.name }} on GitHub">
+              <i class="fa-brands fa-github" aria-hidden="true"></i>
+            </a>
+            {% endif %}
+            {% if member.linkedin_url %}
+            <a href="{{ member.linkedin_url }}" target="_blank" rel="noopener" class="team-social-link" aria-label="{{ member.name }} on LinkedIn">
+              <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+            </a>
+            {% endif %}
+            {% if member.instagram_url %}
+            <a href="{{ member.instagram_url }}" target="_blank" rel="noopener" class="team-social-link" aria-label="{{ member.name }} on Instagram">
+              <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            </a>
+            {% endif %}
+            {% if member.portfolio_url %}
+            <a href="{{ member.portfolio_url }}" target="_blank" rel="noopener" class="team-social-link" aria-label="{{ member.name }}'s Portfolio">
+              <i class="fa-solid fa-globe" aria-hidden="true"></i>
+            </a>
+            {% endif %}
+            {% if member.email %}
+            <a href="mailto:{{ member.email }}" class="team-social-link" aria-label="Email {{ member.name }}">
+              <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Executives Grid -->
+  <div class="govuk-section-break govuk-section-break--visible"></div>
+  <section id="executives" class="team-section">
+    <h2 class="govuk-heading-l">Operations &amp; Community Executives</h2>
+    <p class="govuk-body" style="color: var(--govuk-secondary-text);">Facilitating daily student relations, outreach events, platform operations, and brand growth.</p>
+
+    <div class="team-grid">
+      {% for member in executives %}
+      <div>
+        <div class="nlc-card team-card">
+          {% if member.photo_url %}
+            <img src="{{ member.photo_url }}" alt="{{ member.name }}" class="team-avatar team-avatar--md">
+          {% else %}
+            <img src="{% static member.image %}" alt="{{ member.name }}" class="team-avatar team-avatar--md">
+          {% endif %}
+          <span class="govuk-tag govuk-tag--grey" style="margin-bottom: 12px;">{{ member.department }}</span>
+          <h3 class="govuk-heading-s" style="margin-top: 0; margin-bottom: 4px;">{{ member.name }}</h3>
+          <p class="govuk-body-s team-card__role">{{ member.role }}</p>
+          <p class="govuk-body-s team-card__bio">{{ member.bio }}</p>
+          <div class="team-social team-social--compact">
+            {% if member.github_url %}
+            <a href="{{ member.github_url }}" target="_blank" rel="noopener" class="team-social-link" aria-label="{{ member.name }} on GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if member.linkedin_url %}
+            <a href="{{ member.linkedin_url }}" target="_blank" rel="noopener" class="team-social-link" aria-label="{{ member.name }} on LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if member.instagram_url %}
+            <a href="{{ member.instagram_url }}" target="_blank" rel="noopener" class="team-social-link" aria-label="{{ member.name }} on Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if member.portfolio_url %}
+            <a href="{{ member.portfolio_url }}" target="_blank" rel="noopener" class="team-social-link" aria-label="{{ member.name }}'s Portfolio"><i class="fa-solid fa-globe" aria-hidden="true"></i></a>
+            {% endif %}
+            {% if member.email %}
+            <a href="mailto:{{ member.email }}" class="team-social-link" aria-label="Email {{ member.name }}"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Together CTA -->
+  <section style="background: var(--govuk-page-background); border: 1px solid var(--govuk-border); padding: 40px 30px; text-align: center; margin-bottom: 30px;">
+    <span class="govuk-body-s" style="text-transform: uppercase; letter-spacing: 2px; color: var(--govuk-secondary-text);">Together &middot; 2026–27</span>
+    <h2 class="govuk-heading-l">We Build Opportunities.</h2>
+    <p class="govuk-body">
+      With passion, purpose and teamwork, we are ready to create impact and empower students to Learn, Lead and Grow.
+    </p>
+    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
+      <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="govuk-button">
+        <i class="fa-brands fa-instagram" aria-hidden="true"></i> Follow @namoleads
+      </a>
+      <a href="/opportunities/" class="govuk-button govuk-button--secondary">Browse Opportunities</a>
+    </div>
+  </section>
+
+  <!-- Campus Lead CTA -->
+  <div class="govuk-inset-text">
+    <h3 class="govuk-heading-s" style="margin-top: 0;">Want to be a NamoLead Campus Lead?</h3>
+    <p class="govuk-body">We are expanding our student ambassador network across colleges in India. Help your batchmates discover life-changing career openings.</p>
+    <p style="margin-bottom: 0;">
+      <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="govuk-link">Apply as Campus Lead</a>
+    </p>
+  </div>
+</article>
+{% endblock %}

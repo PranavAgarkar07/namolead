@@ -1,44 +1,84 @@
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags opp_tags %}
 {% url 'opportunities:go' page.slug as go_url %}
 
-<div class="flex flex-wrap items-center gap-3 mb-4">
-  <span class="inline-flex items-center bg-[var(--navy-tint)] text-[var(--navy)] px-2.5 py-0.5 text-xs font-medium">{{ page.get_category_display }}</span>
-  {% if page.organization %}<span class="text-sm text-[var(--ink-muted)]">{{ page.organization }}</span>{% endif %}
-  {% if page.is_expired %}
-    <span class="inline-flex items-center bg-[var(--destructive-soft)] text-[var(--destructive)] px-2.5 py-0.5 text-xs font-bold border border-[var(--destructive)]/30">Deadline passed</span>
-  {% elif page.deadline %}
-    <span class="inline-flex items-center text-xs font-medium text-[var(--ink-muted)]">Apply by <b class="ml-1 text-[var(--ink)]">{{ page.deadline|date:"j M" }}</b></span>
+<!-- Category & Status -->
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; align-items: center;">
+  <span class="govuk-tag">{{ page.get_category_display }}</span>
+  {% if page.organization %}
+    <span class="govuk-body-s" style="margin-bottom: 0; color: var(--govuk-secondary-text);">{{ page.organization }}</span>
   {% endif %}
-  <a href="{{ go_url }}" class="inline-flex items-center gap-2 bg-[var(--navy)] text-white font-semibold text-sm px-5 py-2.5 hover:bg-[var(--navy-soft)] active:scale-[0.97] transition-all">Apply now
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-  </a>
+  {% if page.is_expired %}
+    <span class="govuk-tag govuk-tag--red">Deadline passed</span>
+  {% elif page.deadline %}
+    <span class="govuk-body-s" style="margin-bottom: 0;">Apply by <strong>{{ page.deadline|date:"j M" }}</strong></span>
+  {% endif %}
+  <a href="{{ go_url }}" class="govuk-button" style="margin-left: auto;">Apply now</a>
 </div>
 
-<h1 class="text-4xl sm:text-5xl font-semibold tracking-tight leading-[1.08] mb-6">{{ page.title }}</h1>
+<!-- Title -->
+<h1 class="govuk-heading-xl" style="margin-bottom: 20px;">{{ page.title }}</h1>
 
-<p class="text-lg leading-relaxed max-w-[68ch] mb-10 whitespace-pre-line text-[var(--ink)]">{{ page.short_description }}</p>
+<!-- Key Specs -->
+<div class="govuk-summary-list" style="margin-bottom: 30px;">
+  {% if page.organization %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Organization</dt>
+      <dd class="govuk-summary-list__value">{{ page.organization }}</dd>
+    </div>
+  {% endif %}
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Category</dt>
+    <dd class="govuk-summary-list__value">{{ page.get_category_display }}</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Deadline</dt>
+    <dd class="govuk-summary-list__value">{% if page.deadline %}{{ page.deadline|date:"j M Y" }}{% else %}Open Application{% endif %}</dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Application Fee</dt>
+    <dd class="govuk-summary-list__value" style="color: var(--govuk-success);">100% Free</dd>
+  </div>
+</div>
 
-{% if page.body %}
-  <div class="rich-text max-w-[68ch] mb-10">{{ page.body|richtext }}</div>
+<!-- Summary -->
+{% if page.short_description %}
+  <p class="govuk-body-l">
+    {{ page.short_description }}
+  </p>
 {% endif %}
 
-{% if page.gallery_images.all %}
-  <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-    {% for item in page.gallery_images.all %}
-      <figure>
-        {% image item.image max-1200x900 as gallery_img %}
-        <img src="{{ gallery_img.url }}" class="w-full h-auto cursor-zoom-in" alt="{{ item.caption|default:page.title }}" data-lightbox data-lightbox-src="{{ item.image.file.url }}" data-lightbox-caption="{{ item.caption|default:page.title }}" data-lightbox-group="gallery-{{ page.pk }}">
-        {% if item.caption %}<figcaption class="text-xs text-[var(--ink-muted)] mt-1.5">{{ item.caption }}</figcaption>{% endif %}
-      </figure>
-    {% endfor %}
+<!-- Full Body -->
+{% if page.body %}
+  <div class="rich-text">
+    {{ page.body|richtext }}
   </div>
 {% endif %}
 
+<!-- Gallery -->
+{% if page.gallery_images.all %}
+  <div style="margin: 30px 0;">
+    <h2 class="govuk-heading-m">Gallery Media</h2>
+    <div class="govuk-grid-row">
+      {% for item in page.gallery_images.all %}
+        <div class="govuk-grid-column-one-third">
+          <div class="nlc-card" style="padding: 5px;">
+            {% image item.image max-1200x900 as gallery_img %}
+            <img src="{{ gallery_img.url }}" style="width: 100%; height: auto; cursor: zoom-in;" alt="{{ item.caption|default:page.title }}" data-lightbox data-lightbox-src="{{ item.image.file.url }}" data-lightbox-caption="{{ item.caption|default:page.title }}" data-lightbox-group="gallery-{{ page.pk }}">
+            {% if item.caption %}<p class="govuk-body-s" style="color: var(--govuk-secondary-text); margin-top: 10px;">{{ item.caption }}</p>{% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+<!-- Telemetry Beacon -->
 {% url 'opportunities:pageview' page.slug as pageview_url %}
 <img src="{{ pageview_url }}" width="1" height="1" alt="">
 
-<div>
-  <a href="{{ go_url }}" class="inline-flex items-center gap-2.5 bg-[var(--orange)] text-[var(--navy)] font-semibold rounded-[var(--radius)] px-8 py-3.5 text-base hover:bg-[var(--orange-strong)] active:scale-[0.97] transition-all">Apply now
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<!-- Bottom CTA -->
+<div style="margin-top: 30px; margin-bottom: 20px;">
+  <a href="{{ go_url }}" class="govuk-button govuk-button--start">
+    Apply on Official Website
   </a>
 </div>

@@ -1,23 +1,72 @@
-<header class="nav-shell sticky top-0 z-40 bg-[var(--navy)] text-white">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="flex items-center justify-between gap-4 py-4">
-      {% include "components/brand.html" with dark=True big=True %}
-      <nav class="flex items-center gap-3 sm:gap-8 text-[11px] font-semibold uppercase tracking-[0.18em] leading-none" aria-label="Primary">
-        <a href="/" class="nav-link {% if request.path == '/' %}is-active{% endif %}">Opportunities</a>
-        <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="nav-link group inline-flex items-center gap-1.5" aria-label="NamoLead on Instagram">
-          <span class="sm:hidden" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+{% load static %}
+<header class="govuk-header" role="banner">
+  <div class="govuk-width-container">
+    <div class="govuk-header__container">
+      <a href="/" class="govuk-header__link" aria-label="NamoLead — Home">
+        <span class="govuk-header__logotype">
+          <span class="brand-box" style="background: #ffffff; border-radius: 8px; padding: 4px 6px; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.22);">
+            <img src="{% static 'img/namolead-logo.svg' %}" alt="NamoLead" width="34" height="34" class="brand-mark" style="display: block;">
           </span>
-          <span class="hidden sm:inline">Instagram</span>
-          <svg class="hidden sm:block transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
-        </a>
-      </nav>
-    </div>
-    <div class="hidden md:flex items-center justify-between border-t border-white/10 py-2.5 text-[10px] font-semibold uppercase tracking-[0.22em] leading-none text-white/50">
-      <span>✨Learn • Lead • Grow</span>
-      <span class="flex items-center gap-2">
-        <span class="w-1.5 h-1.5 rounded-full bg-[var(--orange)]" aria-hidden="true"></span>Week {% now "W" %} · updated weekly
-      </span>
+          <span class="govuk-header__logotype-text" style="color: #ffffff; font-size: 22px; font-weight: 800; letter-spacing: -0.02em;">
+            Namo<span style="color: #ff6b35;">Lead</span>
+          </span>
+        </span>
+      </a>
+      <div class="govuk-header__content">
+        <span class="govuk-header__service-name" style="color: rgba(255,255,255,0.85); font-weight: 500;">Learn &middot; Lead &middot; Grow</span>
+      </div>
     </div>
   </div>
 </header>
+
+<nav class="govuk-service-navigation" aria-label="Service information">
+  <div class="govuk-width-container">
+    <div class="govuk-service-navigation__container">
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Toggle navigation menu">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      </button>
+      <ul class="govuk-service-navigation__list" id="nav-list">
+        <li class="govuk-service-navigation__item">
+          <a href="/" class="govuk-service-navigation__link" {% if request.path == '/' %}aria-current="page"{% endif %}>Home</a>
+        </li>
+        <li class="govuk-service-navigation__item">
+          <a href="/opportunities/" class="govuk-service-navigation__link" {% if request.path == '/opportunities/' %}aria-current="page"{% endif %}>Opportunities</a>
+        </li>
+        <li class="govuk-service-navigation__item">
+          <a href="/about/" class="govuk-service-navigation__link" {% if request.path == '/about/' %}aria-current="page"{% endif %}>About</a>
+        </li>
+        <li class="govuk-service-navigation__item">
+          <a href="/team/" class="govuk-service-navigation__link" {% if request.path == '/team/' %}aria-current="page"{% endif %}>Team</a>
+        </li>
+        <li class="govuk-service-navigation__item">
+          <a href="/events/" class="govuk-service-navigation__link" {% if request.path == '/events/' %}aria-current="page"{% endif %}>Events</a>
+        </li>
+        <li class="govuk-service-navigation__item nav-hide-mobile">
+          <a href="https://chat.whatsapp.com/invite/namolead" target="_blank" rel="noopener" class="govuk-service-navigation__link">
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+            WhatsApp
+          </a>
+        </li>
+        <li class="govuk-service-navigation__item nav-hide-mobile">
+          <a href="https://instagram.com/namoleads" target="_blank" rel="noopener" class="govuk-service-navigation__link">
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            Instagram
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<script>
+  (function() {
+    var btn = document.getElementById('nav-toggle');
+    var list = document.getElementById('nav-list');
+    if (btn && list) {
+      btn.addEventListener('click', function() {
+        var open = list.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.querySelector('i').className = open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+      });
+    }
+  })();
+</script>

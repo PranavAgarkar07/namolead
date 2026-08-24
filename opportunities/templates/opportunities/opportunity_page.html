@@ -1,43 +1,67 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load static wagtailcore_tags wagtailimages_tags opp_tags %}
 
 {% block title %}{{ page.title }} · NamoLead{% endblock %}
+
+{% block og_tags %}
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NamoLead">
+<meta property="og:title" content="{{ page.title }} — NamoLead">
+<meta property="og:description" content="{{ page.short_description|truncatechars:180 }}">
+{% if page.featured_image %}
+  {% image page.featured_image width-1200 as og_img %}
+  <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ og_img.url }}">
+{% else %}
+  <meta property="og:image" content="{% if request %}{{ request.build_absolute_uri }}{% endif %}{% static 'img/og-cover.png' %}">
+{% endif %}
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.title }}">
+<meta name="twitter:description" content="{{ page.short_description|truncatechars:180 }}">
+{% endblock %}
 
 {% block content %}
 <article>
   {% include "components/breadcrumbs.html" %}
   {% image page.featured_image max-1200x1200 as hero %}
 
-  {% if hero and page.is_portrait %}
-  <div class="grid lg:grid-cols-[1fr_1.25fr] gap-10 lg:gap-14 items-start mb-12">
-    <div class="lg:sticky lg:top-28">
-      <button type="button" class="block w-full bg-transparent border-0 p-0 cursor-zoom-in" aria-label="View {{ page.title }} image larger">
-        <img src="{{ hero.url }}" data-lightbox data-lightbox-src="{{ page.featured_image.file.url }}" data-lightbox-caption="{{ page.title }}" class="w-full h-auto" alt="">
+  {% if hero %}
+    <div style="margin-bottom: 30px;">
+      <button type="button" style="background: transparent; border: 0; padding: 0; cursor: zoom-in; width: 100%;" aria-label="View {{ page.title }} image larger">
+        <img src="{{ hero.url }}" data-lightbox data-lightbox-src="{{ page.featured_image.file.url }}" data-lightbox-caption="{{ page.title }}" style="width: 100%; height: auto;" alt="">
       </button>
-    </div>
-    <div>
-      {% include "opportunities/_post_body.html" %}
-    </div>
-  </div>
-  {% else %}
-    {% if hero %}
-      <button type="button" class="block w-full bg-transparent border-0 p-0 cursor-zoom-in mb-12" aria-label="View {{ page.title }} image larger">
-        <img src="{{ hero.url }}" data-lightbox data-lightbox-src="{{ page.featured_image.file.url }}" data-lightbox-caption="{{ page.title }}" class="w-full h-auto" alt="">
-      </button>
-    {% endif %}
-    <div class="max-w-3xl">
-      {% include "opportunities/_post_body.html" %}
     </div>
   {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% include "opportunities/_post_body.html" %}
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <div class="nlc-card">
+        <h3 class="govuk-heading-s">Quick links</h3>
+        {% url 'opportunities:go' page.slug as go_url %}
+        <a href="{{ go_url }}" class="govuk-button govuk-button--orange" style="width: 100%; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;">
+          <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+          <span>Apply on Official Website</span>
+        </a>
+        <p class="govuk-body-s" style="margin-top: 15px; margin-bottom: 0; color: var(--govuk-secondary-text);">
+          {% if page.is_expired %}This opportunity has expired.{% elif page.deadline %}Apply by {{ page.deadline|date:"j M Y" }}.{% else %}Open application deadline.{% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
 </article>
 
+<!-- Mobile Sticky Apply Bar -->
 <div class="apply-bar">
-  <span class="text-sm font-semibold">
+  <span class="govuk-body-s" style="margin-bottom: 0; font-weight: 600;">
     {% if page.is_expired %}Deadline passed{% elif page.deadline %}Apply by {{ page.deadline|date:"j M" }}{% else %}Open application{% endif %}
   </span>
   {% url 'opportunities:go' page.slug as go_url %}
-  <a href="{{ go_url }}" class="inline-flex items-center gap-2 bg-[var(--orange)] text-[var(--navy)] font-bold px-6 py-2.5 active:scale-[0.97] transition-all">Apply now
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  <a href="{{ go_url }}" class="govuk-button govuk-button--orange" style="margin-bottom: 0; display: inline-flex; align-items: center; gap: 6px;">
+    <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+    <span>Apply now</span>
   </a>
 </div>
 <div class="apply-bar-spacer"></div>
